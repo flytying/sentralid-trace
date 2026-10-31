@@ -33,33 +33,11 @@
     "permittedUse": "Link and short factual citation of the public Facebook link on the website."
   },
   {
-    "id": "SRC-WEB-SABANGAN",
-    "kind": "independent_business_site",
-    "ownerName": "Sabangan Beach Resort",
-    "title": "Sabangan Beach Resort website — home page",
-    "url": "https://www.sabangan.com/",
-    "observedAt": "2026-10-31T05:06:24Z",
-    "reviewedAt": "2026-10-31",
-    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
-    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
-  },
-  {
     "id": "SRC-WEB-CALALAIYA",
     "kind": "independent_business_site",
     "ownerName": "Cala Laiya",
     "title": "Cala Laiya — Official Website",
     "url": "https://calalaiya.com/",
-    "observedAt": "2026-10-31T05:06:24Z",
-    "reviewedAt": "2026-10-31",
-    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
-    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
-  },
-  {
-    "id": "SRC-WEB-HENRY",
-    "kind": "independent_business_site",
-    "ownerName": "The Henry Hotels",
-    "title": "The Henry Hotel website — home page",
-    "url": "https://thehenryhotel.com/",
     "observedAt": "2026-10-31T05:06:24Z",
     "reviewedAt": "2026-10-31",
     "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",

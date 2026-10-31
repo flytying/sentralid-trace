@@ -75,7 +75,7 @@ describe("admission gate", () => {
   });
 
   it("rejects an admitted record whose manual review is not recorded", () => {
-    const b = { ...base.businesses[0], registryStatus: "admitted" as const };
+    const b = { ...base.businesses[0], registryStatus: "admitted" as const, reviewerNote: "Pending manual review." };
     expect(admissionIssues(b, base.claims, base.sources)).toContain("manual review not recorded");
   });
 
@@ -86,12 +86,37 @@ describe("admission gate", () => {
 });
 
 describe("search and link lookup", () => {
-  const draftOnly: Registry = real;
+  it("never serves draft or needs_review records", () => {
+    const withDraft: Registry = {
+      ...real,
+      businesses: real.businesses.map((b) =>
+        b.id === "cala-laiya" ? { ...b, registryStatus: "draft" as const } : b.id === "bebes-resort" ? { ...b, registryStatus: "needs_review" as const } : b,
+      ),
+    };
+    expect(searchByName(withDraft, "cala laiya")).toEqual([]);
+    expect(searchByName(withDraft, "bebe")).toEqual([]);
+    expect(lookupFacebookLink(withDraft, "facebook.com/calalaiya").status).not.toBe("exact");
+  });
 
-  it("never serves draft records", () => {
-    for (const b of draftOnly.businesses.filter((b) => !isServable(b))) {
-      expect(searchByName(draftOnly, b.displayName).map((v) => v.id)).not.toContain(b.id);
+  it("serves every admitted real record and matches its page exactly", () => {
+    for (const b of real.businesses) {
+      expect(isServable(b), b.id).toBe(true);
+      const page = real.claims.find((c) => c.id === b.claimIds[0])!;
+      const r = lookupFacebookLink(real, page.value);
+      expect(r.status === "exact" && r.matches[0].business.id, b.id).toBe(b.id);
     }
+  });
+
+  it("finds real resorts by accent- and punctuation-insensitive name", () => {
+    expect(searchByName(real, "arias crib").map((v) => v.id)).toEqual(["arias-crib-laiya"]);
+    expect(searchByName(real, "Bebe's").map((v) => v.id)).toEqual(["bebes-resort"]);
+  });
+
+  it("matches both documented Buracai pages, each to its own claim", () => {
+    const a = lookupFacebookLink(real, "https://web.facebook.com/BuracaiDeLaiyaHotelAndResort/");
+    const b = lookupFacebookLink(real, "facebook.com/buracaidelaiya");
+    expect(a.status === "exact" && a.matches[0].claimId).toBe("CLM-buracai-de-laiya-fb-1");
+    expect(b.status === "exact" && b.matches[0].claimId).toBe("CLM-buracai-de-laiya-fb-2");
   });
 
   it("finds sample resorts by partial, case- and accent-insensitive name", () => {

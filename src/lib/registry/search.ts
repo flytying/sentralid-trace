@@ -8,6 +8,7 @@ export function fold(s: string): string {
     .normalize("NFKD")
     .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
+    .replace(/['’`]/g, "")
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 }

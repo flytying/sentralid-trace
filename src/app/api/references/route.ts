@@ -15,5 +15,5 @@ export function GET(req: NextRequest) {
     return NextResponse.json({ registryVersion: reg.version, lookup: lookupFacebookLink(reg, url.slice(0, 500)) });
   }
   const q = (params.get("q") ?? "").slice(0, 80);
-  return NextResponse.json({ registryVersion: reg.version, items: searchByName(reg, q, 12) });
+  return NextResponse.json({ registryVersion: reg.version, items: searchByName(reg, q, 20) });
 }

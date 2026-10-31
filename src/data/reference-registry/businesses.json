@@ -4,7 +4,7 @@
     "displayName": "Acuatico Beach Resort and Hotel",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
@@ -13,7 +13,7 @@
     "claimIds": [
       "CLM-acuatico-beach-resort-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
@@ -21,7 +21,7 @@
     "displayName": "Acuaverde Beach Resort and Hotel",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
@@ -30,58 +30,135 @@
     "claimIds": [
       "CLM-acuaverde-beach-resort-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
-    "id": "sabangan-beach-resort",
-    "displayName": "Sabangan Beach Resort",
+    "id": "altogrand-beach-house",
+    "displayName": "Altogrand Beach House",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-SABANGAN"
+      "SRC-LGU-SJB-FBDIR"
     ],
     "claimIds": [
-      "CLM-sabangan-beach-resort-fb-1"
+      "CLM-altogrand-beach-house-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
-    "id": "cala-laiya",
-    "displayName": "Cala Laiya",
+    "id": "arias-crib-laiya",
+    "displayName": "Aria's Crib - Laiya Beach House",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-CALALAIYA"
+      "SRC-LGU-SJB-FBDIR"
     ],
     "claimIds": [
-      "CLM-cala-laiya-fb-1"
+      "CLM-arias-crib-laiya-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
-    "id": "the-henry-resort-laiya",
-    "displayName": "The Henry Resort Taramindu Laiya",
+    "id": "avc-kubo-transient-house",
+    "displayName": "AVC Kubo Transient House",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-HENRY"
+      "SRC-LGU-SJB-FBDIR"
     ],
     "claimIds": [
-      "CLM-the-henry-resort-laiya-fb-1"
+      "CLM-avc-kubo-transient-house-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
+    "synthetic": false
+  },
+  {
+    "id": "beach-hive-seafront",
+    "displayName": "Beach Hive Seafront",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "admitted",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-beach-hive-seafront-fb-1"
+    ],
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
+    "synthetic": false
+  },
+  {
+    "id": "beatajara-house-rental",
+    "displayName": "Beatajara House Rental",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "admitted",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-beatajara-house-rental-fb-1"
+    ],
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
+    "synthetic": false
+  },
+  {
+    "id": "bebes-resort",
+    "displayName": "Bebe's Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "admitted",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-bebes-resort-fb-1"
+    ],
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
+    "synthetic": false
+  },
+  {
+    "id": "biga-cottages",
+    "displayName": "BigA Cottages",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "admitted",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-biga-cottages-fb-1"
+    ],
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
+    "synthetic": false
+  },
+  {
+    "id": "blue-coral-beach-resort",
+    "displayName": "Blue Coral Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "admitted",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-blue-coral-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
@@ -89,7 +166,7 @@
     "displayName": "Buracai de Laiya Hotel & Resort",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
@@ -99,103 +176,40 @@
       "CLM-buracai-de-laiya-fb-1",
       "CLM-buracai-de-laiya-fb-2"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
-    "id": "la-luz-beach-resort",
-    "displayName": "La Luz Beach Resort & Spa",
+    "id": "burgis-mangrove-beach-resort",
+    "displayName": "Burgis Mangrove Beach Resort",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR"
     ],
     "claimIds": [
-      "CLM-la-luz-beach-resort-fb-1"
+      "CLM-burgis-mangrove-beach-resort-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   },
   {
-    "id": "punta-aguila-resort",
-    "displayName": "Punta Aguila Resort and Hotel",
+    "id": "cala-laiya",
+    "displayName": "Cala Laiya",
     "province": "Batangas",
     "locality": "San Juan",
-    "registryStatus": "draft",
+    "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-CALALAIYA"
     ],
     "claimIds": [
-      "CLM-punta-aguila-resort-fb-1"
+      "CLM-cala-laiya-fb-1"
     ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
-    "synthetic": false
-  },
-  {
-    "id": "one-laiya-beach-resort",
-    "displayName": "One Laiya Beach Resort",
-    "province": "Batangas",
-    "locality": "San Juan",
-    "registryStatus": "draft",
-    "reviewedAt": "2026-10-31",
-    "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
-    ],
-    "claimIds": [
-      "CLM-one-laiya-beach-resort-fb-1"
-    ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
-    "synthetic": false
-  },
-  {
-    "id": "llamar-beach-resort",
-    "displayName": "Llamar Beach Resort",
-    "province": "Batangas",
-    "locality": "San Juan",
-    "registryStatus": "draft",
-    "reviewedAt": "2026-10-31",
-    "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
-    ],
-    "claimIds": [
-      "CLM-llamar-beach-resort-fb-1"
-    ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
-    "synthetic": false
-  },
-  {
-    "id": "virgin-beach-resort",
-    "displayName": "Virgin Beach Resort",
-    "province": "Batangas",
-    "locality": "San Juan",
-    "registryStatus": "draft",
-    "reviewedAt": "2026-10-31",
-    "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
-    ],
-    "claimIds": [
-      "CLM-virgin-beach-resort-fb-1"
-    ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
-    "synthetic": false
-  },
-  {
-    "id": "sigayan-bay-beach-resort",
-    "displayName": "Sigayan Bay Beach Resort",
-    "province": "Batangas",
-    "locality": "San Juan",
-    "registryStatus": "draft",
-    "reviewedAt": "2026-10-31",
-    "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
-    ],
-    "claimIds": [
-      "CLM-sigayan-bay-beach-resort-fb-1"
-    ],
-    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
   }
 ]
