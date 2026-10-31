@@ -44,3 +44,6 @@ next-env.d.ts
 
 # local design reference (prototype export)
 /.design-ref/
+
+# rendered sample HTML (eval/samples-src/render.mjs)
+/eval/samples-src/.build/

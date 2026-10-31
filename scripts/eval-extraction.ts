@@ -10,6 +10,7 @@ const SETS: Record<string, { page?: string; chats: string[] }> = {
   A: { page: "A-page-lumencove-cropped.png", chats: ["A-chat-lumencove-gcash.png"] },
   B: { page: "B-page-bahaydagat-lookalike.png", chats: ["B-chat-bahaydagat-deposit.png", "B-chat-bahaydagat-number.png"] },
   C: { chats: ["C-chat-islaverde-cropped.png"] },
+  D: { page: "D-page-mirasolcove.png", chats: ["D-chat-mirasolcove-deposit.png"] },
 };
 
 async function main() {
