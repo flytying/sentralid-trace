@@ -110,53 +110,33 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
         <p className={styles.sub}>{next.whyItMatters}</p>
       </div>
 
-      {next.hypotheses && (
-        <section className={styles.possible} data-aside-anchor="" aria-label="Two possible explanations">
-          <span className={styles.sectionLabel}>Two possible explanations</span>
-          <div className={styles.possRow}>
-            <p className={styles.poss}>
-              <span className={styles.badge} data-k="a" aria-label="Possibility A">A</span>
-              <span>{next.hypotheses.a}</span>
-            </p>
-            <span className={styles.or} aria-hidden="true">or</span>
-            <p className={styles.poss}>
-              <span className={styles.badge} data-k="b" aria-label="Possibility B">B</span>
-              <span>{next.hypotheses.b}</span>
-            </p>
-          </div>
-        </section>
-      )}
-
-      <section className={`card ${styles.checkMain}`} aria-labelledby={`${ids}-safe`}>
+      <section className={`card ${styles.checkMain}`} data-aside-anchor="" aria-labelledby={`${ids}-do`}>
         <div className={styles.checkIntro}>
-          <span className={styles.nextEyebrowDark} id={`${ids}-safe`}>
-            <ShieldCheck size={15} aria-hidden="true" /> Your check · the safest one we can suggest
+          <span className={styles.stepEyebrow} id={`${ids}-do`}>
+            <ShieldCheck size={15} aria-hidden="true" /> What to do
           </span>
-          <strong className={styles.checkLabel}>{check.label}</strong>
-          <p className={styles.explain}>{check.how}</p>
-          <div className={styles.documented}>
-            <span className={styles.compareLabel}>{report?.documentedLabel ?? "Pages on file"}</span>
-            {check.documented.map((d) => (
-              <span key={d} className="mono">
-                {d}
-              </span>
-            ))}
+          <p className={styles.checkHow}>{check.how}</p>
+          <div className={styles.onFile}>
+            <span className={styles.onFileLabel}>{report?.documentedLabel ?? "Pages on file"}</span>
+            <span className={styles.onFileChips}>
+              {check.documented.map((d) => (
+                <span key={d} className={`mono ${styles.fileChip}`}>
+                  {d}
+                </span>
+              ))}
+            </span>
           </div>
           {check.sources.map((s) =>
             synthetic ? (
               <span key={s.id} className={styles.help}>
-                From: {s.title} <span className="mono">({s.url} — made up, doesn&apos;t open)</span>
+                Source: {s.title} · made up, doesn&apos;t open
               </span>
             ) : (
               <a key={s.id} className={styles.sourceUrl} href={s.url} target="_blank" rel="noopener noreferrer nofollow">
-                Open the source: {s.title} <ExternalLink size={12} aria-label="opens in a new tab" />
+                Source: {s.title} <ExternalLink size={12} aria-label="opens in a new tab" />
               </a>
             ),
           )}
-          <p className={styles.safety}>
-            <ShieldAlert size={15} aria-hidden="true" />
-            Never pay, share codes, or ask the account you&apos;re unsure about for proof while you check.
-          </p>
         </div>
         <form
           className={styles.checkForm}
@@ -166,7 +146,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
           }}
           noValidate
         >
-          <span className={styles.label}>{report?.prompt ?? "Add what you found"}</span>
+          <span className={styles.formLabel}>{report?.prompt ?? "Add the page you're talking to"}</span>
 
           {isReport ? (
             <fieldset className={styles.radioSet}>
@@ -213,8 +193,8 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
                         : "Copy the address of the page you're chatting with, from your browser or the Facebook app's “Copy link”."}
                   </span>
                   {sampleLink && !url && (
-                    <button type="button" className={styles.linkBtn} onClick={() => setUrl(sampleLink)}>
-                      Use the sample&apos;s page link ({displayUrl(sampleLink)})
+                    <button type="button" className={styles.sampleChip} onClick={() => setUrl(sampleLink)}>
+                      Use the sample&apos;s link <span className="mono">{displayUrl(sampleLink)}</span>
                     </button>
                   )}
                 </>
@@ -294,36 +274,45 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
             <button type="submit" className="btn btn-primary" disabled={!canSend}>
               {busy ? "Updating your result…" : isReport ? "Add and update my result" : "Compare and update my result"}
             </button>
-            <button type="button" className="btn btn-secondary" onClick={onSkip} disabled={busy}>
+            <button type="button" className={styles.skipBtn} onClick={onSkip} disabled={busy}>
               I can&apos;t check this
             </button>
           </div>
-          <span className={styles.help}>You can add one follow-up per check.</span>
+          <p className={styles.formNote}>
+            <ShieldAlert size={14} aria-hidden="true" />
+            Never pay, share codes, or ask the account you&apos;re unsure about for proof. You can add one follow-up per check.
+          </p>
         </form>
       </section>
 
-      {next.implications && (
-        <section className={styles.meaning} aria-labelledby={`${ids}-meaning`}>
-          <h2 id={`${ids}-meaning`} className={styles.meaningHead}>
-            What each answer would mean
+      {next.hypotheses && (
+        <section className={styles.outcomes} aria-labelledby={`${ids}-out`}>
+          <h2 id={`${ids}-out`} className={styles.outcomesHead}>
+            What the answer tells you
           </h2>
-          <ul>
-            <li>
-              <span className={styles.badge} data-k="a" aria-label="Points to A">A</span>
-              <span>{next.implications.a}</span>
-            </li>
-            <li>
-              <span className={styles.badge} data-k="b" aria-label="Points to B">B</span>
-              <span>{next.implications.b}</span>
-            </li>
-            <li>
-              <span className={styles.badge} data-k="u" aria-label="Still unclear">?</span>
-              <span>{next.implications.unclear}</span>
-            </li>
-          </ul>
+          <div className={styles.outcomeGrid}>
+            {(["a", "b"] as const).map((k) => (
+              <div key={k} className={styles.outcomeCard}>
+                <span className={styles.badge} data-k={k} aria-hidden="true">
+                  {k.toUpperCase()}
+                </span>
+                <div>
+                  <strong>{next.hypotheses![k]}</strong>
+                  {next.implications && <p>{next.implications[k]}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+          {next.implications && (
+            <p className={styles.unclearNote}>
+              <span className={styles.badge} data-k="u" aria-hidden="true">
+                ?
+              </span>
+              {next.implications.unclear}
+            </p>
+          )}
         </section>
       )}
-
 
       <div>
         <button type="button" className={styles.linkBtn} onClick={onBack} disabled={busy}>
