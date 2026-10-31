@@ -1036,6 +1036,13 @@
 .panel > .looked {
   margin-top: 18px;
 }
+/* Closing block: the read box, then the disclaimer, then the actions, each clearly apart. */
+.panel > .disclaimer {
+  margin-top: 10px;
+}
+.panel > .actions {
+  margin-top: 10px;
+}
 .groupHead {
   display: flex;
   flex-direction: column;
@@ -1072,7 +1079,7 @@
 .findingHead {
   width: 100%;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   padding: 14px 16px;
   border: 0;

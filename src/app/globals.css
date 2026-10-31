@@ -170,24 +170,50 @@ main.container {
 }
 
 /* Chips: state is always conveyed by text, never colour alone. */
+/* Status pill: tinted fill, matching hairline and a leading dot in the tone's colour. */
 .chip {
-  font-size: var(--fs-label);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-meta);
   font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 6px;
+  line-height: 1;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
   white-space: nowrap;
+}
+.chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
 }
 .chip-ok {
   color: var(--ok-fg);
   background: var(--ok-bg);
+  border-color: var(--ok-line);
+}
+.chip-ok::before {
+  background: var(--ok-icon);
 }
 .chip-warn {
   color: var(--warn-fg);
   background: var(--warn-bg);
+  border-color: var(--warn-line);
+}
+.chip-warn::before {
+  background: var(--warn-icon);
 }
 .chip-unk {
   color: var(--unk-fg);
   background: var(--unk-bg);
+  border-color: var(--unk-line);
+}
+.chip-unk::before {
+  background: var(--unk-icon);
 }
 
 .eyebrow {
