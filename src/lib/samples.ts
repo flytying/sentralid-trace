@@ -11,7 +11,7 @@ export interface SampleScenario {
   pageUrl?: string;
   pageImage?: string;
   chatImages: string[];
-  /** Demo helper for the follow-up step: the link the (made-up) chat page would show. */
+  /** Demo helper for the follow-up step: the link the demo scenario's chat page would show. */
   followupLink?: string;
 }
 

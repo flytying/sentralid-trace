@@ -45,7 +45,7 @@ Open `.env.local` and fill in two values:
 - `MODEL_API_KEY=`: your Meta Model API key. It stays on the server and is never sent to the browser.
 - `CASE_SEAL_KEY=`: a random secret Trace uses to protect each check in progress. Generate one with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
 
-Check that your key works. This makes two small calls to Meta, the second with a made-up sample screenshot; you should see two `ok` lines.
+Check that your key works. This makes two small calls to Meta, the second with a demo screenshot; you should see two `ok` lines.
 
 ```bash
 npm run smoke:meta
@@ -60,7 +60,7 @@ npm run build && npm start      # production build on http://localhost:3000
 
 ### Try it
 
-1. Open http://localhost:3000 and choose **Sample A** under *Try a sample*. The samples use made-up resorts and screenshots, but Meta reads them live, just like your own.
+1. Open http://localhost:3000 and choose **Demo scenario A** under *Try a sample*. The demo scenarios use fictional resorts and screenshots, but Meta reads them live, just like your own.
 2. Tick the privacy box and click **Check this booking**. Muse Spark reads both screenshots in about 5 seconds. The result is *We can't confirm this booking channel yet*, because the page screenshot is cropped and doesn't show which page it is.
 3. Click **Let's check**. Trace suggests comparing the page's address with the pages listed on the resort's own website. Click **Use the sample's link**, then **Compare and update my result**.
 4. The page result changes from *Can't tell* to *Matches our record*. Who is sending the messages, and whose GCash account it is, stay open.
@@ -72,7 +72,7 @@ npm run build && npm start      # production build on http://localhost:3000
 
 ### Is it really live?
 
-Yes. There's no replay mode and no stored answers. Every screenshot, including the samples, goes to Meta. If Meta is unavailable, you see an error, never a made-up result. A check that uses only a pasted link doesn't need the AI at all; the app tells you so, and it never opens the link.
+Yes. There's no replay mode and no stored answers. Every screenshot, including the samples, goes to Meta. If Meta is unavailable, you see an error, never a guessed result. A check that uses only a pasted link doesn't need the AI at all; the app tells you so, and it never opens the link.
 
 ## How a check works
 
@@ -98,14 +98,14 @@ The overall result is always one of three: *No conflict found in what we could c
 
 Phone numbers and emails come only from the resort's own listed Facebook page, never from a lookalike. A record backs up the resort's page and published contacts. It says nothing about who sends a chat, any booking agent, or any payment account. `npm run registry:gate` confirms at least 10 reviewed real records are in place.
 
-The sample resorts (Lumen Cove, Bahay Dagat, Isla Verde and Mirasol Cove) are made up. They live in a separate file, use `.example` web addresses, and are never counted as real.
+The sample resorts (Lumen Cove, Bahay Dagat, Isla Verde and Mirasol Cove) are fictional. They live in a separate file, use `.example` web addresses, and are never counted as real.
 
 ## Safety and privacy
 
 - **Screenshots can't give the AI orders.** The AI is told that screenshot text is information only. Its answers must follow a fixed format, and Trace checks them again before using them. Anything unexpected is rejected: after one retry, you get an error.
 - **Only the page's own address counts.** Trace compares the address you pasted, or the one shown in the browser bar of a page screenshot. Links written inside chats, bios or posts are listed as "mentioned" and never count as a match. If one screenshot shows two different page addresses, Trace trusts neither.
 - **The AI can't pass on a scammer's contact details.** Muse Spark words the suggested next check, but Trace rejects that wording if it includes a phone or account number, an @handle, an email, a link, or words like "official", "verified", "safe to pay" or "scam". The check card only ever shows contact details from Trace's own records.
-- **Tested against attacks.** `eval/adversarial/` holds made-up hostile screenshots: hidden instructions to the AI in a page bio, a fake "verified" badge next to the real link, a chat claiming to be the "official GCash", and a chat whose sender name tells the AI to send the user to a phone number and call it safe to pay. In live runs (`npm run eval:adversarial`), none of them produced a false match, a "no conflict" result, or a planted number on the check card. The planted number was even flagged as not matching the one on file.
+- **Tested against attacks.** `eval/adversarial/` holds fictional hostile screenshots: hidden instructions to the AI in a page bio, a fake "verified" badge next to the real link, a chat claiming to be the "official GCash", and a chat whose sender name tells the AI to send the user to a phone number and call it safe to pay. In live runs (`npm run eval:adversarial`), none of them produced a false match, a "no conflict" result, or a planted number on the check card. The planted number was even flagged as not matching the one on file.
 - **Nothing is fetched.** Pasted links are read as text, never opened. The only outside service Trace contacts is `https://api.meta.ai/v1`, and the server won't start with any other address or model.
 - **Privacy.** You're asked to cover private details and agree before any screenshot is sent. Images are shrunk in your browser, handled in memory, and never stored. Account numbers are partly hidden. Logs record only timings, counts and the result, never what your screenshots say.
 - **Size limits.** Uploads are capped at 4.4 MB, counted from the data actually received, so the cap can't be dodged. Each image is checked to be a real PNG, JPEG or WebP of a sensible size.
@@ -170,7 +170,7 @@ src/lib/meta/                  Meta API client and screenshot reading
 src/lib/verify/                the list of safe checks, the AI planner and its checks, before-and-after
 src/lib/registry/              record format, loading, admission rules, search
 src/lib/case/                  first check and follow-up, encrypted check tokens
-src/data/reference-registry/   real records, plus the made-up sample resorts
+src/data/reference-registry/   real records, plus the fictional demo resorts
 eval/adversarial/              hostile test screenshots (and the HTML they're drawn from)
 eval/samples-src/              generator for the sample screenshots
 docs/                          record audit, live QA report, changes from the original specs
@@ -178,10 +178,10 @@ docs/                          record audit, live QA report, changes from the or
 
 ## Built during the hackathon (27 Oct – 4 Nov 2026)
 
-All code in this repository was written during the event, and the commit history shows how it grew. Before coding, the entrant wrote the business, product and technical specs and built a clickable HTML prototype; the app's visual design comes from that prototype. Neither is in this repo. The sample screenshots are drawn by `eval/samples-src/render.mjs`. Deliberate changes from the original specs are recorded in [docs/spec-changes.md](docs/spec-changes.md): a fourth safe check, a fourth sample, a new kind of source for contact details, and made-up sample resorts.
+All code in this repository was written during the event, and the commit history shows how it grew. Before coding, the entrant wrote the business, product and technical specs and built a clickable HTML prototype; the app's visual design comes from that prototype. Neither is in this repo. The sample screenshots are drawn by `eval/samples-src/render.mjs`. Deliberate changes from the original specs are recorded in [docs/spec-changes.md](docs/spec-changes.md): a fourth safe check, a fourth sample, a new kind of source for contact details, and fictional demo resorts.
 
 - **Phase 1, Foundation:** app shell and design, a Meta API client that refuses to run when misconfigured, a live smoke test, encrypted check tokens.
-- **Phase 2, Records:** the record format and admission rules, 13 reviewed real resorts, a strict Facebook link parser, search, the resort picker and the "on file" panel, labelled made-up samples.
+- **Phase 2, Records:** the record format and admission rules, 13 reviewed real resorts, a strict Facebook link parser, search, the resort picker and the "on file" panel, labelled demo scenarios.
 - **Phase 3, Live checks:** the upload form with consent, image shrinking in the browser and image checks on the server, Muse Spark screenshot reading, the comparison rules, findings with their evidence, honest progress and error screens.
 - **Phase 4, Next check:** the list of safe checks, two competing explanations, an AI-chosen check that Trace double-checks (with a standard fallback), one follow-up, the before-and-after view.
 - **Phase 5, Hardening:** protection against mentioned links and conflicting addresses, hostile test screenshots, rate limiting, security headers, failure tests, accessibility fixes, a first round of live repeat runs on the three samples that existed then (repeated with all four in Phase 7).
@@ -192,7 +192,7 @@ All code in this repository was written during the event, and the commit history
 
 Next.js, React, Zod, lucide-react (ISC licence) and the Geist fonts (SIL Open Font License 1.1). The fonts are included in `src/app/fonts/` with their licence, so the app builds without an internet connection. Development tools: Vitest, tsx, ESLint.
 
-Resort names and Facebook links come from the San Juan, Batangas Municipal Tourism Office list and the resorts' own websites. No photos, logos or page content from them are included. Sample and test screenshots are made up and marked as such.
+Resort names and Facebook links come from the San Juan, Batangas Municipal Tourism Office list and the resorts' own websites. No photos, logos or page content from them are included. Sample and test screenshots are fictional and marked as such.
 
 ## Limitations
 

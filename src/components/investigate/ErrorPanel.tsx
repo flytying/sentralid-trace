@@ -32,7 +32,7 @@ export function ErrorPanel({ error, onRetry, onEdit, onRestart }: { error: Clien
           <strong>{TITLE[error.code] ?? "Something in what you sent needs fixing"}</strong>
           <p>{error.message}</p>
           <p className={styles.help}>
-            We never show made-up results when something goes wrong. Code <span className="mono">{error.code}</span>
+            We never guess a result when something goes wrong. Code <span className="mono">{error.code}</span>
             {error.requestId && <> · ref <span className="mono">{error.requestId}</span></>}
           </p>
         </div>

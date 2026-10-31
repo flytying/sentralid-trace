@@ -36,7 +36,7 @@ export function NextCheckCard({ next, onStart, synthetic }: { next: NextCheck; o
         </button>
         <span className={styles.nextMeta}>
           {next.selectedBy === "model" ? "Chosen with Meta AI from our list of safe checks" : "Chosen by our rules from our list of safe checks"}
-          {synthetic ? " · made-up sample" : ""}
+          {synthetic ? " · demo scenario" : ""}
         </span>
       </div>
     </div>
@@ -103,7 +103,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
   return (
     <div className={`${styles.panel} stagger`}>
       <div className={styles.headBlock}>
-        <span className={styles.eyebrowMuted}>One thing to check{synthetic ? " · made-up sample" : ""}</span>
+        <span className={styles.eyebrowMuted}>One thing to check{synthetic ? " · demo scenario" : ""}</span>
         <h1 className={styles.h1} tabIndex={-1}>
           {next.question}
         </h1>
@@ -129,7 +129,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
           {check.sources.map((s) =>
             synthetic ? (
               <span key={s.id} className={styles.help}>
-                Source: {s.title} · made up, doesn&apos;t open
+                Source: {s.title} · demo source, doesn&apos;t open
               </span>
             ) : (
               <a key={s.id} className={styles.sourceUrl} href={s.url} target="_blank" rel="noopener noreferrer nofollow">

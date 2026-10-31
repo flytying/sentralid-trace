@@ -20,6 +20,7 @@ const eslintConfig = [
       "next-env.d.ts",
       ".design-ref/**",
       ".next-qa/**",
+      "private/**",
     ],
   },
 ];

@@ -9,7 +9,7 @@ The specs have since been reissued with these changes folded in, as **BRD v1.4, 
 | 1 | TDD §5.3 allowed catalog; VERIFY-01 | Fourth safe check: `MESSAGE_FROM_LISTED_PAGE` |
 | 2 | TDD §3 `SourceKind`; registry admission | New source kind `listed_facebook_page`, for contacts only |
 | 3 | BRD §9.1; PRD §10.1, §5 home page, release gates | Four sample scenarios, not three |
-| 4 | BRD §9.1 | Samples use made-up resorts, not real resort records |
+| 4 | BRD §9.1 | Samples use fictional resorts, not real resort records |
 
 ## 1. Fourth safe check: `MESSAGE_FROM_LISTED_PAGE`
 
@@ -78,11 +78,11 @@ It shows claim-scoped trust directly: the page matching does not settle the send
 
 **Release gate now:** four scenarios × five production repeats. Latest run: **20/20** ([QA report](qa/repeat-runs-2026-10-31.md)).
 
-## 4. Samples use made-up resorts
+## 4. Samples use fictional resorts
 
 **Amends** BRD §9.1, which says "Samples use real, source-backed resort reference records but any impersonator and transaction data must be fictional".
 
-**Changed to:** all four samples use made-up resorts in a separate sample registry (`src/data/reference-registry/fixtures/samples.json`), with `.example` sources and watermarked screenshots. Real records live only in the real registry.
+**Changed to:** all four samples use fictional resorts in a separate sample registry (`src/data/reference-registry/fixtures/samples.json`), with `.example` sources and watermarked screenshots. Real records live only in the real registry.
 
 **Why.** Three of the four samples show something going wrong:
 - a lookalike page

@@ -51,7 +51,7 @@ export default function Home() {
               </span>
               <span className={styles.mockName}>
                 <strong>Bahay Dagat Resort</strong>
-                <span>Moalboal, Cebu · made-up example</span>
+                <span>Moalboal, Cebu · demo scenario</span>
               </span>
             </div>
             <div className={styles.mockAlert}>
@@ -114,16 +114,16 @@ export default function Home() {
       <section className={styles.steps} aria-labelledby="samples">
         <div className={styles.stepsHead}>
           <span className="eyebrow">Try a sample</span>
-          <h2 id="samples">See it work on a made-up case</h2>
+          <h2 id="samples">See it work on a demo scenario</h2>
           <p className={styles.samplesNote}>
-            These resorts and screenshots are invented for the demo. Samples still run live analysis.
+            These resorts and screenshots are fictional, created for the demo. Samples still run live analysis.
           </p>
         </div>
         <ul className={styles.sampleGrid}>
           {Object.values(SAMPLES).map((s) => (
             <li key={s.key}>
               <Link href={`/investigate?sample=${s.key}`} className={`card ${styles.sample}`}>
-                <span className={styles.sampleKey}>Sample {s.key} · made up</span>
+                <span className={styles.sampleKey}>Demo scenario {s.key}</span>
                 <strong>{s.title}</strong>
                 <span>{s.summary}</span>
                 <span className={styles.sampleCta}>

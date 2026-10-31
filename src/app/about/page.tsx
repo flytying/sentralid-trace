@@ -47,7 +47,7 @@ export default function AboutPage() {
           For each resort, we record its Facebook page only when a separate, identifiable source — such as a local
           tourism office directory or the resort&apos;s own website — links to that exact page. We note the source, how
           we checked it, and when. A record supports only that page link; it says nothing about chat senders, booking
-          agents or payment accounts. The sample cases on this site use made-up resorts and are labelled as such.
+          agents or payment accounts. The sample cases on this site are demo scenarios with fictional resorts, and are labelled as such.
         </p>
       </section>
 

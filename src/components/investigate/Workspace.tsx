@@ -69,7 +69,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
     };
   }, [view]);
 
-  // A sample scenario preselects its made-up resort and loads its made-up screenshots.
+  // A sample scenario preselects its fictional resort and loads its demo screenshots.
   useEffect(() => {
     if (!sample) return;
     let cancelled = false;
@@ -209,7 +209,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
     <div className={styles.workspace}>
       <div className={styles.topBar}>
         <div className={styles.topTitle}>
-          <span className={styles.eyebrowMuted}>{sample ? `Sample ${sample.key} · made-up example` : "Booking check"}</span>
+          <span className={styles.eyebrowMuted}>{sample ? `Demo scenario ${sample.key}` : "Booking check"}</span>
           <span className={styles.caseTitle}>{title}</span>
         </div>
         <button type="button" className={styles.smallBtn} onClick={restart}>

@@ -144,7 +144,7 @@ export function ResortPicker({ samples, onSelect }: Props) {
 
         {!isLink && items && (
           <div className={`card ${styles.list}`}>
-            <div className={styles.listHead}>{trimmed ? "Matching resorts on file" : samples ? "Sample resorts (made up)" : "Resorts on file"}</div>
+            <div className={styles.listHead}>{trimmed ? "Matching resorts on file" : samples ? "Demo scenario resorts" : "Resorts on file"}</div>
             {items.map((r) => (
               <ResortRow
                 key={r.id}
@@ -189,7 +189,7 @@ function ResortRow({ r, fbLine, cta, onClick }: { r: ReferenceView; fbLine?: str
       <span className={styles.rowMain}>
         <span className={styles.rowName}>
           {r.displayName} <span className={styles.rowLoc}>· {r.locality}, {r.province}</span>
-          {r.synthetic && <span className="chip chip-unk" style={{ marginLeft: 6 }}>Made-up sample</span>}
+          {r.synthetic && <span className="chip chip-unk" style={{ marginLeft: 6 }}>Demo scenario</span>}
         </span>
         {fbLine && <span className={`mono ${styles.rowFb}`}>{fbLine}</span>}
         {r.reviewDue && <span className={styles.recheck}>Due for a recheck · last checked {formatDate(r.reviewedAt)}</span>}

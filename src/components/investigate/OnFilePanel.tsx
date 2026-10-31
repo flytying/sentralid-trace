@@ -45,7 +45,7 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
   return (
     <aside className={`card ${styles.side}`} aria-label="Resort record">
       <div className={styles.sideHead}>
-        <span className={styles.sideEyebrow}>On file{r.synthetic ? " · made-up sample" : ""}</span>
+        <span className={styles.sideEyebrow}>On file{r.synthetic ? " · demo scenario" : ""}</span>
         <button type="button" className={styles.linkBtn} onClick={onChange}>
           Change
         </button>
@@ -129,7 +129,7 @@ export function RecordDetails({ r }: { r: ReferenceView }) {
                 <span className={styles.fileText}>
                   <span className={styles.srcName}>{k.label}</span>
                   <span className={styles.fileMeta}>
-                    {r.synthetic ? "made up · doesn't open" : hostOf(s.url)} · checked {formatDate(s.reviewedAt)}
+                    {r.synthetic ? "demo source · doesn't open" : hostOf(s.url)} · checked {formatDate(s.reviewedAt)}
                   </span>
                 </span>
                 {!r.synthetic && <ExternalLink size={14} className={styles.srcOut} aria-hidden="true" />}

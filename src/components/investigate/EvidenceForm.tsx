@@ -110,7 +110,7 @@ export function EvidenceForm({ evidence, onChange, onSubmit, onBack, isSample }:
       {isSample && (
         <p className={styles.sampleNote}>
           <Info size={17} aria-hidden="true" style={{ flex: "none", marginTop: 2 }} />
-          <span>This sample is filled in with made-up screenshots. They&apos;ll be read live by Meta AI, just like your own.</span>
+          <span>This demo scenario is filled in with sample screenshots of a fictional resort. They&apos;ll be read live by Meta AI, just like your own.</span>
         </p>
       )}
 
@@ -290,7 +290,7 @@ function ShotRow({
   onDown?: () => void;
 }) {
   const [viewing, setViewing] = useState(false);
-  const detail = `${shot.sample ? "Made-up sample · " : ""}${shot.name} · ${Math.round(shot.file.size / 1024)} KB`;
+  const detail = `${shot.sample ? "Demo scenario · " : ""}${shot.name} · ${Math.round(shot.file.size / 1024)} KB`;
   return (
     <div className={styles.shot}>
       <button type="button" className={styles.thumbBtn} onClick={() => setViewing(true)} aria-label={`View ${caption} full size`}>
