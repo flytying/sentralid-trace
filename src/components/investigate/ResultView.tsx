@@ -55,6 +55,51 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
   const changes = reassessment?.changes ?? [];
   const worse = (c: (typeof changes)[number]) => c.after?.state === "different_from_reference";
 
+  // What the user added in step 4, as shown back to them.
+  const added =
+    reassessment?.followup.userReport ??
+    (reassessment?.observations
+      .filter((o) => reassessment.followup.evidenceIds.includes(o.id) && o.value)
+      .map((o) => o.value)
+      .join(" · ") ||
+      null);
+  const secs = (ms: number | null | undefined) => (ms ? `${(ms / 1000).toFixed(1)} s` : null);
+  const shots = analysis.inputs.filter((i) => i.kind === "page_screenshot" || i.kind === "chat_screenshot").length;
+  const time = (d: Date | null) => (d ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" }) : "—");
+  const history: { step: string; title: string; detail: string; at: Date | null }[] = [
+    {
+      step: "Step 3",
+      title: `First check · ${OUTCOME_COPY[analysis.outcome].label}`,
+      detail: analysis.inferencePerformed
+        ? `${shots} screenshot${shots === 1 ? "" : "s"} read live by Meta AI${secs(analysis.inference?.latencyMs) ? ` in ${secs(analysis.inference?.latencyMs)}` : ""}, then compared with our records by fixed rules`
+        : "Link compared with our records · no AI used",
+      at: checkedAt.analyzed,
+    },
+    {
+      step: "Step 4",
+      title: analysis.nextCheck.check ? `Check suggested · ${analysis.nextCheck.check.label}` : "No safe check available",
+      detail:
+        analysis.nextCheck.selectedBy === "model"
+          ? `Chosen with Meta AI from our list of safe checks${secs(analysis.planner?.latencyMs) ? ` in ${secs(analysis.planner?.latencyMs)}` : ""}`
+          : "Chosen by fixed rules",
+      at: checkedAt.analyzed,
+    },
+    {
+      step: "Step 4",
+      title: skipped ? "You skipped the check" : `You added · ${reassessment?.followup.inputLabel ?? "—"}`,
+      detail: skipped
+        ? "Nothing new was added"
+        : `${added ?? "—"}${reassessment?.inference ? ` · read live by Meta AI in ${secs(reassessment.inference.latencyMs)}` : " · no AI used"}`,
+      at: checkedAt.followup,
+    },
+    {
+      step: "Step 5",
+      title: `Updated result · ${copy.label}`,
+      detail: skipped || changes.length === 0 ? "No findings changed" : `${changes.length} finding${changes.length === 1 ? "" : "s"} changed`,
+      at: checkedAt.followup,
+    },
+  ];
+
   return (
     <div className={`${styles.panel} stagger`}>
       <div className={styles.headBlock}>
@@ -115,14 +160,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
           <div className={`card ${styles.sectionCard} ${styles.compare}`}>
             <div>
               <span className={styles.compareLabel}>What you added</span>
-              <span className={styles.compareValue}>
-                {reassessment.followup.userReport ??
-                  (reassessment.observations
-                    .filter((o) => reassessment.followup.evidenceIds.includes(o.id) && o.value)
-                    .map((o) => o.value)
-                    .join(" · ") ||
-                    "—")}
-              </span>
+              <span className={styles.compareValue}>{added ?? "—"}</span>
               <span className={styles.help}>
                 {reassessment.followup.inputLabel}
                 {reassessment.inference ? ` · read live by Meta AI in ${(reassessment.inference.latencyMs / 1000).toFixed(1)}s` : " · no AI used"}
@@ -182,15 +220,16 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
           Check history
         </h2>
         <ol className={`card ${styles.rowCard} ${styles.history}`}>
-          <li>
-            <span className="mono">{checkedAt.analyzed.toLocaleTimeString()}</span> First check:{" "}
-            {analysis.inferencePerformed ? `${analysis.inputs.length} input(s), screenshots read live by Meta AI` : "link compared, no AI used"} →{" "}
-            {OUTCOME_COPY[analysis.outcome].label}
-          </li>
-          <li>
-            <span className="mono">{checkedAt.followup ? checkedAt.followup.toLocaleTimeString() : "—"}</span>{" "}
-            {skipped ? "Check skipped" : `Follow-up: ${reassessment?.followup.inputLabel.toLowerCase()}`} → {copy.label}
-          </li>
+          {history.map((h, n) => (
+            <li key={n}>
+              <span className={styles.histStep}>{h.step}</span>
+              <span className={styles.histText}>
+                <strong>{h.title}</strong>
+                <span>{h.detail}</span>
+              </span>
+              <time className="mono">{time(h.at)}</time>
+            </li>
+          ))}
         </ol>
       </section>
 
