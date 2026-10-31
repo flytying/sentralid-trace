@@ -41,6 +41,32 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
   const [checkError, setCheckError] = useState<string | null>(null);
   const [times, setTimes] = useState<{ analyzed: Date; followup: Date | null }>({ analyzed: new Date(), followup: null });
   const mainRef = useRef<HTMLDivElement>(null);
+  const [asideOffset, setAsideOffset] = useState(0);
+
+  // Line the side panel up with the first card in the main column, below each step's heading.
+  useEffect(() => {
+    const main = mainRef.current;
+    if (!main) return;
+    const update = () => {
+      const card = main.querySelector<HTMLElement>(".card");
+      const sideBySide = window.matchMedia("(min-width: 901px)").matches;
+      // offsetTop ignores the fade-in transform, so the result doesn't depend on animation timing.
+      const pageTop = (el: HTMLElement | null) => {
+        let y = 0;
+        for (; el; el = el.offsetParent as HTMLElement | null) y += el.offsetTop;
+        return y;
+      };
+      setAsideOffset(card && sideBySide ? pageTop(card) - pageTop(main) : 0);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(main);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [view]);
 
   // A sample scenario preselects its made-up resort and loads its made-up screenshots.
   useEffect(() => {
@@ -249,7 +275,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
           )}
         </div>
         {selection && view !== "business" && (
-          <div className={styles.aside}>
+          <div className={styles.aside} style={{ marginTop: asideOffset }}>
             <OnFilePanel selection={selection} onChange={() => setView("business")} />
           </div>
         )}
