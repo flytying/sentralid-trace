@@ -50,3 +50,6 @@ next-env.d.ts
 
 # entrant-only notes (e.g. the demo video script), kept out of the public repo
 /private/
+
+# local editor / agent tooling
+/.claude/
