@@ -49,7 +49,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
     if (!main) return;
     const update = () => {
       const card = main.querySelector<HTMLElement>("[data-aside-anchor]") ?? main.querySelector<HTMLElement>(".card");
-      const sideBySide = window.matchMedia("(min-width: 901px)").matches;
+      const sideBySide = window.matchMedia("(min-width: 1001px)").matches;
       // offsetTop ignores the fade-in transform, so the result doesn't depend on animation timing.
       const pageTop = (el: HTMLElement | null) => {
         let y = 0;

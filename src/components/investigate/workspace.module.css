@@ -145,24 +145,26 @@
 .columns {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 32px;
   align-items: flex-start;
 }
 .main {
-  flex: 3 1 560px;
+  flex: 1 1 560px;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 .aside {
-  flex: 1 1 300px;
+  flex: 0 0 360px;
   min-width: 0;
   position: sticky;
   top: 76px;
 }
-@media (max-width: 900px) {
+/* Below this width the side panel stacks under the main column at full width. */
+@media (max-width: 1000px) {
   .aside {
+    flex-basis: 100%;
     position: static;
   }
 }
@@ -171,9 +173,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-width: 680px;
   width: 100%;
-  margin: 0 auto;
 }
 .headBlock {
   display: flex;
