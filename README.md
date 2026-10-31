@@ -184,7 +184,7 @@ All code in this repository was written during the event, and the commit history
 - **Phase 2, Records:** the record format and admission rules, 13 reviewed real resorts, a strict Facebook link parser, search, the resort picker and the "on file" panel, labelled made-up samples.
 - **Phase 3, Live checks:** the upload form with consent, image shrinking in the browser and image checks on the server, Muse Spark screenshot reading, the comparison rules, findings with their evidence, honest progress and error screens.
 - **Phase 4, Next check:** the list of safe checks, two competing explanations, an AI-chosen check that Trace double-checks (with a standard fallback), one follow-up, the before-and-after view.
-- **Phase 5, Hardening:** protection against mentioned links and conflicting addresses, hostile test screenshots, rate limiting, security headers, failure tests, accessibility fixes, 3 samples × 5 live runs.
+- **Phase 5, Hardening:** protection against mentioned links and conflicting addresses, hostile test screenshots, rate limiting, security headers, failure tests, accessibility fixes, a first round of live repeat runs on the three samples that existed then (repeated with all four in Phase 7).
 - **Phase 6, Submission:** this README, a fresh-download test, the demo video plan.
 - **Phase 7, Depth and polish:** phone numbers and emails from each resort's listed page; the "message the resort" check and Sample D to show it; realistic sample screenshots; a progress screen that walks through the real steps; redesigned screens; a full-size screenshot viewer; consistent text sizes and a colour-contrast pass; 4 samples × 5 live runs (20 out of 20).
 
