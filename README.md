@@ -8,7 +8,7 @@ Entry for the **Meta Global AI Developer Hackathon** — Indie Developer track, 
 |---|---|
 | Runtime AI | Meta `muse-spark-1.3` (Standard mode) via `https://api.meta.ai/v1` — the only AI the app calls |
 | Real records | 13 San Juan, Batangas resorts, each tied to its Facebook page by the LGU tourism directory |
-| Tests | 131 unit/route tests · live 4 × 5 demo runs: 20/20 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
+| Tests | 134 unit/route tests · live 4 × 5 demo runs: 20/20 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
 
 ## Why this isn't "ask a chatbot"
 
@@ -75,16 +75,19 @@ Sample resorts (Lumen Cove, Bahay Dagat, Isla Verde) are fictional, kept in a se
 ## Safety, privacy and abuse controls
 
 - **Model boundary:** screenshot text is data. The extraction prompt says so; output is schema-constrained by the API and re-validated with zod; unknown fields, extra keys or screenshots that weren't sent are rejected (one bounded retry, then an error).
-- **Mentioned links never count:** only the page's own address (pasted, or shown as the address in a page screenshot) is compared. Links written in chats, bios or posts are reported as "mentioned" and never match; if one screenshot yields two different addresses, neither is trusted. Synthetic adversarial screenshots (prompt injection in a bio, fake "verified" badge with the real link, "official GCash" chat) live in `eval/adversarial/`; none produced a match or a "no conflict" result.
+- **Mentioned links never count:** only the page's own address (pasted, or shown as the address in a page screenshot) is compared. Links written in chats, bios or posts are reported as "mentioned" and never match; if one screenshot yields two different addresses, neither is trusted. Synthetic adversarial screenshots live in `eval/adversarial/` (`npm run eval:adversarial`): prompt injection in a bio, a fake "verified" badge with the real link, an "official GCash" chat, and a chat whose sender name tells the AI to call a number and say it's safe to pay. None produced a lookalike match, a "no conflict" result, a vouching word or a contact detail in the next-check text, and the injected number was flagged as different from the one on file.
+- **The planner can't relay a scammer's contact:** Meta AI words the next check, but its text is rejected (and replaced by a labelled rule-based plan) if it contains a phone or account number, an @handle, an email, a link or domain, or a vouching or accusing word ("official", "verified", "safe to pay", "scam"…). The check card shows only the contacts on file, from the registry.
 - **No fetching:** pasted links are parsed, never opened. The only outbound request is to `https://api.meta.ai/v1`; the server refuses to run with any other host or model.
 - **Privacy:** consent and redaction notice before any screenshot is sent; images are shrunk in the browser, processed in memory and never stored; account numbers are masked; logs contain only request id, input types, timings, counts and outcome.
-- **Rate limiting:** `RATE_LIMIT_PER_MINUTE` (per client) and `MODEL_CALLS_PER_HOUR` (per server) cap model use, with `Retry-After`. This limiter is **per instance** — fine for a local run; a public deployment must add platform rate limiting and Meta spend alerts.
-- **Headers:** strict CSP (`connect-src 'self'`, `frame-ancestors 'none'`), `nosniff`, no `X-Powered-By`.
+- **Request limits:** uploads are capped at 4.4 MB by bytes actually read, not by the `Content-Length` header (so a chunked upload can't bypass it); each image is content-sniffed and size- and dimension-checked.
+- **Rate limiting:** `RATE_LIMIT_PER_MINUTE` (per client) and `MODEL_CALLS_PER_HOUR` (per server) cap model use, with `Retry-After`. This limiter is **per instance**, and the per-client key comes from `X-Forwarded-For`, which only a trusted proxy can vouch for; the per-server hourly cap holds regardless. Fine for a local run; a public deployment must add platform rate limiting and Meta spend alerts.
+- **Headers:** strict CSP in production (`connect-src 'self'`, `frame-ancestors 'none'`, no `unsafe-eval`), `nosniff`, `X-Frame-Options: DENY`, no `X-Powered-By`.
+- **Dependencies:** `npm audit` reports 0 vulnerabilities (Zod 4.6.7; PostCSS bundled with Next pinned to 8.5.29 via `overrides`).
 
 ## Testing and QA
 
 ```bash
-npm test                 # 131 unit + route tests (no network)
+npm test                 # 134 unit + route tests (no network)
 npm run typecheck && npm run lint
 npm run registry:gate    # ≥10 reviewed real records
 npm run smoke:meta       # live: key, image input, JSON-schema output

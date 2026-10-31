@@ -238,3 +238,27 @@ describe("Messenger check (MESSAGE_FROM_LISTED_PAGE)", () => {
     expect(res.followup).toMatchObject({ reportedAnswer: "new_chat", inputLabel: "What you saw in Messenger" });
   });
 });
+
+describe("request size cap", () => {
+  it("rejects an oversized upload even without a Content-Length header, before any model call", async () => {
+    const { analyze } = await routes();
+    const big = new Uint8Array(5_000_000);
+    const stream = new ReadableStream<Uint8Array>({
+      start(c) {
+        for (let i = 0; i < big.length; i += 64_000) c.enqueue(big.subarray(i, i + 64_000));
+        c.close();
+      },
+    });
+    const req = new NextRequest("http://localhost/api/investigations/analyze", {
+      method: "POST",
+      body: stream,
+      headers: { "content-type": "multipart/form-data; boundary=x", "x-forwarded-for": "10.0.0.9" },
+      duplex: "half", // Node's fetch needs this for a streamed body
+    });
+    expect(req.headers.get("content-length")).toBeNull();
+    const res = await analyze(req);
+    expect(res.status).toBe(413);
+    expect((await res.json()).error.code).toBe("PAYLOAD_TOO_LARGE");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+});

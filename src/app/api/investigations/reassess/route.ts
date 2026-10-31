@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { reassessCase } from "@/lib/case/reassessCase";
 import { ConfigError } from "@/lib/env";
 import { AppError, errorBody } from "@/lib/errors";
+import { readFormCapped } from "@/lib/http";
 import { checkRateLimit, clientKey, limitsFromEnv } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
@@ -15,16 +16,7 @@ export async function POST(req: NextRequest) {
   const started = Date.now();
   try {
     checkRateLimit(clientKey(req.headers), limitsFromEnv());
-    const declared = Number(req.headers.get("content-length") ?? "0");
-    if (declared > MAX_REQUEST_BYTES) {
-      throw new AppError("PAYLOAD_TOO_LARGE", "Your screenshots are too large together. Remove one or use smaller images.", 413);
-    }
-    let form: FormData;
-    try {
-      form = await req.formData();
-    } catch {
-      throw new AppError("NO_EVIDENCE", "We couldn't read what you sent. Please try again.", 400);
-    }
+    const form = await readFormCapped(req, MAX_REQUEST_BYTES, "Your screenshots are too large together. Remove one or use smaller images.");
     const result = await reassessCase(form, (entry) => console.info(JSON.stringify({ evt: "reassess", ...entry, totalMs: Date.now() - started })), requestId);
     return NextResponse.json(result, { headers: { "Cache-Control": "no-store" } });
   } catch (err) {

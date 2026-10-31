@@ -138,6 +138,26 @@ describe("planner output validation (VERIFY-01)", () => {
       expect(validatePlannerOutput(JSON.stringify({ ...ok, ifA: bad }), ["COMPARE_LGU_REFERENCE_PAGE"]), bad).toBeNull();
     }
   });
+  it("rejects contact details a screenshot may have injected (numbers, handles, emails, domains)", () => {
+    for (const bad of [
+      "If unsure, call 0917 222 3344 to confirm.",
+      "Message +63 917-222-3344 on Viber first.",
+      "Send the deposit to GCash 09172223344 after checking.",
+      "Ask @bahaydagat.bookings to confirm the room.",
+      "Email reservations@bahay-dagat.ph for proof.",
+      "Check bahaydagat.ph for the page list.",
+      "This is the resort's official page.",
+      "The account is genuine and trusted.",
+    ]) {
+      expect(validatePlannerOutput(JSON.stringify({ ...ok, whyItMatters: bad }), ["COMPARE_LGU_REFERENCE_PAGE"]), bad).toBeNull();
+    }
+  });
+
+  it("still accepts ordinary wording with dates and prices", () => {
+    const fine = { ...ok, whyItMatters: "The chat asked for ₱4,500 by Dec 28–29; comparing the page address first is the safest step." };
+    expect(validatePlannerOutput(JSON.stringify(fine), ["COMPARE_LGU_REFERENCE_PAGE"])).not.toBeNull();
+  });
+
   it("falls back to a labelled rule-based plan when the model misbehaves", async () => {
     const f = compareEvidence(samples, lumen, [PAGE, CHAT], sampleA);
     const fetchImpl = async () =>

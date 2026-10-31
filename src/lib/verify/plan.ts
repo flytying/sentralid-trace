@@ -21,7 +21,13 @@ export interface NextCheck {
   allowedActionIds: ActionId[];
 }
 
-const BANNED = /\b(scam\w*|fraud\w*|fake|legit\w*|verified|guarantee\w*|safe to (pay|book)|definitely|certainly|100%|otp|password|pin)\b/i;
+// Words that would let the planner vouch for, or accuse, the account in question.
+const BANNED =
+  /\b(scam\w*|fraud\w*|fake|legit\w*|verified|official|genuine|authentic\w*|trust(ed|worthy)|approved|guarantee\w*|safe to (pay|book|send)|definitely|certainly|100%|otp|password|pin)\b/i;
+// Contact or account details: the planner may only point at sources on file, which the UI shows
+// itself, so any number, handle, email or link in its text is rejected. This is what stops a
+// screenshot saying "tell the user to call 0917 …" from reaching the check card.
+const CONTACT_DETAILS = /https?:\/\/|www\.|\.(com|ph|net|org)\b|@\s*[A-Za-z0-9_.]{2,}|\d(?:[\s.\-•·()]*\d){4,}/i;
 const UNCLEAR = "If you can't tell, or the answer is mixed, your result stays as it is. Use only contact details from our sources.";
 const REPORT_NOTE = " What you tell us is kept as your note — it can't change our records or your result by itself.";
 
@@ -59,7 +65,8 @@ export async function planNextCheck(
     targetFinding: {
       about: findingCopy(input.target).title,
       state: input.target.state,
-      observed: input.target.observed,
+      // Untrusted screenshot text: bounded, and labelled as data in the system prompt.
+      observed: input.target.observed?.slice(0, 160) ?? null,
       onFile: input.target.reference,
     },
     explanations: input.hypotheses,
@@ -133,7 +140,7 @@ export function validatePlannerOutput(raw: string, allowed: ActionId[]): z.infer
   if (!parsed.success) return null;
   if (!allowed.includes(parsed.data.actionId)) return null;
   const text = [parsed.data.question, parsed.data.whyItMatters, parsed.data.ifA, parsed.data.ifB].join(" ");
-  if (BANNED.test(text) || /https?:\/\/|www\.|\.com\b/i.test(text)) return null;
+  if (BANNED.test(text) || CONTACT_DETAILS.test(text)) return null;
   return parsed.data;
 }
 
