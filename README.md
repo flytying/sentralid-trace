@@ -50,6 +50,7 @@ npm run build && npm start
 npm test               # unit tests
 npm run typecheck
 npm run lint
+npm run registry:gate  # release gate: ≥10 reviewed, admitted real records
 ```
 
 ## Built during the hackathon (Oct 27 – Nov 4, 2026)
@@ -57,6 +58,11 @@ npm run lint
 All code in this repository was written during the event. Commit history shows the progression by phase.
 
 - Phase 1 — Foundation: Next.js app shell and design system (ported from the Trace prototype), fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
+- Phase 2 — Registry: claim/source data model with zod validation and integrity checks, admission gate, strict Facebook URL parser (no fetching), name search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic sample scenarios.
+
+## Reference registry
+
+`src/data/reference-registry/` holds real Philippine resort records. Each record links a business to a Facebook page only when a separate, identifiable source does so — primarily the [San Juan, Batangas LGU tourism directory](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages), sometimes also the resort's own website. Records stay `draft` (never shown or compared against) until a human reviewer checks them; see [docs/registry-audit.md](docs/registry-audit.md). A record supports only the page relationship — never a chat sender or payment account.
 
 ## Sample data
 

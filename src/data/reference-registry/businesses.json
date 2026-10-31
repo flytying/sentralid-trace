@@ -1,0 +1,201 @@
+[
+  {
+    "id": "acuatico-beach-resort",
+    "displayName": "Acuatico Beach Resort and Hotel",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-ACUATICO"
+    ],
+    "claimIds": [
+      "CLM-acuatico-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "acuaverde-beach-resort",
+    "displayName": "Acuaverde Beach Resort and Hotel",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-ACUAVERDE"
+    ],
+    "claimIds": [
+      "CLM-acuaverde-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "sabangan-beach-resort",
+    "displayName": "Sabangan Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-SABANGAN"
+    ],
+    "claimIds": [
+      "CLM-sabangan-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "cala-laiya",
+    "displayName": "Cala Laiya",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-CALALAIYA"
+    ],
+    "claimIds": [
+      "CLM-cala-laiya-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "the-henry-resort-laiya",
+    "displayName": "The Henry Resort Taramindu Laiya",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-HENRY"
+    ],
+    "claimIds": [
+      "CLM-the-henry-resort-laiya-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "buracai-de-laiya",
+    "displayName": "Buracai de Laiya Hotel & Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-BURACAI"
+    ],
+    "claimIds": [
+      "CLM-buracai-de-laiya-fb-1",
+      "CLM-buracai-de-laiya-fb-2"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "la-luz-beach-resort",
+    "displayName": "La Luz Beach Resort & Spa",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-la-luz-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "punta-aguila-resort",
+    "displayName": "Punta Aguila Resort and Hotel",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-punta-aguila-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "one-laiya-beach-resort",
+    "displayName": "One Laiya Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-one-laiya-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "llamar-beach-resort",
+    "displayName": "Llamar Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-llamar-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "virgin-beach-resort",
+    "displayName": "Virgin Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-virgin-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  },
+  {
+    "id": "sigayan-bay-beach-resort",
+    "displayName": "Sigayan Bay Beach Resort",
+    "province": "Batangas",
+    "locality": "San Juan",
+    "registryStatus": "draft",
+    "reviewedAt": "2026-10-31",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "claimIds": [
+      "CLM-sigayan-bay-beach-resort-fb-1"
+    ],
+    "reviewerNote": "Pending manual review: open both links, confirm the Facebook page is live and matches the business name.",
+    "synthetic": false
+  }
+]

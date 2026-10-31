@@ -1,0 +1,79 @@
+[
+  {
+    "id": "SRC-LGU-SJB-FBDIR",
+    "kind": "local_tourism_directory",
+    "ownerName": "Municipal Tourism Office, San Juan, Batangas (LGU)",
+    "title": "San Juan, Batangas Tourism — Verified Facebook Pages",
+    "url": "https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Read the LGU tourism directory page; recorded the exact Facebook link next to the business name (link target taken from page HTML, not the visible text). The page states listed establishments are registered with the LGU.",
+    "permittedUse": "Link and short factual citation (business name + linked Facebook URL) of a public government page."
+  },
+  {
+    "id": "SRC-WEB-ACUATICO",
+    "kind": "independent_business_site",
+    "ownerName": "Acuatico Beach Resort",
+    "title": "Acuatico Beach Resort website — home page",
+    "url": "https://www.acuaticoresort.com.ph/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-WEB-ACUAVERDE",
+    "kind": "independent_business_site",
+    "ownerName": "Acuaverde Beach Resort",
+    "title": "Acuaverde Beach Resort website — home page",
+    "url": "https://acuaverderesort.com.ph/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-WEB-SABANGAN",
+    "kind": "independent_business_site",
+    "ownerName": "Sabangan Beach Resort",
+    "title": "Sabangan Beach Resort website — home page",
+    "url": "https://www.sabangan.com/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-WEB-CALALAIYA",
+    "kind": "independent_business_site",
+    "ownerName": "Cala Laiya",
+    "title": "Cala Laiya — Official Website",
+    "url": "https://calalaiya.com/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-WEB-HENRY",
+    "kind": "independent_business_site",
+    "ownerName": "The Henry Hotels",
+    "title": "The Henry Hotel website — home page",
+    "url": "https://thehenryhotel.com/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-WEB-BURACAI",
+    "kind": "independent_business_site",
+    "ownerName": "Buracai de Laiya Hotel & Resort",
+    "title": "Buracai de Laiya website — home page",
+    "url": "https://buracaidelaiya.com/",
+    "observedAt": "2026-10-31T05:06:24Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
+    "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  }
+]

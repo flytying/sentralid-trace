@@ -1,0 +1,142 @@
+{
+  "businesses": [
+    {
+      "id": "sample-lumen-cove",
+      "displayName": "Lumen Cove Resort",
+      "province": "Bohol",
+      "locality": "Panglao",
+      "registryStatus": "admitted",
+      "reviewedAt": "2026-10-28",
+      "sourceIds": [
+        "SRC-SAMPLE-LC-DIR",
+        "SRC-SAMPLE-LC-WEB"
+      ],
+      "claimIds": [
+        "CLM-sample-lc-fb-1",
+        "CLM-sample-lc-fb-2",
+        "CLM-sample-lc-phone"
+      ],
+      "reviewerNote": "Made-up resort for sample A (legitimate alternate channel). Not a real business.",
+      "synthetic": true
+    },
+    {
+      "id": "sample-bahay-dagat",
+      "displayName": "Bahay Dagat Resort",
+      "province": "Cebu",
+      "locality": "Moalboal",
+      "registryStatus": "admitted",
+      "reviewedAt": "2026-10-28",
+      "sourceIds": [
+        "SRC-SAMPLE-BD-DIR"
+      ],
+      "claimIds": [
+        "CLM-sample-bd-fb-1",
+        "CLM-sample-bd-phone"
+      ],
+      "reviewerNote": "Made-up resort for sample B (lookalike page). Not a real business.",
+      "synthetic": true
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-SAMPLE-LC-WEB",
+      "kind": "independent_business_site",
+      "ownerName": "Lumen Cove Resort (fictional)",
+      "title": "Lumen Cove Resort website — Contact & booking page (synthetic)",
+      "url": "https://lumencove.example/contact",
+      "observedAt": "2026-10-28T00:00:00Z",
+      "reviewedAt": "2026-10-28",
+      "method": "Synthetic record for demonstration. Not a real source.",
+      "permittedUse": "Synthetic demo data."
+    },
+    {
+      "id": "SRC-SAMPLE-LC-DIR",
+      "kind": "local_tourism_directory",
+      "ownerName": "Example municipal tourism office (fictional)",
+      "title": "Example tourism directory — Lumen Cove Resort (synthetic)",
+      "url": "https://tourism-directory.example/lumen-cove",
+      "observedAt": "2026-10-28T00:00:00Z",
+      "reviewedAt": "2026-10-28",
+      "method": "Synthetic record for demonstration. Not a real source.",
+      "permittedUse": "Synthetic demo data."
+    },
+    {
+      "id": "SRC-SAMPLE-BD-DIR",
+      "kind": "local_tourism_directory",
+      "ownerName": "Example regional tourism office (fictional)",
+      "title": "Example tourism accreditation listing — Bahay Dagat Resort (synthetic)",
+      "url": "https://tourism-directory.example/bahay-dagat",
+      "observedAt": "2026-10-28T00:00:00Z",
+      "reviewedAt": "2026-10-28",
+      "method": "Synthetic record for demonstration. Not a real source.",
+      "permittedUse": "Synthetic demo data."
+    }
+  ],
+  "claims": [
+    {
+      "id": "CLM-sample-lc-fb-1",
+      "businessId": "sample-lumen-cove",
+      "kind": "facebook_page_url",
+      "value": "https://www.facebook.com/lumencoveresort",
+      "normalizedValue": "facebook.com/lumencoveresort",
+      "label": "Main page",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-LC-DIR",
+        "SRC-SAMPLE-LC-WEB"
+      ],
+      "reviewedAt": "2026-10-28"
+    },
+    {
+      "id": "CLM-sample-lc-fb-2",
+      "businessId": "sample-lumen-cove",
+      "kind": "facebook_page_url",
+      "value": "https://www.facebook.com/lumencove.reservations",
+      "normalizedValue": "facebook.com/lumencove.reservations",
+      "label": "Reservations page",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-LC-WEB"
+      ],
+      "reviewedAt": "2026-10-28",
+      "note": "The (fictional) resort website documents a separate reservations page."
+    },
+    {
+      "id": "CLM-sample-lc-phone",
+      "businessId": "sample-lumen-cove",
+      "kind": "reservation_phone",
+      "value": "+63 38 555 0117",
+      "normalizedValue": "+63385550117",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-LC-WEB"
+      ],
+      "reviewedAt": "2026-10-28"
+    },
+    {
+      "id": "CLM-sample-bd-fb-1",
+      "businessId": "sample-bahay-dagat",
+      "kind": "facebook_page_url",
+      "value": "https://www.facebook.com/bahaydagatmoalboal",
+      "normalizedValue": "facebook.com/bahaydagatmoalboal",
+      "label": "Main page",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-BD-DIR"
+      ],
+      "reviewedAt": "2026-10-28"
+    },
+    {
+      "id": "CLM-sample-bd-phone",
+      "businessId": "sample-bahay-dagat",
+      "kind": "reservation_phone",
+      "value": "+63 32 555 0142",
+      "normalizedValue": "+63325550142",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-BD-DIR"
+      ],
+      "reviewedAt": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+[
+  {
+    "id": "CLM-acuatico-beach-resort-fb-1",
+    "businessId": "acuatico-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/AcuaticoBeachResort",
+    "normalizedValue": "facebook.com/acuaticobeachresort",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-ACUATICO"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Acuatico Beach Resort and Hotel, Inc.”. The business's own website links the same page."
+  },
+  {
+    "id": "CLM-acuaverde-beach-resort-fb-1",
+    "businessId": "acuaverde-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/AcuaverdeBeachResort",
+    "normalizedValue": "facebook.com/acuaverdebeachresort",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-ACUAVERDE"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Acuaverde Beach Resort and Hotel, Inc.”. The business's own website links the same page."
+  },
+  {
+    "id": "CLM-sabangan-beach-resort-fb-1",
+    "businessId": "sabangan-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/mysabangan",
+    "normalizedValue": "facebook.com/mysabangan",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-SABANGAN"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Sabangan Beach Resort, Inc.”. The business's own website links the same page."
+  },
+  {
+    "id": "CLM-cala-laiya-fb-1",
+    "businessId": "cala-laiya",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/calalaiya",
+    "normalizedValue": "facebook.com/calalaiya",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-CALALAIYA"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Cala Laiya”. The business's own website links the same page."
+  },
+  {
+    "id": "CLM-the-henry-resort-laiya-fb-1",
+    "businessId": "the-henry-resort-laiya",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/TheHenryHotels",
+    "normalizedValue": "facebook.com/thehenryhotels",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-WEB-HENRY"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “The Henry Resort Taramindu Laiya”. The business's own website links the same page."
+  },
+  {
+    "id": "CLM-buracai-de-laiya-fb-1",
+    "businessId": "buracai-de-laiya",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/BuracaiDeLaiyaHotelAndResort",
+    "normalizedValue": "facebook.com/buracaidelaiyahotelandresort",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Buracai de Laiya Hotel & Resort”."
+  },
+  {
+    "id": "CLM-buracai-de-laiya-fb-2",
+    "businessId": "buracai-de-laiya",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/BuracaiDelaiya",
+    "normalizedValue": "facebook.com/buracaidelaiya",
+    "label": "Page linked from website",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-WEB-BURACAI"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Linked from the business's own website; differs from the page in the LGU directory. Both are documented channels; owner-controlled source only."
+  },
+  {
+    "id": "CLM-la-luz-beach-resort-fb-1",
+    "businessId": "la-luz-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/laluzbeachresortandspa",
+    "normalizedValue": "facebook.com/laluzbeachresortandspa",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “La Luz Beach Resort & Spa”."
+  },
+  {
+    "id": "CLM-punta-aguila-resort-fb-1",
+    "businessId": "punta-aguila-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/PuntaAguila",
+    "normalizedValue": "facebook.com/puntaaguila",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Punta Aguila Resort and Hotel”."
+  },
+  {
+    "id": "CLM-one-laiya-beach-resort-fb-1",
+    "businessId": "one-laiya-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/onelaiya",
+    "normalizedValue": "facebook.com/onelaiya",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “One Laiya Beach Resort”."
+  },
+  {
+    "id": "CLM-llamar-beach-resort-fb-1",
+    "businessId": "llamar-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/LlamarBeachResortOfficial/",
+    "normalizedValue": "facebook.com/llamarbeachresortofficial",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Llamar Beach Resort, Inc.”."
+  },
+  {
+    "id": "CLM-virgin-beach-resort-fb-1",
+    "businessId": "virgin-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://web.facebook.com/virginbeachresortlaiya",
+    "normalizedValue": "facebook.com/virginbeachresortlaiya",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Virgin Beach Resort”."
+  },
+  {
+    "id": "CLM-sigayan-bay-beach-resort-fb-1",
+    "businessId": "sigayan-bay-beach-resort",
+    "kind": "facebook_page_url",
+    "value": "https://www.facebook.com/sigayanbay",
+    "normalizedValue": "facebook.com/sigayanbay",
+    "label": "Main page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-LGU-SJB-FBDIR"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Listed by the San Juan, Batangas LGU tourism directory as “Sigayan Bay Beach Resort”."
+  }
+]

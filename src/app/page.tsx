@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   TriangleAlert,
 } from "lucide-react";
+import { SAMPLES } from "@/lib/samples";
 import styles from "./page.module.css";
 
 const STEPS = [
@@ -108,6 +109,30 @@ export default function Home() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className={styles.steps} aria-labelledby="samples">
+        <div className={styles.stepsHead}>
+          <span className="eyebrow">Try a sample</span>
+          <h2 id="samples">See it work on a made-up case</h2>
+          <p className={styles.samplesNote}>
+            These resorts and screenshots are invented for the demo. Samples still run live analysis.
+          </p>
+        </div>
+        <ul className={styles.sampleGrid}>
+          {Object.values(SAMPLES).map((s) => (
+            <li key={s.key}>
+              <Link href={`/investigate?sample=${s.key}`} className={`card ${styles.sample}`}>
+                <span className={styles.sampleKey}>Sample {s.key} · made up</span>
+                <strong>{s.title}</strong>
+                <span>{s.summary}</span>
+                <span className={styles.sampleCta}>
+                  Open sample <ArrowRight size={15} aria-hidden="true" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
