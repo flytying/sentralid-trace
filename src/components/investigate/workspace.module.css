@@ -49,7 +49,7 @@
 .stepper {
   list-style: none;
   margin: 0;
-  padding: 6px 0;
+  padding: 20px 0 24px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
@@ -99,6 +99,37 @@
 }
 .step[data-state="current"] .stepDot {
   box-shadow: inset 0 0 0 2px var(--brand), 0 0 0 4px var(--brand-soft);
+}
+/* Sonar: two thin rings ease out from the current step, half a cycle apart. */
+.step[data-state="current"] .stepDot::before,
+.step[data-state="current"] .stepDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--brand);
+  opacity: 0;
+  pointer-events: none;
+  animation: tr-sonar 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+.step[data-state="current"] .stepDot::after {
+  animation-delay: 1.4s;
+}
+@keyframes tr-sonar {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step[data-state="current"] .stepDot::before,
+  .step[data-state="current"] .stepDot::after {
+    display: none;
+  }
 }
 .step[data-state="current"] .stepDot > span {
   width: 12px;
