@@ -153,6 +153,42 @@ describe("trust invariants", () => {
     expect(reduceOutcome(f, subject)).toBe("no_material_conflict_observed");
   });
 
+  it("ADV: a lookalike page that writes the real page's link in its bio does not match", () => {
+    const o = [
+      obs({ field: "facebook_url", value: "facebook.com/bahaydagat.moalboal.ph" }),
+      obs({ field: "facebook_url_mentioned", value: "facebook.com/bahaydagatmoalboal" }),
+    ];
+    const f = compareEvidence(samples, bahay, [PAGE_IN], o);
+    expect(byKind(f, "facebook_page_url")[0].state).toBe("different_from_reference");
+    expect(byKind(f, "mentioned_link")[0]).toMatchObject({ state: "unknown", rationaleCode: "LINK_ONLY_MENTIONED" });
+    expect(reduceOutcome(f, bahay)).toBe("potential_channel_conflict");
+  });
+
+  it("ADV: a real page link typed into a chat message is only 'mentioned'", () => {
+    const o = [obs({ inputId: "IN-CHAT-1", field: "facebook_url", value: "facebook.com/bahaydagatmoalboal" })];
+    const f = compareEvidence(samples, bahay, [CHAT_IN], o);
+    expect(f.some((x) => x.kind === "facebook_page_url" && x.state === "match")).toBe(false);
+    expect(byKind(f, "mentioned_link")[0].reference).toContain("on file for Bahay Dagat Resort");
+    expect(reduceOutcome(f, bahay)).toBe("insufficient_evidence");
+  });
+
+  it("a screenshot-read match carries the 'screenshots can be edited' caveat; a typed link doesn't", () => {
+    const shot = compareEvidence(samples, bahay, [PAGE_IN], [obs({ field: "facebook_url", value: "facebook.com/bahaydagatmoalboal" })]);
+    expect(byKind(shot, "facebook_page_url")[0].limitations.join(" ")).toMatch(/can be edited/);
+    const typed = compareEvidence(samples, bahay, [URL_IN], [obs({ inputId: "IN-URL", field: "facebook_url", value: "facebook.com/bahaydagatmoalboal", origin: "user" })]);
+    expect(byKind(typed, "facebook_page_url")[0].limitations.join(" ")).not.toMatch(/can be edited/);
+  });
+
+  it("ADV: two different 'addresses' read from one screenshot are both treated as unclear", () => {
+    const o = [
+      obs({ field: "facebook_url", value: "facebook.com/bahaydagatresort.bookings" }),
+      obs({ field: "facebook_url", value: "facebook.com/bahaydagatmoalboal" }),
+    ];
+    const f = compareEvidence(samples, bahay, [PAGE_IN], o);
+    expect(f.some((x) => x.kind === "facebook_page_url" && x.state === "match")).toBe(false);
+    expect(reduceOutcome(f, bahay)).toBe("insufficient_evidence");
+  });
+
   it("finding ids are stable for the same evidence", () => {
     const o = [obs({ inputId: "IN-URL", field: "facebook_url", value: "facebook.com/bahaydagat.moalboal.ph", origin: "user" })];
     const a = compareEvidence(samples, bahay, [URL_IN], o).map((f) => f.id);

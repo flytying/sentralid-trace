@@ -49,6 +49,10 @@ const RATIONALE: Record<RationaleCode, { title: (f: Finding) => string; explanat
     title: () => "Page link was only partly readable",
     explanation: "We could make out part of a link, but not enough to compare it reliably.",
   },
+  LINK_ONLY_MENTIONED: {
+    title: () => "A page link is mentioned in what you sent",
+    explanation: "Someone wrote this link in a message or on a page. Anyone can write any link, so a mentioned link doesn't tell us which page you're actually talking to.",
+  },
   FB_PAGE_NO_REFERENCE: {
     title: () => "No page on file to compare with",
     explanation: "This resort isn't in our records, so there's nothing to compare the link with. That isn't evidence either way.",
@@ -95,6 +99,7 @@ export function findingCopy(f: Finding): { title: string; explanation: string } 
 export const FIELD_LABEL: Record<string, string> = {
   business_name: "Name",
   facebook_url: "Facebook link",
+  facebook_url_mentioned: "Link mentioned in text",
   facebook_handle: "Facebook username",
   phone: "Phone number",
   email: "Email",

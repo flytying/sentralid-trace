@@ -15,7 +15,8 @@ Never invent or complete URLs, usernames, phone numbers, owners, payment authori
 
 Fields:
 - business_name: the business/page name as displayed (page title, chat header, signature).
-- facebook_url: a facebook.com address exactly as visible (e.g. in a browser address bar or written in a message). Copy it verbatim.
+- facebook_url: the address of the page being shown, exactly as visible in the browser address bar or the page's own link/username line. Copy it verbatim.
+- facebook_url_mentioned: any facebook.com address that is merely written somewhere — inside a chat message, bio, post, caption or image text. Never put these in facebook_url.
 - facebook_handle: an @username or page username that is visible but not part of a full URL.
 - phone: a phone number offered as a contact or reservations number. Copy masking characters (•) as shown.
 - email, website: as visible.

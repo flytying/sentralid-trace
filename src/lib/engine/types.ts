@@ -13,6 +13,7 @@ export interface EvidenceInput {
 export const OBSERVATION_FIELDS = [
   "business_name",
   "facebook_url",
+  "facebook_url_mentioned",
   "facebook_handle",
   "phone",
   "email",
@@ -38,7 +39,13 @@ export interface Observation {
   origin: "model" | "user";
 }
 
-export type FindingKind = "facebook_page_url" | "business_name" | "reservation_phone" | "message_sender" | "payment_instruction";
+export type FindingKind =
+  | "facebook_page_url"
+  | "mentioned_link"
+  | "business_name"
+  | "reservation_phone"
+  | "message_sender"
+  | "payment_instruction";
 export type FindingState = "match" | "different_from_reference" | "unknown";
 export type CaseOutcome = "no_material_conflict_observed" | "potential_channel_conflict" | "insufficient_evidence";
 
@@ -49,6 +56,7 @@ export type RationaleCode =
   | "FB_PAGE_NOT_VISIBLE"
   | "FB_PAGE_NO_REFERENCE"
   | "FB_PAGE_UNCLEAR"
+  | "LINK_ONLY_MENTIONED"
   | "NAME_SAME_AS_RECORD"
   | "NAME_DIFFERS_FROM_RECORD"
   | "PHONE_MATCH"

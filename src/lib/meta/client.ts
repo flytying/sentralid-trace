@@ -82,6 +82,9 @@ export async function createCompletion(
   if (res.status === 429) {
     throw new AppError("MODEL_RATE_LIMITED", "Live analysis is busy right now. Please wait a moment and retry.", 429);
   }
+  if (res.status === 401 || res.status === 403) {
+    throw new AppError("CONFIG_INVALID", "The Meta Model API rejected this server's API key. Check MODEL_API_KEY in .env.local and restart.", 502);
+  }
   if (!res.ok) {
     throw new AppError("MODEL_UNAVAILABLE", `Live analysis is temporarily unavailable (provider status ${res.status}).`, 502);
   }

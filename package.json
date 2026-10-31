@@ -11,7 +11,9 @@
     "test": "vitest run",
     "smoke:meta": "tsx --env-file=.env.local scripts/smoke-meta.ts",
     "registry:gate": "tsx scripts/registry-gate.ts",
-    "eval:extraction": "tsx --env-file=.env.local scripts/eval-extraction.ts"
+    "eval:extraction": "tsx --env-file=.env.local scripts/eval-extraction.ts",
+    "eval:adversarial": "tsx scripts/eval-adversarial.ts",
+    "qa:repeat": "tsx scripts/repeat-demo.ts"
   },
   "dependencies": {
     "lucide-react": "^0.454.0",

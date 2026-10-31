@@ -52,7 +52,20 @@ npm run typecheck
 npm run lint
 npm run registry:gate  # release gate: ≥10 reviewed, admitted real records
 npm run eval:extraction -- minimal low   # live extraction on the synthetic samples (uses your key)
+npm run eval:adversarial                 # live adversarial screenshots vs. a running server
+TRACE_URL=http://localhost:3000 npm run qa:repeat -- 5   # 3 scenarios × 5 live runs → docs/qa/
 ```
+
+Latest live QA report: [docs/qa/repeat-runs-2026-10-31.md](docs/qa/repeat-runs-2026-10-31.md).
+
+## Safety and abuse controls
+
+- **Model boundary:** screenshot text is data. The extraction prompt says so, output is schema-constrained and re-validated, and the comparison is done by fixed rules. Synthetic adversarial screenshots (prompt injection in a page bio, a fake "verified" badge with the real page's link in the bio, an "official GCash" chat) are in `eval/adversarial/`; none produced a page match or a "no conflict" result.
+- **Mentioned links never count:** only the page's own address (pasted by the user, or shown as the address in a page screenshot) is compared. A link written inside a chat, bio or post is reported as "mentioned" and never matches. If one screenshot yields two different addresses, neither is trusted.
+- **No fetching:** pasted links are parsed, never opened. The server only calls `https://api.meta.ai/v1`.
+- **Privacy:** screenshots are processed in memory and not stored; logs record request id, input types, timings, counts and outcome only. Account numbers are masked in results.
+- **Rate limiting:** `RATE_LIMIT_PER_MINUTE` (per client) and `MODEL_CALLS_PER_HOUR` (per server) cap model use. This limiter is in-memory **per instance**: it protects a local run but does not coordinate across serverless instances. A public hosted deployment must also enable platform rate limiting (for example a Vercel Firewall rate-limit rule on `/api/investigations/*`) and Meta API spend alerts.
+- **Headers:** strict Content-Security-Policy (`connect-src 'self'`), `frame-ancestors 'none'`, `nosniff`, no `X-Powered-By`.
 
 ## How a check flows
 
@@ -79,6 +92,7 @@ All code in this repository was written during the event. Commit history shows t
 - Phase 2 — Registry: claim/source data model with zod validation and integrity checks, admission gate, strict Facebook URL parser (no fetching), name search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic sample scenarios.
 - Phase 3 — Live investigation: evidence intake (link, page screenshot, up to three ordered chat screenshots, consent), browser-side image shrinking, server-side content sniffing and limits, schema-constrained Muse Spark extraction with one bounded retry, deterministic comparison engine (page link, name, phone, chat sender, payment request), case outcome, sealed case token, findings view with evidence trace, and honest progress/error states.
 - Phase 4 — VerifyNext and reassessment: server-owned catalog of three safe checks, deterministic candidate builder with two competing explanations, Muse Spark choosing one check from the allowlist and wording it (validated; labelled rule-based fallback), one sealed follow-up (page link, screenshot or phone-call report), claim-level before/after diff that changes only justified findings, and the check and updated-result screens.
+- Phase 5 — Hardening: "mentioned link" handling and ambiguous-address guard, synthetic adversarial screenshots with a live eval, per-instance rate limiting with `Retry-After`, security headers, clear error for a rejected API key, route-level failure tests (provider 401/429/500/timeout/bad output, missing key, planner failure, follow-up replay, tampered token, log hygiene), contrast and control-labelling fixes, and a 3×5 live repeat-run report.
 
 ## Reference registry
 

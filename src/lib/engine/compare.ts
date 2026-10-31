@@ -16,7 +16,12 @@ interface PageLink {
   observationIds: string[];
   /** True only when the full link was clearly visible or typed by the user. */
   certain: boolean;
+  /** True when every supporting observation was typed by the user rather than read from a screenshot. */
+  fromUser: boolean;
 }
+
+const SCREENSHOT_LINK_LIMIT =
+  "This link was read from a screenshot, and screenshots can be edited. To be sure, open the page on file yourself and message the resort from there.";
 
 export function compareEvidence(reg: Registry, subject: CaseSubject, inputs: EvidenceInput[], observations: Observation[]): Finding[] {
   const business = subject.businessId
@@ -27,7 +32,7 @@ export function compareEvidence(reg: Registry, subject: CaseSubject, inputs: Evi
   const findings: Finding[] = [];
 
   // ---- Facebook page links ---------------------------------------------------------------
-  const links = collectPageLinks(observations);
+  const { pageLinks: links, mentioned } = collectPageLinks(observations);
   const fbClaims = ownClaims.filter((c) => c.kind === "facebook_page_url");
   const refPages = fbClaims.map((c) => displayClaimUrl(c)).join(" · ") || null;
 
@@ -55,7 +60,8 @@ export function compareEvidence(reg: Registry, subject: CaseSubject, inputs: Evi
     }
     const exact = fbClaims.find((c) => c.normalizedValue === link.key);
     if (exact && link.certain) {
-      findings.push({ ...base, state: "match", rationaleCode: "FB_PAGE_MATCH", referenceClaimIds: [exact.id], sourceIds: exact.sourceIds, reference: displayClaimUrl(exact), limitations: [PAGE_MATCH_LIMIT] });
+      const limits = link.fromUser ? [PAGE_MATCH_LIMIT] : [PAGE_MATCH_LIMIT, SCREENSHOT_LINK_LIMIT];
+      findings.push({ ...base, state: "match", rationaleCode: "FB_PAGE_MATCH", referenceClaimIds: [exact.id], sourceIds: exact.sourceIds, reference: displayClaimUrl(exact), limitations: limits });
       continue;
     }
     if (!link.certain) {
@@ -72,6 +78,30 @@ export function compareEvidence(reg: Registry, subject: CaseSubject, inputs: Evi
       continue;
     }
     findings.push({ ...base, state: "different_from_reference", rationaleCode: "FB_PAGE_DIFFERS", referenceClaimIds: fbClaims.map((c) => c.id), sourceIds: uniq(fbClaims.flatMap((c) => c.sourceIds)), reference: refPages, limitations: ["A different link isn't proof of a scam — some businesses run more than one page. It does mean this page isn't one we can confirm."] });
+  }
+
+  // ---- Links merely written in a message or bio: reported, never compared for identity -------
+  const pageKeys = new Set(links.map((l) => l.key));
+  for (const m of mentioned) {
+    if (pageKeys.has(m.key)) continue;
+    const onFile = reg.claims.find(
+      (c) => c.kind === "facebook_page_url" && c.trust === "corroborated" && c.normalizedValue === m.key && reg.businesses.some((b) => b.id === c.businessId && isServable(b)),
+    );
+    const owner = onFile ? reg.businesses.find((b) => b.id === onFile.businessId)!.displayName : null;
+    findings.push({
+      id: `F-mention:${m.key}`,
+      kind: "mentioned_link",
+      state: "unknown",
+      rationaleCode: "LINK_ONLY_MENTIONED",
+      observationIds: m.observationIds,
+      referenceClaimIds: onFile ? [onFile.id] : [],
+      sourceIds: onFile ? onFile.sourceIds : [],
+      observed: m.display,
+      reference: owner ? `${displayClaimUrl(onFile!)} is on file for ${owner}` : null,
+      limitations: owner
+        ? ["Seeing a real page's link written down doesn't mean you're talking to that page. Open the link yourself and contact the resort from there."]
+        : [],
+    });
   }
 
   // ---- Business name (listed resort only) -------------------------------------------------
@@ -174,12 +204,16 @@ export function reduceOutcome(findings: Finding[], subject: CaseSubject): CaseOu
   return "insufficient_evidence";
 }
 
-function collectPageLinks(observations: Observation[]): PageLink[] {
-  const byKey = new Map<string, PageLink>();
+// Only the page's own address (pasted by the user, or shown as the page's address in a page
+// screenshot) can be compared for identity. Links written inside chats, bios or posts are
+// "mentioned": anyone can write any link.
+function collectPageLinks(observations: Observation[]): { pageLinks: PageLink[]; mentioned: PageLink[] } {
+  const pages = new Map<string, PageLink>();
+  const mentions = new Map<string, PageLink>();
   for (const o of observations) {
     if (!o.value || o.clarity === "unreadable") continue;
     let candidate: string | null = null;
-    if (o.field === "facebook_url") candidate = o.value;
+    if (o.field === "facebook_url" || o.field === "facebook_url_mentioned") candidate = o.value;
     // A bare handle is compared only when it is a plain username.
     else if (o.field === "facebook_handle") {
       const h = o.value.trim().replace(/^@/, "");
@@ -188,16 +222,38 @@ function collectPageLinks(observations: Observation[]): PageLink[] {
     if (!candidate) continue;
     const p = parseFacebookUrl(candidate);
     if (!p.ok) continue;
-    const certain = o.origin === "user" || (o.clarity === "clear" && o.field === "facebook_url");
-    const existing = byKey.get(p.normalized);
+    const isMention = o.field === "facebook_url_mentioned" || o.inputId.startsWith("IN-CHAT");
+    const target = isMention ? mentions : pages;
+    const certain = !isMention && (o.origin === "user" || (o.clarity === "clear" && o.field === "facebook_url"));
+    const fromUser = o.origin === "user";
+    const existing = target.get(p.normalized);
     if (existing) {
       existing.observationIds.push(o.id);
       existing.certain ||= certain;
+      existing.fromUser &&= fromUser;
     } else {
-      byKey.set(p.normalized, { key: p.normalized, display: displayFacebookUrl(p), observationIds: [o.id], certain });
+      target.set(p.normalized, { key: p.normalized, display: displayFacebookUrl(p), observationIds: [o.id], certain, fromUser });
     }
   }
-  return [...byKey.values()];
+  // One screenshot can only show one page address. If it yields several different ones, we can't
+  // tell which is the address and which was just written on the page, so none is certain.
+  const keysByInput = new Map<string, Set<string>>();
+  for (const o of observations) {
+    if (o.origin !== "model" || o.field !== "facebook_url" || !o.value) continue;
+    const p = parseFacebookUrl(o.value);
+    if (!p.ok) continue;
+    const set = keysByInput.get(o.inputId) ?? new Set<string>();
+    set.add(p.normalized);
+    keysByInput.set(o.inputId, set);
+  }
+  const ambiguousObs = new Set(
+    observations.filter((o) => o.origin === "model" && (keysByInput.get(o.inputId)?.size ?? 0) > 1).map((o) => o.id),
+  );
+  for (const link of pages.values()) {
+    if (link.fromUser) continue;
+    if (link.observationIds.every((id) => ambiguousObs.has(id))) link.certain = false;
+  }
+  return { pageLinks: [...pages.values()], mentioned: [...mentions.values()] };
 }
 
 function displayClaimUrl(c: RegistryClaim): string {

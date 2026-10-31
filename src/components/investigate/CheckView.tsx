@@ -172,11 +172,11 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
           </fieldset>
         ) : (
           <>
-            <div className={styles.tabs} role="tablist" aria-label="How to add it">
-              <button type="button" role="tab" aria-selected={mode === "url"} onClick={() => setMode("url")}>
+            <div className={styles.tabs} role="group" aria-label="How to add it">
+              <button type="button" aria-pressed={mode === "url"} onClick={() => setMode("url")}>
                 Page link
               </button>
-              <button type="button" role="tab" aria-selected={mode === "image"} onClick={() => setMode("image")}>
+              <button type="button" aria-pressed={mode === "image"} onClick={() => setMode("image")}>
                 Screenshot
               </button>
             </div>

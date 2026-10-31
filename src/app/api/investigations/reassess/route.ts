@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { reassessCase } from "@/lib/case/reassessCase";
 import { ConfigError } from "@/lib/env";
 import { AppError, errorBody } from "@/lib/errors";
+import { checkRateLimit, clientKey, limitsFromEnv } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -13,6 +14,7 @@ export async function POST(req: NextRequest) {
   const requestId = crypto.randomUUID().slice(0, 8);
   const started = Date.now();
   try {
+    checkRateLimit(clientKey(req.headers), limitsFromEnv());
     const declared = Number(req.headers.get("content-length") ?? "0");
     if (declared > MAX_REQUEST_BYTES) {
       throw new AppError("PAYLOAD_TOO_LARGE", "Your screenshots are too large together. Remove one or use smaller images.", 413);
@@ -34,6 +36,10 @@ export async function POST(req: NextRequest) {
           : new AppError("MODEL_UNAVAILABLE", "Something went wrong on our side. Please try again.", 500);
     // Log only the error class — never request contents.
     console.warn(JSON.stringify({ evt: "reassess_error", requestId, code: appErr.code, totalMs: Date.now() - started }));
-    return NextResponse.json(errorBody(appErr, requestId), { status: appErr.status, headers: { "Cache-Control": "no-store" } });
+    const retryAfter = (appErr as AppError & { retryAfter?: number }).retryAfter;
+    return NextResponse.json(errorBody(appErr, requestId), {
+      status: appErr.status,
+      headers: { "Cache-Control": "no-store", ...(retryAfter ? { "Retry-After": String(retryAfter) } : {}) },
+    });
   }
 }
