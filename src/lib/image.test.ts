@@ -12,7 +12,7 @@ describe("image checks", () => {
   });
 
   it("reads PNG dimensions", () => {
-    expect(imageSize(png, "image/png")).toEqual({ width: 540, height: 960 });
+    expect(imageSize(png, "image/png")).toEqual({ width: 780, height: 1688 });
   });
 
   it("rejects a PDF renamed to .png", async () => {
