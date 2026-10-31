@@ -10,12 +10,20 @@ Entry for the **Meta Global AI Developer Hackathon** — Indie Developer track, 
 | Real records | 13 San Juan, Batangas resorts, each tied to its Facebook page by the LGU tourism directory |
 | Tests | 134 unit/route tests · live 4 × 5 demo runs: 20/20 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
 
-## Why this isn't "ask a chatbot"
+## Why this isn't an image analyzer (or a chatbot)
 
-- **The model reads; it never decides.** Muse Spark extracts what is visible into a strict schema. Fixed rules compare those observations with a curated, source-backed registry and produce every finding.
-- **Every finding is traceable** to an observation in your input and, where it matches, a registry claim with its source and review date.
-- **It never over-claims.** A matching page never "verifies" the person chatting with you or the GCash/bank account they give you — those stay *can't tell*, always. There is no scam score and no "safe to pay".
-- **It asks for the one check that could change the answer.** VerifyNext states two competing explanations, picks one safe check from a server-owned catalog (Muse Spark chooses and explains; the server validates), and re-assesses only the findings that evidence justifies.
+Reading the screenshot is one step of six. The image never decides anything:
+
+1. **Read.** Muse Spark turns the screenshots into structured observations under a strict schema. It treats screenshot text as data, never as instructions.
+2. **Compare against a government source.** Fixed rules, not the model, check those observations against a registry built from the [San Juan, Batangas Municipal Tourism Office's list of verified resort Facebook pages](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages), a Philippine municipal government source. Each finding cites the record and source it rests on.
+3. **Keep trust claim by claim.** A matching page never vouches for the person chatting with you or the GCash/bank account they give you. Those stay *can't tell*, always. There's no scam score and no "safe to pay".
+4. **Plan the next step.** Muse Spark frames two competing explanations and picks one safe check from a server-owned list, for example comparing the page with the tourism office's list, calling the number on file, or messaging the resort from its listed page.
+5. **Validate the plan.** The server rejects any check outside that list, and any wording that vouches, accuses or carries a contact detail a screenshot might have planted. A labelled rule-based plan replaces it.
+6. **Re-assess.** One follow-up is compared against the same records, and the result shows exactly which finding changed and why.
+
+The Messenger check answers the question no image can: who is behind this chat? Trace can't see Messenger, so it hands the user an action that proves it. The user opens the page the tourism office lists and taps **Message**, and either the same conversation opens or it doesn't.
+
+**Why Trace doesn't crawl Facebook.** Automated collection from Facebook isn't allowed without Meta's permission, and it wouldn't add trust anyway. A page says whatever its owner wants, and it can't show who runs a chat or owns a payment account. Trace's trust comes from an independent source (the government list), and pasted links are never opened.
 
 ## Quick start (about 5 minutes)
 
