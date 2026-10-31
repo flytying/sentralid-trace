@@ -41,6 +41,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
   const [checkError, setCheckError] = useState<string | null>(null);
   const [times, setTimes] = useState<{ analyzed: Date; followup: Date | null }>({ analyzed: new Date(), followup: null });
   const mainRef = useRef<HTMLDivElement>(null);
+  const [analysisDone, setAnalysisDone] = useState(false);
   const [asideOffset, setAsideOffset] = useState(0);
 
   // Line the side panel up with the first box under each step's heading (marked data-aside-anchor, else the first card).
@@ -171,6 +172,7 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
   async function analyze() {
     if (!selection) return;
     setError(null);
+    setAnalysisDone(false);
     setView("analyzing");
     const form = new FormData();
     if (sample) form.set("samples", "1");
@@ -192,7 +194,8 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
       setReassessment(null);
       setSkipped(false);
       setTimes({ analyzed: new Date(), followup: null });
-      setView("findings");
+      // The progress screen plays the remaining stages, then switches to the findings.
+      setAnalysisDone(true);
     } catch {
       setError({ code: "NETWORK", message: "Check your connection and try again. Nothing was analysed.", recoverable: true });
       setView("error");
@@ -231,6 +234,9 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
           {view === "analyzing" && (
             <Progress
               usesModel={usesModel}
+              done={analysisDone}
+              modelMs={analysisDone ? (result?.inference?.latencyMs ?? null) : null}
+              onFinished={() => setView("findings")}
               shots={[
                 ...(evidence.pageShot ? [{ shot: evidence.pageShot, caption: "Page" }] : []),
                 ...evidence.chats.map((shot, i) => ({ shot, caption: `Chat ${i + 1}` })),

@@ -1,3 +1,21 @@
+/* Keyframes used by this module. CSS modules rename keyframes per file, so the copies in
+   globals.css can't be referenced from here. */
+@keyframes pp-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .workspace {
   padding: 22px 0 56px;
   display: flex;
@@ -714,7 +732,7 @@
   align-items: center;
   gap: 12px;
 }
-.progressHead .indet {
+.progressHead .bar {
   flex: 1;
 }
 .timer {
@@ -726,8 +744,35 @@
 }
 .scanStrip {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
+  justify-content: center;
+  padding: 6px 0 2px;
+}
+/* Once reading is done the scan stops and each thumbnail gets a check. */
+.scanStrip[data-done="true"] .scanBeam {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.scanCheck {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(14, 52, 66, 0.2);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.25s, transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+.scanStrip[data-done="true"] .scanCheck {
+  opacity: 1;
+  transform: none;
 }
 .scanShot {
   margin: 0;
@@ -777,7 +822,13 @@
 .targets {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
+  text-align: center;
+}
+.targets[data-done="true"] .target,
+.targets[data-done="true"] .target::before {
+  animation: none;
 }
 .targetsLabel {
   font-size: var(--fs-meta);
@@ -786,6 +837,7 @@
 .targetList {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 6px;
 }
 .target {
@@ -887,19 +939,37 @@
     background-position: 0 0;
   }
 }
-.indet {
-  height: 4px;
-  border-radius: 4px;
+.bar {
+  height: 6px;
+  border-radius: 6px;
   background: var(--line);
   overflow: hidden;
 }
-.indet span {
+.bar span {
+  position: relative;
   display: block;
-  width: 35%;
   height: 100%;
+  border-radius: 6px;
   background: var(--brand);
-  border-radius: 4px;
-  animation: pp-indet 1.4s ease-in-out infinite;
+  transition: width 0.4s linear;
+  overflow: hidden;
+}
+.bar[data-finishing="true"] span {
+  transition: width 0.5s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+/* A soft sheen runs along the filled part so it reads as live. */
+.bar span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-100%);
+  animation: tr-sheen 1.6s ease-in-out infinite;
+}
+@keyframes tr-sheen {
+  to {
+    transform: translateX(100%);
+  }
 }
 .stageList {
   list-style: none;
@@ -931,6 +1001,10 @@
   place-items: center;
   flex: none;
   box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+.stageList li {
+  transition: color 0.25s;
 }
 .stageList li[data-state="done"] .stageDot {
   background: var(--brand);
