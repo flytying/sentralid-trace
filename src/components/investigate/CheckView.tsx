@@ -85,7 +85,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
       </div>
 
       {next.hypotheses && (
-        <div className={styles.hypGrid}>
+        <div className={styles.hypGrid} data-aside-anchor="">
           <div className={styles.hyp}>
             <span className={styles.hypLabel}>Possibility A</span>
             <span>{next.hypotheses.a}</span>

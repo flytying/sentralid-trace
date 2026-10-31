@@ -44,7 +44,7 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
         </h1>
       </div>
 
-      <div className={styles.outcome} data-tone={outcome.tone}>
+      <div className={styles.outcome} data-aside-anchor="" data-tone={outcome.tone}>
         <OutcomeIcon size={22} aria-hidden="true" />
         <div>
           <strong>{outcome.label}</strong>

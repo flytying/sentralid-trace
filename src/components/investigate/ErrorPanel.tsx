@@ -26,7 +26,7 @@ export function ErrorPanel({ error, onRetry, onEdit, onRestart }: { error: Clien
           Check didn&apos;t finish
         </h1>
       </div>
-      <div className={styles.errorCard} role="alert">
+      <div className={styles.errorCard} data-aside-anchor="" role="alert">
         <TriangleAlert size={20} aria-hidden="true" />
         <div>
           <strong>{TITLE[error.code] ?? "Something in what you sent needs fixing"}</strong>

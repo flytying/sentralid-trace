@@ -43,12 +43,12 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
   const mainRef = useRef<HTMLDivElement>(null);
   const [asideOffset, setAsideOffset] = useState(0);
 
-  // Line the side panel up with the first card in the main column, below each step's heading.
+  // Line the side panel up with the first box under each step's heading (marked data-aside-anchor, else the first card).
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
     const update = () => {
-      const card = main.querySelector<HTMLElement>(".card");
+      const card = main.querySelector<HTMLElement>("[data-aside-anchor]") ?? main.querySelector<HTMLElement>(".card");
       const sideBySide = window.matchMedia("(min-width: 901px)").matches;
       // offsetTop ignores the fade-in transform, so the result doesn't depend on animation timing.
       const pageTop = (el: HTMLElement | null) => {

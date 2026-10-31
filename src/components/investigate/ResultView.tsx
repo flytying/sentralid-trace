@@ -47,7 +47,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
         </h1>
       </div>
 
-      <div className={styles.outcome} data-tone={copy.tone}>
+      <div className={styles.outcome} data-aside-anchor="" data-tone={copy.tone}>
         <Icon size={22} aria-hidden="true" />
         <div>
           <strong>{copy.label}</strong>
