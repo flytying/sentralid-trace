@@ -20,7 +20,7 @@ async function main() {
   console.log(`Endpoint: ${baseUrl}/chat/completions  model: ${model}`);
 
   console.log("\n[1/2] Text-only call…");
-  const t = await createCompletion(cfg, [{ role: "user", content: "Reply with the single word: ready" }], { maxTokens: 20 });
+  const t = await createCompletion(cfg, [{ role: "user", content: "Reply with the single word: ready" }], { maxTokens: 1000 });
   console.log(`  ok  latency=${t.latencyMs}ms  responseModel=${t.model}  reply=${JSON.stringify(t.content.slice(0, 40))}`);
 
   const imagePath = process.argv[2] ?? "public/samples/B-chat-bahaydagat-deposit.png";
@@ -62,7 +62,7 @@ async function main() {
         ],
       },
     ],
-    { jsonSchema: { name: "smoke_extraction", schema }, maxTokens: 800 },
+    { jsonSchema: { name: "smoke_extraction", schema }, maxTokens: 4000 },
   );
   const parsed = JSON.parse(r.content);
   console.log(`  ok  latency=${r.latencyMs}ms  responseModel=${r.model}  usage=${JSON.stringify(r.usage)}`);

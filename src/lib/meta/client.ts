@@ -24,24 +24,33 @@ export interface JsonSchemaFormat {
   strict?: boolean;
 }
 
+export type ReasoningEffort = "minimal" | "low" | "medium" | "high";
+
 export interface CompletionResult {
   content: string;
   model: string | null;
   latencyMs: number;
-  usage: { promptTokens?: number; completionTokens?: number } | null;
+  usage: { promptTokens?: number; completionTokens?: number; reasoningTokens?: number } | null;
   providerRequestId: string | null;
 }
 
 export async function createCompletion(
   cfg: MetaConfig,
   messages: ChatMessage[],
-  opts: { jsonSchema?: JsonSchemaFormat; maxTokens?: number; fetchImpl?: typeof fetch } = {},
+  opts: {
+    jsonSchema?: JsonSchemaFormat;
+    maxTokens?: number;
+    reasoningEffort?: ReasoningEffort;
+    fetchImpl?: typeof fetch;
+  } = {},
 ): Promise<CompletionResult> {
   const body: Record<string, unknown> = {
     model: cfg.model,
     messages,
-    max_tokens: opts.maxTokens ?? 2000,
+    // Muse Spark reasons before answering; reasoning tokens count against this cap.
+    max_tokens: opts.maxTokens ?? 4000,
   };
+  if (opts.reasoningEffort) body.reasoning_effort = opts.reasoningEffort;
   if (opts.jsonSchema) {
     body.response_format = {
       type: "json_schema",
@@ -80,15 +89,26 @@ export async function createCompletion(
   let json: {
     model?: string;
     id?: string;
-    choices?: Array<{ message?: { content?: string | null } }>;
-    usage?: { prompt_tokens?: number; completion_tokens?: number };
+    choices?: Array<{ finish_reason?: string; message?: { content?: string | null; refusal?: string | null } }>;
+    usage?: {
+      prompt_tokens?: number;
+      completion_tokens?: number;
+      completion_tokens_details?: { reasoning_tokens?: number };
+    };
   };
   try {
     json = await res.json();
   } catch {
     throw new AppError("MODEL_BAD_RESPONSE", "Live analysis returned an unreadable response.", 502);
   }
-  const content = json.choices?.[0]?.message?.content;
+  const choice = json.choices?.[0];
+  const content = choice?.message?.content;
+  if (choice?.finish_reason === "length") {
+    throw new AppError("MODEL_BAD_RESPONSE", "Live analysis ran out of output budget before answering.", 502);
+  }
+  if (choice?.message?.refusal) {
+    throw new AppError("MODEL_BAD_RESPONSE", "Live analysis declined to read this input.", 502);
+  }
   if (typeof content !== "string" || content.length === 0) {
     throw new AppError("MODEL_BAD_RESPONSE", "Live analysis returned an empty response.", 502);
   }
@@ -96,7 +116,13 @@ export async function createCompletion(
     content,
     model: json.model ?? null,
     latencyMs,
-    usage: json.usage ? { promptTokens: json.usage.prompt_tokens, completionTokens: json.usage.completion_tokens } : null,
+    usage: json.usage
+      ? {
+          promptTokens: json.usage.prompt_tokens,
+          completionTokens: json.usage.completion_tokens,
+          reasoningTokens: json.usage.completion_tokens_details?.reasoning_tokens,
+        }
+      : null,
     providerRequestId: res.headers.get("x-request-id") ?? json.id ?? null,
   };
 }

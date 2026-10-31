@@ -35,6 +35,8 @@ Verify your Meta access with a live smoke test (sends one synthetic sample scree
 npm run smoke:meta
 ```
 
+Expected output: two `ok` lines. Muse Spark is a reasoning model, so the image call takes several seconds (about 4–12s depending on `reasoning_effort`).
+
 ## Run
 
 ```bash
