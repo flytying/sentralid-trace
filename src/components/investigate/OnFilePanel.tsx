@@ -63,6 +63,14 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
             <dd className="mono">{c.value}</dd>
           </div>
         ))}
+        {!r.contacts.some((c) => c.kind === "reservation_phone" || c.kind === "reservation_email") && (
+          <div>
+            <dt>Phone and email</dt>
+            <dd className={styles.help}>
+              None on file. Our source lists Facebook pages only, and we don&apos;t copy numbers from a resort&apos;s own page.
+            </dd>
+          </div>
+        )}
       </dl>
 
       <div className={styles.sources}>
