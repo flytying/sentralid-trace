@@ -51,7 +51,20 @@ npm test               # unit tests
 npm run typecheck
 npm run lint
 npm run registry:gate  # release gate: ≥10 reviewed, admitted real records
+npm run eval:extraction -- minimal low   # live extraction on the synthetic samples (uses your key)
 ```
+
+## Model settings and measured behaviour
+
+Screenshot extraction uses `muse-spark-1.3` with `reasoning_effort: "minimal"`, chosen from live runs on 2026-10-31 (single runs, not a benchmark):
+
+| Effort | Sample A | Sample B | Sample C | Extraction quality on samples |
+|---|---|---|---|---|
+| minimal | 4.2s | 4.3s | 5.9s | All key fields read correctly |
+| low | 10.7s | 11.1s | 6.6s | Same fields |
+| default | 18.2s | 25.8s | 21.1s | Same fields, more noise |
+
+An unseen real page screenshot (not in the repo) also extracted correctly at `minimal` in 4.9s, including the `facebook.com/…` address from the browser bar. Muse Spark spends output tokens on reasoning first, so calls set a generous `max_tokens`; an exhausted budget is reported as an error, never as an empty result.
 
 ## Built during the hackathon (Oct 27 – Nov 4, 2026)
 
@@ -59,6 +72,7 @@ All code in this repository was written during the event. Commit history shows t
 
 - Phase 1 — Foundation: Next.js app shell and design system (ported from the Trace prototype), fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
 - Phase 2 — Registry: claim/source data model with zod validation and integrity checks, admission gate, strict Facebook URL parser (no fetching), name search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic sample scenarios.
+- Phase 3 — Live investigation: evidence intake (link, page screenshot, up to three ordered chat screenshots, consent), browser-side image shrinking, server-side content sniffing and limits, schema-constrained Muse Spark extraction with one bounded retry, deterministic comparison engine (page link, name, phone, chat sender, payment request), case outcome, sealed case token, findings view with evidence trace, and honest progress/error states.
 
 ## Reference registry
 
