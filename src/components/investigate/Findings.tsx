@@ -36,7 +36,7 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
   const counts = GROUPS.map((g) => ({ g, n: result.findings.filter((f) => f.state === g.state).length }));
 
   return (
-    <div className={`${styles.panel} fade-in`}>
+    <div className={`${styles.panel} stagger`}>
       <div className={styles.headBlock}>
         <span className={styles.eyebrowMuted}>What we found</span>
         <h1 className={styles.h1} tabIndex={-1}>
@@ -89,7 +89,7 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
         const items = result.findings.filter((f) => f.state === g.state);
         if (!items.length && !g.empty) return null;
         return (
-          <section key={g.state} className={styles.group} aria-labelledby={`grp-${g.state}`}>
+          <section key={g.state} className={`${styles.group} stagger`} aria-labelledby={`grp-${g.state}`}>
             <div>
               <h2 id={`grp-${g.state}`} className={styles.h2}>
                 {g.label} <span className={styles.count}>{items.length}</span>

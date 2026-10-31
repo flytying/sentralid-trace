@@ -674,6 +674,151 @@
   flex-direction: column;
   gap: 14px;
 }
+.progressHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progressHead .indet {
+  flex: 1;
+}
+.timer {
+  font-size: 12.5px;
+  color: var(--muted);
+  min-width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.scanStrip {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.scanShot {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  animation: pp-in 0.4s ease both;
+}
+.scanShot figcaption {
+  font-size: 12px;
+  color: var(--muted);
+}
+.scanFrame {
+  position: relative;
+  width: 96px;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-soft, #eef3f4);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.scanFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: saturate(0.85);
+}
+.scanBeam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 36%;
+  background: linear-gradient(180deg, transparent, rgba(35, 127, 135, 0.22) 80%, rgba(35, 127, 135, 0.9));
+  border-bottom: 2px solid var(--brand);
+  animation: tr-scan 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  transform: translateY(-100%);
+}
+@keyframes tr-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(290%);
+  }
+}
+.targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.targetsLabel {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.target {
+  font-size: 12.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--line);
+  color: var(--text-3);
+  animation-name: tr-target;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+@keyframes tr-target {
+  0%,
+  22% {
+    background: var(--brand-pale);
+    color: var(--brand);
+    box-shadow: inset 0 0 0 1px var(--brand);
+  }
+  30%,
+  100% {
+    background: var(--line);
+    color: var(--text-3);
+    box-shadow: none;
+  }
+}
+.skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  animation: pp-in 0.4s ease both;
+}
+.skelDot,
+.skelLine,
+.skelChip {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--line) 25%, #f4f8f8 50%, var(--line) 75%);
+  background-size: 300% 100%;
+  animation: tr-shimmer 1.6s ease-in-out infinite;
+}
+.skelDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+.skelLine {
+  height: 12px;
+}
+.skelChip {
+  margin-left: auto;
+  width: 84px;
+  height: 20px;
+  border-radius: 999px;
+}
+@keyframes tr-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
 .indet {
   height: 4px;
   border-radius: 4px;
@@ -1149,6 +1294,44 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+/* Before → After: the arrow slides in, then the new state pops with a brief highlight. */
+.changeGrid > :first-child {
+  animation: pp-in 0.4s ease 0.25s both;
+}
+.changeArrow {
+  animation: tr-nudge 0.5s ease 0.55s both;
+}
+.changeGrid > :last-child {
+  border-radius: 10px;
+  animation: tr-pop 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s both;
+}
+@keyframes tr-nudge {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes tr-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+    box-shadow: 0 0 0 0 rgba(35, 127, 135, 0);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 0 6px rgba(35, 127, 135, 0.18);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    box-shadow: 0 0 0 0 rgba(35, 127, 135, 0);
+  }
 }
 .change[data-worse="true"] {
   border-color: var(--warn-line);

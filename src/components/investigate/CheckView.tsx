@@ -76,7 +76,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
   }
 
   return (
-    <div className={`${styles.panel} fade-in`}>
+    <div className={`${styles.panel} stagger`}>
       <div className={styles.headBlock}>
         <span className={styles.eyebrowMuted}>One thing to check{synthetic ? " · made-up sample" : ""}</span>
         <h1 className={styles.h1} tabIndex={-1}>

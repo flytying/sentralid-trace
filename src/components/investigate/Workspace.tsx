@@ -228,7 +228,15 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
           {view === "evidence" && selection && (
             <EvidenceForm evidence={evidence} onChange={setEvidence} onSubmit={analyze} onBack={() => setView("business")} isSample={Boolean(sample)} />
           )}
-          {view === "analyzing" && <Progress usesModel={usesModel} />}
+          {view === "analyzing" && (
+            <Progress
+              usesModel={usesModel}
+              shots={[
+                ...(evidence.pageShot ? [{ shot: evidence.pageShot, caption: "Page" }] : []),
+                ...evidence.chats.map((shot, i) => ({ shot, caption: `Chat ${i + 1}` })),
+              ]}
+            />
+          )}
           {view === "error" && error && <ErrorPanel error={error} onRetry={analyze} onEdit={() => setView("evidence")} onRestart={restart} />}
           {view === "findings" && result && (
             <Findings

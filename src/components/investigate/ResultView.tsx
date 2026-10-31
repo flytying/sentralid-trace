@@ -39,7 +39,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
   const worse = (c: (typeof changes)[number]) => c.after?.state === "different_from_reference";
 
   return (
-    <div className={`${styles.panel} fade-in`}>
+    <div className={`${styles.panel} stagger`}>
       <div className={styles.headBlock}>
         <span className={styles.eyebrowMuted}>Your updated result</span>
         <h1 className={styles.h1} tabIndex={-1}>
