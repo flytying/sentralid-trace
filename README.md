@@ -150,7 +150,7 @@ All code in this repository was written during the event; the commit history sho
 
 ## Third-party software and data
 
-Next.js, React, zod, lucide-react (ISC), Geist fonts via `next/font` (SIL OFL); dev: Vitest, tsx, ESLint. Registry facts (business names and public Facebook links) are cited from the San Juan, Batangas Municipal Tourism Office directory and the resorts' own websites; no photos, logos or page content from them are included. Sample and adversarial screenshots are synthetic and watermarked.
+Next.js, React, zod, lucide-react (ISC), Geist fonts (SIL OFL 1.1, committed in `src/app/fonts/` with their licence so builds work offline); dev: Vitest, tsx, ESLint. Registry facts (business names and public Facebook links) are cited from the San Juan, Batangas Municipal Tourism Office directory and the resorts' own websites; no photos, logos or page content from them are included. Sample and adversarial screenshots are synthetic and watermarked.
 
 ## Limitations
 

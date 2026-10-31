@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], weight: ["400", "500"] });
+// Fonts are committed (src/app/fonts, SIL OFL 1.1) so `npm run build` never needs the network —
+// next/font/google fetches from fonts.googleapis.com at build time and fails behind proxies or offline.
+const geistSans = localFont({ src: "./fonts/Geist-Variable.woff2", variable: "--font-geist-sans", weight: "100 900", display: "swap" });
+const geistMono = localFont({ src: "./fonts/GeistMono-Variable.woff2", variable: "--font-geist-mono", weight: "100 900", display: "swap" });
 
 export const metadata: Metadata = {
   title: "SentralID Trace — Verify Before You Book",

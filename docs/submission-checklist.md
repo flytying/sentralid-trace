@@ -15,7 +15,7 @@ Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec
 | 5 | Demo scenarios × five production repetitions | ✅ 20/20 (Samples A–D) | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
 | 6 | No safety or privacy critical defect | ✅ (no known open) | Trust-invariant tests, adversarial eval, log-hygiene test, no storage of uploads |
 | 7 | Public repo with hackathon-built code and licensed/synthetic assets only | ✅ | Public at github.com/flytying/sentralid-trace; synthetic samples; no resort photos/logos; LICENSE: all rights reserved, evaluation-only permission for judges |
-| 8 | 3-minute demo video, accessible without login | ⏳ | Script: [demo-script.md](demo-script.md) |
+| 8 | 3-minute demo video, accessible without login | ⏳ **record by 1 Nov** | Script: [demo-script.md](demo-script.md). The only gate left that the build depends on |
 | 9 | Video clearly identifies newly built functionality | ⏳ | Covered in the script's 2:40 segment and README "Built during the hackathon" |
 | 10 | Submission completed on time; receipt saved | ⏳ | — |
 
