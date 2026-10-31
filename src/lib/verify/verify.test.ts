@@ -69,6 +69,37 @@ describe("VerifyNext candidates", () => {
     expect(buildPlanInput(samples, subject, f).status).toBe("no_safe_check");
   });
 
+  it("real page and numbers match, chat sender open → message the resort from its listed page", () => {
+    const subject: CaseSubject = { businessId: "altogrand-beach-house", label: "Altogrand Beach House", samples: false };
+    const f = compareEvidence(real, subject, [PAGE, CHAT], [
+      o("OBS-1", { field: "facebook_url", value: "facebook.com/EnteBeachResort" }),
+      o("OBS-2", { field: "phone", value: "09503177669" }),
+      o("OBS-3", { inputId: "IN-CHAT-1", field: "chat_sender_label", value: "Altogrand Beach House" }),
+    ]);
+    const plan = buildPlanInput(real, subject, f);
+    expect(plan.status).toBe("check_available");
+    expect(plan.target?.id).toBe("F-sender");
+    expect(plan.candidates.map((c) => c.actionId)).toEqual(["MESSAGE_FROM_LISTED_PAGE"]);
+    expect(plan.candidates[0]).toMatchObject({ resolution: "user_report", documented: ["facebook.com/EnteBeachResort"] });
+    expect(plan.candidates[0].sources.map((s) => s.kind)).toEqual(["local_tourism_directory"]);
+    expect(plan.hypotheses?.b).toMatch(/different account/);
+  });
+
+  it("A: the Messenger check isn't offered while we can't even see which page it is", () => {
+    const f = compareEvidence(samples, lumen, [PAGE, CHAT], sampleA);
+    expect(buildPlanInput(samples, lumen, f).candidates.map((c) => c.actionId)).not.toContain("MESSAGE_FROM_LISTED_PAGE");
+  });
+
+  it("B: a different page with a chat → the Messenger check is offered after the number on file", () => {
+    const chatB = [...sampleB, o("OBS-4", { inputId: "IN-CHAT-1", field: "chat_sender_label", value: "Bahay Dagat Resort" })];
+    const f = compareEvidence(samples, bahay, [URL_IN, PAGE, CHAT], chatB);
+    expect(buildPlanInput(samples, bahay, f).candidates.map((c) => c.actionId)).toEqual([
+      "CHECK_REGISTERED_CONTACT_POLICY",
+      "MESSAGE_FROM_LISTED_PAGE",
+      "COMPARE_LGU_REFERENCE_PAGE",
+    ]);
+  });
+
   it("page already matches → no material issue to check", () => {
     const subject: CaseSubject = { businessId: "cala-laiya", label: "Cala Laiya", samples: false };
     const f = compareEvidence(real, subject, [URL_IN], [o("OBS-1", { inputId: "IN-URL", field: "facebook_url", value: "facebook.com/calalaiya", origin: "user" })]);
@@ -133,6 +164,15 @@ describe("reassessment", () => {
     const r = reassess(samples, bahay, [URL_IN, PAGE, CHAT], sampleB, REPORT, follow);
     expect(r.changes).toEqual([]);
     expect(r.outcome).toBe(r.previousOutcome);
+  });
+
+  it("what the user saw in Messenger never changes a finding", () => {
+    const REPORT: EvidenceInput = { id: "IN-FOLLOWUP", kind: "followup_report", label: "What you saw in Messenger" };
+    const follow = [o("OBS-5", { inputId: "IN-FOLLOWUP", field: "user_report", value: "Messaging from the listed page opened the same conversation.", origin: "user" })];
+    const chatB = [...sampleB, o("OBS-4", { inputId: "IN-CHAT-1", field: "chat_sender_label", value: "Bahay Dagat Resort" })];
+    const r = reassess(samples, bahay, [URL_IN, PAGE, CHAT], chatB, REPORT, follow);
+    expect(r.changes).toEqual([]);
+    expect(r.findings.find((x) => x.id === "F-sender")?.state).toBe("unknown");
   });
 
   it("an observed claim to be official in a new screenshot stays unconfirmed", () => {

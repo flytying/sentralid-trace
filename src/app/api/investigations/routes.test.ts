@@ -199,3 +199,42 @@ describe("reassess route", () => {
     expect((await (await reassess(req("/api/investigations/reassess", f))).json()).error.code).toBe("CASE_INVALID");
   });
 });
+
+describe("Messenger check (MESSAGE_FROM_LISTED_PAGE)", () => {
+  it("takes only its own answers, keeps them as a note, and changes no finding", async () => {
+    const { analyze, reassess } = await routes();
+    const extraction = JSON.stringify({
+      observations: [{ inputId: "IN-CHAT-1", field: "chat_sender_label", value: "Bahay Dagat Resort", visibleExcerpt: null, clarity: "clear" }],
+      warnings: [],
+    });
+    const plan = JSON.stringify({
+      actionId: "MESSAGE_FROM_LISTED_PAGE",
+      question: "Is the chat you're in with the page the tourism office lists?",
+      whyItMatters: "Starting a message from the listed page shows which conversation belongs to that page.",
+      ifA: "The same conversation opens, so you're chatting with the listed page.",
+      ifB: "A new, empty chat opens, so the account that messaged you is a different one.",
+    });
+    fetchMock.mockResolvedValueOnce(ok(extraction)).mockResolvedValueOnce(ok(plan));
+    const f = new FormData();
+    f.set("samples", "1");
+    f.set("businessId", "sample-bahay-dagat");
+    f.set("pageUrl", "facebook.com/bahaydagat.moalboal.ph");
+    f.set("consent", "true");
+    f.append("chatImages", new File([PNG], "chat.png", { type: "image/png" }));
+    const body = await (await analyze(req("/api/investigations/analyze", f))).json();
+    expect(body.nextCheck).toMatchObject({ actionId: "MESSAGE_FROM_LISTED_PAGE", selectedBy: "model", allowedActionIds: ["MESSAGE_FROM_LISTED_PAGE"] });
+
+    const send = (answer: string) => {
+      const r = new FormData();
+      r.set("sealedCaseToken", body.sealedCaseToken);
+      r.set("actionId", "MESSAGE_FROM_LISTED_PAGE");
+      r.set("reportedAnswer", answer);
+      return reassess(req("/api/investigations/reassess", r));
+    };
+    expect((await (await send("confirmed")).json()).error.code).toBe("NO_EVIDENCE");
+    const res = await (await send("new_chat")).json();
+    expect(res.changes).toEqual([]);
+    expect(res.outcome).toBe(res.previousOutcome);
+    expect(res.followup).toMatchObject({ reportedAnswer: "new_chat", inputLabel: "What you saw in Messenger" });
+  });
+});

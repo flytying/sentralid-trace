@@ -28,6 +28,22 @@ interface Props {
   onRestart: () => void;
 }
 
+// What to do after messaging the resort from its listed page. Guidance only — the findings don't change.
+const MESSENGER_NEXT: Record<string, { title: string; body: string }> = {
+  same_chat: {
+    title: "You're chatting with the listed page",
+    body: "That still doesn't show whose GCash or bank account you'd pay. Before sending money, confirm the payment details with the resort using the number on file.",
+  },
+  new_chat: {
+    title: "The account that messaged you isn't the listed page",
+    body: "Don't pay or share details in the old chat. Continue only in the conversation that opened from the listed page, or call the number on file.",
+  },
+  cant_tell: {
+    title: "Still unclear",
+    body: "Keep booking only through the listed page or the number on file, and don't pay in a chat you can't place.",
+  },
+};
+
 export function ResultView({ analysis, reassessment, skipped, reference, checkedAt, onRestart }: Props) {
   const outcome = reassessment?.outcome ?? analysis.outcome;
   const prev = reassessment?.previousOutcome ?? analysis.outcome;
@@ -64,9 +80,17 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
           <p className={styles.emptyGroup}>
             Nothing changed.{" "}
             {reassessment?.followup.userReport
-              ? "What you were told is kept as your note. A phone call can't be checked by us, so it can't change our records or your result on its own — but it can still guide what you do next."
+              ? reassessment.followup.actionId === "MESSAGE_FROM_LISTED_PAGE"
+                ? "What you saw is kept as your note. We can't see your Messenger, so it can't change our records or your result — but it's the clearest sign of who you're chatting with."
+                : "What you were told is kept as your note. A phone call can't be checked by us, so it can't change our records or your result on its own — but it can still guide what you do next."
               : "What you added didn't match anything our sources record, or didn't show enough to compare."}
           </p>
+        )}
+        {reassessment?.followup.reportedAnswer && MESSENGER_NEXT[reassessment.followup.reportedAnswer] && reassessment.followup.actionId === "MESSAGE_FROM_LISTED_PAGE" && (
+          <div className={`card ${styles.messengerNext}`} data-answer={reassessment.followup.reportedAnswer}>
+            <strong>{MESSENGER_NEXT[reassessment.followup.reportedAnswer].title}</strong>
+            <p>{MESSENGER_NEXT[reassessment.followup.reportedAnswer].body}</p>
+          </div>
         )}
         {changes.map((c) => (
           <article key={c.findingId} className={`card ${styles.change}`} data-worse={worse(c)}>

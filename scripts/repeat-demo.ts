@@ -93,7 +93,9 @@ async function runScenario(key: keyof typeof SCENARIOS, run: number): Promise<Ro
     f.set("actionId", d.nextCheck.actionId);
     const pageAction = d.nextCheck.check.resolution === "page_link_or_screenshot";
     if (pageAction && sc.followup.extraPageUrl) f.set("extraPageUrl", sc.followup.extraPageUrl);
-    else if (!pageAction && sc.followup.reportedAnswer) f.set("reportedAnswer", sc.followup.reportedAnswer);
+    else if (!pageAction && sc.followup.reportedAnswer)
+      // Each report-type check has its own answers; send the "it's theirs" answer for whichever was chosen.
+      f.set("reportedAnswer", d.nextCheck.actionId === "MESSAGE_FROM_LISTED_PAGE" ? "same_chat" : sc.followup.reportedAnswer);
     else if (sc.followup.extraPageUrl) f.set("reportedAnswer", "confirmed");
     else f.set("extraPageUrl", sc.url);
     const r = await post("/api/investigations/reassess", f);
@@ -155,7 +157,7 @@ Server: production build (\`next build\` + \`next start\`), live Meta \`muse-spa
 | Scenario | Expected |
 |---|---|
 | A | not enough evidence → (documented reservations link) → no conflict found; exactly 1 finding changes; payment stays unknown |
-| B | possible mismatch → (phone report "they said yes") → unchanged; 0 findings change |
+| B | possible mismatch → (user report: "they said yes" for the phone check, or "same conversation" for the Messenger check — whichever Meta AI chose) → unchanged; 0 findings change |
 | C | not enough evidence; no safe check available (resort not on file) |
 
 ## Runs

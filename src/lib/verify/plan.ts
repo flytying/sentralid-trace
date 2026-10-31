@@ -23,7 +23,7 @@ export interface NextCheck {
 
 const BANNED = /\b(scam\w*|fraud\w*|fake|legit\w*|verified|guarantee\w*|safe to (pay|book)|definitely|certainly|100%|otp|password|pin)\b/i;
 const UNCLEAR = "If you can't tell, or the answer is mixed, your result stays as it is. Use only contact details from our sources.";
-const REPORT_NOTE = " Whatever you're told is kept as your note — it can't change our records or your result by itself.";
+const REPORT_NOTE = " What you tell us is kept as your note — it can't change our records or your result by itself.";
 
 const PlannerOutput = z
   .object({
@@ -137,23 +137,48 @@ export function validatePlannerOutput(raw: string, allowed: ActionId[]): z.infer
   return parsed.data;
 }
 
+const RULE_COPY: Record<ActionId, { question: string; why: string; a: string; b: string }> = {
+  COMPARE_LGU_REFERENCE_PAGE: {
+    question: "Is the page you're talking to one the resort is documented to use?",
+    why: "An exact page link can be compared with the pages our independent sources list for this resort.",
+    a: "If the link is one our sources list, that page finding changes to a match.",
+    b: "If it isn't, the page stays one we can't confirm.",
+  },
+  COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE: {
+    question: "Is the page you're talking to one the resort is documented to use?",
+    why: "An exact page link can be compared with the pages our independent sources list for this resort.",
+    a: "If the link is one our sources list, that page finding changes to a match.",
+    b: "If it isn't, the page stays one we can't confirm.",
+  },
+  CHECK_REGISTERED_CONTACT_POLICY: {
+    question: "Does the resort confirm this page or number is theirs?",
+    why: "Asking through the number our source lists reaches the resort without going through the account in question.",
+    a: "If the resort says yes, keep using only the contact details from our sources.",
+    b: "If the resort says no, don't pay through this page or number.",
+  },
+  MESSAGE_FROM_LISTED_PAGE: {
+    question: "Is the chat you're in with the page the tourism office lists?",
+    why: "Starting a message from the listed page shows, in your own app, which conversation belongs to that page — without asking the account you're unsure about.",
+    a: "If it opens the same conversation, you're chatting with the listed page.",
+    b: "If it opens a new, empty chat, don't pay in the old one — continue only in the chat from the listed page.",
+  },
+};
+
 function rulePlan(input: PlanInput, candidates: CheckCandidate[]): NextCheck {
   const chosen = candidates[0];
-  const pageCheck = chosen.resolution === "page_link_or_screenshot";
+  const copy = RULE_COPY[chosen.actionId];
   return {
     status: "check_available",
     selectedBy: "rules",
     targetFindingId: input.target!.id,
     actionId: chosen.actionId,
-    question: pageCheck ? "Is the page you're talking to one the resort is documented to use?" : "Does the resort confirm this page or number is theirs?",
-    whyItMatters: pageCheck
-      ? "An exact page link can be compared with the pages our independent sources list for this resort."
-      : "Asking through the number our source lists reaches the resort without going through the account in question.",
+    question: copy.question,
+    whyItMatters: copy.why,
     hypotheses: input.hypotheses,
     implications: {
-      a: pageCheck ? "If the link is one our sources list, that page finding changes to a match." : "If the resort says yes, keep using only the contact details from our sources.",
-      b: pageCheck ? "If it isn't, the page stays one we can't confirm." : "If the resort says no, don't pay through this page or number.",
-      unclear: UNCLEAR + (pageCheck ? "" : REPORT_NOTE),
+      a: copy.a,
+      b: copy.b,
+      unclear: UNCLEAR + (chosen.resolution === "user_report" ? REPORT_NOTE : ""),
     },
     check: stripCandidate(chosen),
     allowedActionIds: [chosen.actionId],

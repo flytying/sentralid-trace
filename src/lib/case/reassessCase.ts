@@ -12,10 +12,22 @@ import { EXTRACTION_EFFORT } from "./analyze";
 import { decodeSealKey, seal, unseal } from "./seal";
 import type { CaseState, ReassessResponse } from "./state";
 
-const REPORT_TEXT: Record<string, string> = {
-  confirmed: "You were told the page or number belongs to the resort.",
-  denied: "You were told the page or number does not belong to the resort.",
-  no_answer: "You couldn't get an answer from the number on file.",
+// Checks answered by the user. Answers are kept as notes and never compared with the registry.
+const REPORT_TEXT: Partial<Record<ActionId, Record<string, string>>> = {
+  CHECK_REGISTERED_CONTACT_POLICY: {
+    confirmed: "You were told the page or number belongs to the resort.",
+    denied: "You were told the page or number does not belong to the resort.",
+    no_answer: "You couldn't get an answer from the number on file.",
+  },
+  MESSAGE_FROM_LISTED_PAGE: {
+    same_chat: "Messaging from the listed page opened the same conversation.",
+    new_chat: "Messaging from the listed page opened a new, empty chat — not the conversation you were in.",
+    cant_tell: "You couldn't tell whether it was the same conversation.",
+  },
+};
+const REPORT_MISSING: Partial<Record<ActionId, string>> = {
+  CHECK_REGISTERED_CONTACT_POLICY: "Tell us what the resort said when you called the number on file.",
+  MESSAGE_FROM_LISTED_PAGE: "Tell us what happened when you tapped Message on the listed page.",
 };
 
 export async function reassessCase(form: FormData, log: (e: Record<string, unknown>) => void, requestId: string): Promise<ReassessResponse> {
@@ -46,9 +58,9 @@ export async function reassessCase(form: FormData, log: (e: Record<string, unkno
   const provided = [Boolean(url), hasImage, Boolean(answer)].filter(Boolean).length;
   if (provided !== 1) throw new AppError("NO_EVIDENCE", "Add one thing: a page link, a screenshot, or what you were told.", 400);
 
-  const reportAction = action === "CHECK_REGISTERED_CONTACT_POLICY";
-  if (reportAction !== Boolean(answer)) {
-    throw new AppError("NO_EVIDENCE", reportAction ? "Tell us what the resort said when you called the number on file." : "Add the page link or a screenshot that shows it.", 400);
+  const answers = REPORT_TEXT[action];
+  if (Boolean(answers) !== Boolean(answer)) {
+    throw new AppError("NO_EVIDENCE", REPORT_MISSING[action] ?? "Add the page link or a screenshot that shows it.", 400);
   }
 
   const nextId = state.observations.length + 1;
@@ -57,6 +69,7 @@ export async function reassessCase(form: FormData, log: (e: Record<string, unkno
   let warnings: string[] = [];
   let inference: ReassessResponse["inference"] = null;
   let userReport: string | null = null;
+  let reportedAnswer: string | null = null;
 
   if (url) {
     const p = parseFacebookUrl(url);
@@ -76,9 +89,11 @@ export async function reassessCase(form: FormData, log: (e: Record<string, unkno
     warnings = ex.warnings;
     inference = { latencyMs: ex.latencyMs, attempts: ex.attempts };
   } else {
-    if (!(answer in REPORT_TEXT)) throw new AppError("NO_EVIDENCE", "Choose what the resort told you.", 400);
-    input = { id: "IN-FOLLOWUP", kind: "followup_report", label: "What you were told" };
-    userReport = REPORT_TEXT[answer];
+    if (!answers || !Object.hasOwn(answers, answer)) throw new AppError("NO_EVIDENCE", "Choose one of the answers.", 400);
+    const fromMessenger = action === "MESSAGE_FROM_LISTED_PAGE";
+    input = { id: "IN-FOLLOWUP", kind: "followup_report", label: fromMessenger ? "What you saw in Messenger" : "What you were told" };
+    userReport = answers[answer];
+    reportedAnswer = answer;
     followObs = [{ id: `OBS-${nextId}`, inputId: "IN-FOLLOWUP", field: "user_report", value: userReport, excerpt: null, clarity: "clear", origin: "user" }];
   }
 
@@ -105,7 +120,7 @@ export async function reassessCase(form: FormData, log: (e: Record<string, unkno
     findings: r.findings,
     observations: r.observations,
     inputs: r.inputs,
-    followup: { actionId: action, inputLabel: input.label, evidenceIds: followObs.map((o) => o.id), userReport },
+    followup: { actionId: action, inputLabel: input.label, evidenceIds: followObs.map((o) => o.id), userReport, reportedAnswer },
     inference,
     warnings,
     followupCount: nextState.followupCount,

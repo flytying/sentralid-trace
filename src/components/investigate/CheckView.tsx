@@ -11,7 +11,7 @@ import styles from "./workspace.module.css";
 export type FollowUp =
   | { kind: "url"; url: string }
   | { kind: "image"; file: File; consent: true }
-  | { kind: "report"; answer: "confirmed" | "denied" | "no_answer" };
+  | { kind: "report"; answer: string };
 
 /** Compact card shown on the findings screen. */
 export function NextCheckCard({ next, onStart, synthetic }: { next: NextCheck; onStart: () => void; synthetic: boolean }) {
@@ -53,6 +53,28 @@ interface Props {
   onBack: () => void;
 }
 
+// Checks the user answers themselves. The answers are kept as notes and never change a finding.
+const REPORTS = {
+  CHECK_REGISTERED_CONTACT_POLICY: {
+    documentedLabel: "Number on file",
+    prompt: "What did the resort tell you?",
+    answers: [
+      ["confirmed", "They said the page or number is theirs"],
+      ["denied", "They said it isn't theirs"],
+      ["no_answer", "I couldn't reach them"],
+    ],
+  },
+  MESSAGE_FROM_LISTED_PAGE: {
+    documentedLabel: "Page on file",
+    prompt: "What happened when you tapped Message?",
+    answers: [
+      ["same_chat", "It opened the same conversation"],
+      ["new_chat", "It opened a new, empty chat"],
+      ["cant_tell", "I couldn't tell"],
+    ],
+  },
+} as const;
+
 export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, onSkip, onBack }: Props) {
   const check = next.check!;
   const ids = useId();
@@ -61,16 +83,17 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
   const [url, setUrl] = useState("");
   const [shot, setShot] = useState<{ file: File; preview: string } | null>(null);
   const [consent, setConsent] = useState(false);
-  const [answer, setAnswer] = useState<"" | "confirmed" | "denied" | "no_answer">("");
+  const [answer, setAnswer] = useState("");
   const [fileErr, setFileErr] = useState<string | null>(null);
 
   const parsed = url.trim() ? parseFacebookUrl(url) : null;
   const isReport = check.resolution === "user_report";
+  const report = REPORTS[check.actionId as keyof typeof REPORTS];
   const canSend = !busy && (isReport ? Boolean(answer) : mode === "url" ? Boolean(parsed?.ok) : Boolean(shot) && consent);
 
   function submit() {
     if (!canSend) return;
-    if (isReport) onSubmit({ kind: "report", answer: answer as "confirmed" });
+    if (isReport) onSubmit({ kind: "report", answer });
     else if (mode === "url") onSubmit({ kind: "url", url: url.trim() });
     else onSubmit({ kind: "image", file: shot!.file, consent: true });
   }
@@ -105,7 +128,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
         <strong className={styles.checkLabel}>{check.label}</strong>
         <p className={styles.explain}>{check.how}</p>
         <div className={styles.documented}>
-          <span className={styles.compareLabel}>{isReport ? "Number on file" : "Pages on file"}</span>
+          <span className={styles.compareLabel}>{report?.documentedLabel ?? "Pages on file"}</span>
           {check.documented.map((d) => (
             <span key={d} className="mono">
               {d}
@@ -151,18 +174,12 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
         }}
         noValidate
       >
-        <span className={styles.label}>{isReport ? "What did the resort tell you?" : "Add what you found"}</span>
+        <span className={styles.label}>{report?.prompt ?? "Add what you found"}</span>
 
         {isReport ? (
           <fieldset className={styles.radioSet}>
-            <legend className="sr-only">What did the resort tell you?</legend>
-            {(
-              [
-                ["confirmed", "They said the page or number is theirs"],
-                ["denied", "They said it isn't theirs"],
-                ["no_answer", "I couldn't reach them"],
-              ] as const
-            ).map(([v, label]) => (
+            <legend className="sr-only">{report?.prompt}</legend>
+            {(report?.answers ?? []).map(([v, label]) => (
               <label key={v} className={styles.checkRow}>
                 <input type="radio" name="answer" value={v} checked={answer === v} onChange={() => setAnswer(v)} />
                 {label}

@@ -48,7 +48,7 @@ export interface ReassessResponse {
   findings: Finding[];
   observations: Observation[];
   inputs: EvidenceInput[];
-  followup: { actionId: ActionId; inputLabel: string; evidenceIds: string[]; userReport: string | null };
+  followup: { actionId: ActionId; inputLabel: string; evidenceIds: string[]; userReport: string | null; reportedAnswer: string | null };
   inference: { latencyMs: number; attempts: number } | null;
   warnings: string[];
   followupCount: number;

@@ -52,7 +52,7 @@ npm run build && npm start      # production build on http://localhost:3000
 2. Tick the privacy box → **Check this booking**. Muse Spark reads both screenshots (~5 s). Result: *We can't confirm this booking channel yet* — the cropped page screenshot doesn't show which page it is.
 3. **Let's check** → Trace suggests comparing your page's address with the pages the resort's own website lists. Click **Use the sample's page link** → **Compare and update my result**.
 4. The page finding changes from *Can't tell* to *Matches our record*. Who is sending the messages and whose GCash it is stay open.
-5. Try **Sample B** (a lookalike page and a different phone number → *Some details don't match*; reporting what the resort "said" changes nothing, by design) and **Sample C** (a resort not on file → no safe check available).
+5. Try **Sample B** (a lookalike page and a different phone number → *Some details don't match*; Meta AI suggests either calling the number on file or messaging the resort from its listed page; what you report is kept as a note and changes nothing, by design) and **Sample C** (a resort not on file → no safe check available).
 6. Then use your own screenshot of a real resort's Facebook page — for example one of the [13 resorts on file](docs/registry-audit.md) — via **Check a booking**.
 
 ### Live vs. simulated
@@ -61,8 +61,8 @@ Everything is live. There is **no replay, stub or cached-answer mode**: every sc
 
 ## How a check flows
 
-1. **Analyze** (`POST /api/investigations/analyze`): validate inputs (content-sniffed images, strict Facebook-URL parser) → one Muse Spark **extraction** call → deterministic comparison → findings and outcome → one small Muse Spark **planning** call that chooses the next check from the server's candidates (`COMPARE_LGU_REFERENCE_PAGE`, `COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE`, `CHECK_REGISTERED_CONTACT_POLICY`). Anything outside the list, or with unsafe wording, is rejected and replaced by a rule-based plan that the UI labels as such.
-2. **Reassess** (`POST /api/investigations/reassess`): exactly one follow-up, carried in an AES-256-GCM encrypted, expiring case token (no database). A new link is compared without fetching it; a new screenshot gets one more extraction call; a phone-call report is kept as the user's note and cannot change any finding. Findings are recomputed against the same registry snapshot and returned as a before/after diff.
+1. **Analyze** (`POST /api/investigations/analyze`): validate inputs (content-sniffed images, strict Facebook-URL parser) → one Muse Spark **extraction** call → deterministic comparison → findings and outcome → one small Muse Spark **planning** call that chooses the next check from the server's candidates (`COMPARE_LGU_REFERENCE_PAGE`, `COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE`, `CHECK_REGISTERED_CONTACT_POLICY`, `MESSAGE_FROM_LISTED_PAGE`). Anything outside the list, or with unsafe wording, is rejected and replaced by a rule-based plan that the UI labels as such.
+2. **Reassess** (`POST /api/investigations/reassess`): exactly one follow-up, carried in an AES-256-GCM encrypted, expiring case token (no database). A new link is compared without fetching it; a new screenshot gets one more extraction call; a phone-call report, or what the user saw after tapping **Message** on the listed page (same conversation / new empty chat), is kept as the user's note and cannot change any finding — Trace can't see Messenger, so it never claims to know who is behind a chat. Findings are recomputed against the same registry snapshot and returned as a before/after diff.
 
 Outcomes are one of: *No conflict found in what we could check*, *Possible booking-channel mismatch*, *Not enough evidence* — each with "This can't promise the page is real or that paying is safe."
 
