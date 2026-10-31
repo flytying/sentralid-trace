@@ -1,5 +1,5 @@
 // Labelled synthetic demo scenarios (PRD §10.1). All businesses and screenshots are fictional.
-export type SampleKey = "A" | "B" | "C";
+export type SampleKey = "A" | "B" | "C" | "D";
 
 export interface SampleScenario {
   key: SampleKey;
@@ -42,8 +42,16 @@ export const SAMPLES: Record<SampleKey, SampleScenario> = {
     unlistedName: "Isla Verde Hideaway",
     chatImages: ["/samples/C-chat-islaverde-cropped.png"],
   },
+  D: {
+    key: "D",
+    title: "The right page, but who's in the chat?",
+    summary: "Mirasol Cove Resort's page and number match our records — but the chat wants a deposit to a personal GCash today.",
+    businessId: "sample-mirasol-cove",
+    pageImage: "/samples/D-page-mirasolcove.png",
+    chatImages: ["/samples/D-chat-mirasolcove-deposit.png"],
+  },
 };
 
 export function isSampleKey(v: unknown): v is SampleKey {
-  return v === "A" || v === "B" || v === "C";
+  return v === "A" || v === "B" || v === "C" || v === "D";
 }

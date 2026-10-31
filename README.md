@@ -8,7 +8,7 @@ Entry for the **Meta Global AI Developer Hackathon** — Indie Developer track, 
 |---|---|
 | Runtime AI | Meta `muse-spark-1.3` (Standard mode) via `https://api.meta.ai/v1` — the only AI the app calls |
 | Real records | 13 San Juan, Batangas resorts, each tied to its Facebook page by the LGU tourism directory |
-| Tests | 122 unit/route tests · live 3 × 5 demo runs: 15/15 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
+| Tests | 131 unit/route tests · live 4 × 5 demo runs: 20/20 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
 
 ## Why this isn't "ask a chatbot"
 
@@ -52,7 +52,7 @@ npm run build && npm start      # production build on http://localhost:3000
 2. Tick the privacy box → **Check this booking**. Muse Spark reads both screenshots (~5 s). Result: *We can't confirm this booking channel yet* — the cropped page screenshot doesn't show which page it is.
 3. **Let's check** → Trace suggests comparing your page's address with the pages the resort's own website lists. Click **Use the sample's page link** → **Compare and update my result**.
 4. The page finding changes from *Can't tell* to *Matches our record*. Who is sending the messages and whose GCash it is stay open.
-5. Try **Sample B** (a lookalike page and a different phone number → *Some details don't match*; Meta AI suggests either calling the number on file or messaging the resort from its listed page; what you report is kept as a note and changes nothing, by design) and **Sample C** (a resort not on file → no safe check available).
+5. Try **Sample B** (a lookalike page and a different phone number → *Some details don't match*; Meta AI suggests either calling the number on file or messaging the resort from its listed page; what you report is kept as a note and changes nothing, by design) **Sample C** (a resort not on file → no safe check available) and **Sample D** (the page and number match our records, but the chat wants a deposit to a personal GCash → Meta AI suggests messaging the resort from its listed page; tick *It opened a new, empty chat* to see the guidance).
 6. Then use your own screenshot of a real resort's Facebook page — for example one of the [13 resorts on file](docs/registry-audit.md) — via **Check a booking**.
 
 ### Live vs. simulated
@@ -95,7 +95,7 @@ TRACE_URL=http://localhost:3000 npm run qa:repeat -- 5   # live: 3 scenarios × 
 
 Tests cover the trust invariants from the design (every finding cites evidence; a screenshot alone can't corroborate; payment never upgrades; only allowlisted checks; one follow-up; unrelated findings stay byte-identical), provider failures (401/429/500/timeout/malformed output never produce a result), tampered/expired/replayed case tokens, image sniffing and log hygiene.
 
-Latest live report: [docs/qa/repeat-runs-2026-10-31.md](docs/qa/repeat-runs-2026-10-31.md) — 15/15 runs matched expectations on a production build; analyze end-to-end 4.1–9.1 s.
+Latest live report: [docs/qa/repeat-runs-2026-10-31.md](docs/qa/repeat-runs-2026-10-31.md) — 20/20 runs matched expectations on a production build; analyze end-to-end 3.1–9.1 s.
 
 ## Model settings
 

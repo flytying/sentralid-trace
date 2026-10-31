@@ -12,7 +12,7 @@ Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · �
 | 2 | Repo runs live from a clean checkout per README, with a judge's own key | ✅ | Fresh `git clone` from GitHub on 31 Oct: `npm ci`, tests 122/122, typecheck, lint, registry gate, `smoke:meta`, `build`, `start`, and Sample A clicked through to the updated result |
 | 3 | A new, unseen screenshot invokes Meta and yields evidence-linked results | ✅ | Real Altogrand page screenshot (not in repo): live extraction, page link matched from address bar ([QA report](qa/repeat-runs-2026-10-31.md)) |
 | 4 | One counterfactual question + validated reassessment visibly changes a supported claim | ✅ | Sample A: page finding *Can't tell → Matches our record*, citing `CLM-sample-lc-fb-2`; other findings unchanged |
-| 5 | Three demo scenarios × five production repetitions | ✅ 15/15 | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
+| 5 | Demo scenarios × five production repetitions | ✅ 20/20 (Samples A–D) | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
 | 6 | No safety or privacy critical defect | ✅ (no known open) | Trust-invariant tests, adversarial eval, log-hygiene test, no storage of uploads |
 | 7 | Public repo with hackathon-built code and licensed/synthetic assets only | ✅ | Public at github.com/flytying/sentralid-trace; synthetic samples; no resort photos/logos; LICENSE: all rights reserved, evaluation-only permission for judges |
 | 8 | 3-minute demo video, accessible without login | ⏳ | Script: [demo-script.md](demo-script.md) |
@@ -46,7 +46,7 @@ Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · �
 ```bash
 git pull && npm ci && npm test && npm run typecheck && npm run lint && npm run registry:gate
 npm run smoke:meta
-npm run build && npm start   # click through Samples A, B, C and one real screenshot
+npm run build && npm start   # click through Samples A–D and one real screenshot
 ```
 
 Then open the repo and video links in a logged-out browser, submit on Cerebral Valley, and save the confirmation.

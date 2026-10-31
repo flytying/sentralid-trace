@@ -85,6 +85,21 @@ describe("VerifyNext candidates", () => {
     expect(plan.hypotheses?.b).toMatch(/different account/);
   });
 
+  it("D: page and number match the record → the Messenger check is the only one offered", () => {
+    const mirasol: CaseSubject = { businessId: "sample-mirasol-cove", label: "Mirasol Cove Resort", samples: true };
+    const f = compareEvidence(samples, mirasol, [PAGE, CHAT], [
+      o("OBS-1", { field: "facebook_url", value: "facebook.com/mirasolcoveanilao" }),
+      o("OBS-2", { field: "phone", value: "(043) 555 0188" }),
+      o("OBS-3", { inputId: "IN-CHAT-1", field: "chat_sender_label", value: "Mirasol Cove Resort" }),
+      o("OBS-4", { inputId: "IN-CHAT-1", field: "payment_instruction", value: "GCash M. Lopez 0917 ••• 3305" }),
+    ]);
+    expect(f.find((x) => x.kind === "facebook_page_url")?.state).toBe("match");
+    expect(f.find((x) => x.kind === "reservation_phone")?.state).toBe("match");
+    const plan = buildPlanInput(samples, mirasol, f);
+    expect(plan.target?.id).toBe("F-sender");
+    expect(plan.candidates.map((c) => c.actionId)).toEqual(["MESSAGE_FROM_LISTED_PAGE"]);
+  });
+
   it("A: the Messenger check isn't offered while we can't even see which page it is", () => {
     const f = compareEvidence(samples, lumen, [PAGE, CHAT], sampleA);
     expect(buildPlanInput(samples, lumen, f).candidates.map((c) => c.actionId)).not.toContain("MESSAGE_FROM_LISTED_PAGE");

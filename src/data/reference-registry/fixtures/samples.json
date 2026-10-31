@@ -35,6 +35,23 @@
       ],
       "reviewerNote": "Made-up resort for sample B (lookalike page). Not a real business.",
       "synthetic": true
+    },
+    {
+      "id": "sample-mirasol-cove",
+      "displayName": "Mirasol Cove Resort",
+      "province": "Batangas",
+      "locality": "Mabini",
+      "registryStatus": "admitted",
+      "reviewedAt": "2026-10-31",
+      "sourceIds": [
+        "SRC-SAMPLE-MC-DIR"
+      ],
+      "claimIds": [
+        "CLM-sample-mc-fb-1",
+        "CLM-sample-mc-phone"
+      ],
+      "reviewerNote": "Made-up resort for sample D (real page, chat asking for a deposit). Not a real business.",
+      "synthetic": true
     }
   ],
   "sources": [
@@ -68,6 +85,17 @@
       "url": "https://tourism-directory.example/bahay-dagat",
       "observedAt": "2026-10-28T00:00:00Z",
       "reviewedAt": "2026-10-28",
+      "method": "Synthetic record for demonstration. Not a real source.",
+      "permittedUse": "Synthetic demo data."
+    },
+    {
+      "id": "SRC-SAMPLE-MC-DIR",
+      "kind": "local_tourism_directory",
+      "ownerName": "Example regional tourism office (fictional)",
+      "title": "Example tourism accreditation listing — Mirasol Cove Resort (synthetic)",
+      "url": "https://tourism-directory.example/mirasol-cove",
+      "observedAt": "2026-10-31T00:00:00Z",
+      "reviewedAt": "2026-10-31",
       "method": "Synthetic record for demonstration. Not a real source.",
       "permittedUse": "Synthetic demo data."
     }
@@ -137,6 +165,31 @@
         "SRC-SAMPLE-BD-DIR"
       ],
       "reviewedAt": "2026-10-28"
+    },
+    {
+      "id": "CLM-sample-mc-fb-1",
+      "businessId": "sample-mirasol-cove",
+      "kind": "facebook_page_url",
+      "value": "https://www.facebook.com/mirasolcoveanilao",
+      "normalizedValue": "facebook.com/mirasolcoveanilao",
+      "label": "Main page",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-MC-DIR"
+      ],
+      "reviewedAt": "2026-10-31"
+    },
+    {
+      "id": "CLM-sample-mc-phone",
+      "businessId": "sample-mirasol-cove",
+      "kind": "reservation_phone",
+      "value": "+63 43 555 0188",
+      "normalizedValue": "+63435550188",
+      "trust": "corroborated",
+      "sourceIds": [
+        "SRC-SAMPLE-MC-DIR"
+      ],
+      "reviewedAt": "2026-10-31"
     }
   ]
 }

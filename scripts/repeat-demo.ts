@@ -34,6 +34,13 @@ const SCENARIOS = {
     chats: [`${S}/C-chat-islaverde-cropped.png`],
     expect: { first: "insufficient_evidence", after: null, changes: null, checkStatus: "no_safe_check" },
   },
+  D: {
+    business: "sample-mirasol-cove",
+    page: `${S}/D-page-mirasolcove.png`,
+    chats: [`${S}/D-chat-mirasolcove-deposit.png`],
+    followup: { reportedAnswer: "new_chat" },
+    expect: { first: "no_material_conflict_observed", after: "no_material_conflict_observed", changes: 0, checkStatus: "check_available", action: "MESSAGE_FROM_LISTED_PAGE" },
+  },
 } as const;
 
 async function file(path: string) {
@@ -85,6 +92,7 @@ async function runScenario(key: keyof typeof SCENARIOS, run: number): Promise<Ro
   if (!d.inferencePerformed) row.notes.push("no live inference");
   if (d.outcome !== sc.expect.first) row.notes.push(`first outcome ${d.outcome}`);
   if (d.nextCheck.status !== sc.expect.checkStatus) row.notes.push(`check status ${d.nextCheck.status}`);
+  if (sc.expect.action && d.nextCheck.actionId !== sc.expect.action) row.notes.push(`check ${d.nextCheck.actionId}`);
   if (d.findings.some((f: Json) => f.kind === "payment_instruction" && f.state !== "unknown")) row.notes.push("payment not unknown");
 
   if (sc.followup && d.nextCheck.actionId) {
@@ -95,7 +103,7 @@ async function runScenario(key: keyof typeof SCENARIOS, run: number): Promise<Ro
     if (pageAction && sc.followup.extraPageUrl) f.set("extraPageUrl", sc.followup.extraPageUrl);
     else if (!pageAction && sc.followup.reportedAnswer)
       // Each report-type check has its own answers; send the "it's theirs" answer for whichever was chosen.
-      f.set("reportedAnswer", d.nextCheck.actionId === "MESSAGE_FROM_LISTED_PAGE" ? "same_chat" : sc.followup.reportedAnswer);
+      f.set("reportedAnswer", d.nextCheck.actionId === "MESSAGE_FROM_LISTED_PAGE" && sc.followup.reportedAnswer === "confirmed" ? "same_chat" : sc.followup.reportedAnswer);
     else if (sc.followup.extraPageUrl) f.set("reportedAnswer", "confirmed");
     else f.set("extraPageUrl", sc.url);
     const r = await post("/api/investigations/reassess", f);
@@ -159,6 +167,7 @@ Server: production build (\`next build\` + \`next start\`), live Meta \`muse-spa
 | A | not enough evidence → (documented reservations link) → no conflict found; exactly 1 finding changes; payment stays unknown |
 | B | possible mismatch → (user report: "they said yes" for the phone check, or "same conversation" for the Messenger check — whichever Meta AI chose) → unchanged; 0 findings change |
 | C | not enough evidence; no safe check available (resort not on file) |
+| D | no conflict found (page and number match) → Messenger check is the one offered → (user report: "new, empty chat") → unchanged; 0 findings change; payment stays unknown |
 
 ## Runs
 
