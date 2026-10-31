@@ -18,7 +18,9 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      {/* Browser extensions (e.g. Web of Trust) add attributes to <body> before React loads.
+          This only ignores attribute differences on <body> itself, not anything inside it. */}
+      <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
         <div className="shell">
           <SiteHeader />
           <main className="container">{children}</main>
