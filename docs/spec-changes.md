@@ -1,6 +1,8 @@
 # Spec amendments
 
-The specs (BRD v1.3, PRD v1.4, TDD v1.2) were written before the build. These are the deliberate changes made during it. Each one amends the section named, and where this file and a spec disagree, this file is current. Everything else in the specs stands as written.
+The specs (BRD v1.3, PRD v1.4, TDD v1.2) were written before the build. These are the deliberate changes made during it. Each one amends the section named, and everything else in the specs stands as written.
+
+The specs have since been reissued with these changes folded in, as **BRD v1.4, PRD v1.5 and TDD v1.3** (31 Oct 2026). Those are the entrant's working documents and are not in this repository. This file is the record of what changed and why.
 
 | # | Amends | Change |
 |---|---|---|
