@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { ImageUp, ShieldAlert, X } from "lucide-react";
+import { ImageUp, Info, ShieldAlert, X } from "lucide-react";
 import { FACEBOOK_URL_ERROR_TEXT, parseFacebookUrl, displayFacebookUrl } from "@/lib/facebook-url";
 import { CLIENT_MAX_TOTAL_BYTES, PrepareError, prepareImage } from "./compress";
 import styles from "./workspace.module.css";
@@ -108,7 +108,8 @@ export function EvidenceForm({ evidence, onChange, onSubmit, onBack, isSample }:
 
       {isSample && (
         <p className={styles.sampleNote}>
-          This sample is filled in with made-up screenshots. They&apos;ll be read live by Meta AI, just like your own.
+          <Info size={17} aria-hidden="true" style={{ flex: "none", marginTop: 2 }} />
+          <span>This sample is filled in with made-up screenshots. They&apos;ll be read live by Meta AI, just like your own.</span>
         </p>
       )}
 

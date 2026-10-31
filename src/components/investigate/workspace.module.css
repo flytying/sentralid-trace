@@ -517,7 +517,11 @@
 /* Evidence form */
 .sampleNote {
   margin: 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
   background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
   color: var(--brand-hover);
   border-radius: 12px;
   padding: 12px 14px;
@@ -940,15 +944,21 @@
   padding: 16px;
   border-radius: 14px;
 }
+.outcome {
+  border: 1px solid transparent;
+}
 .outcome[data-tone="ok"] {
+  border-color: var(--ok-line);
   background: var(--ok-bg);
   color: var(--ok-fg);
 }
 .outcome[data-tone="warn"] {
+  border-color: var(--warn-line);
   background: var(--warn-bg);
   color: var(--warn-fg);
 }
 .outcome[data-tone="unk"] {
+  border-color: var(--unk-line);
   background: var(--unk-bg);
   color: var(--unk-fg);
 }
@@ -975,6 +985,7 @@
   padding: 12px 14px;
   border-radius: 12px;
   background: var(--unk-bg);
+  border: 1px solid var(--unk-line);
   font-size: var(--fs-body);
   color: var(--text-2);
   line-height: 1.5;
@@ -1180,6 +1191,7 @@
   padding: 12px 14px;
   border-radius: 12px;
   background: var(--unk-bg);
+  border: 1px solid var(--unk-line);
   font-size: var(--fs-body);
   color: var(--text-2);
   line-height: 1.5;

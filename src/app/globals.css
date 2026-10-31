@@ -18,12 +18,13 @@
   --muted-2: #7d8f95;
   --muted-3: #8aa0a6;
 
-  --brand: #237f87;
-  --brand-hover: #1b666d;
+  --brand: #1e737a; /* ≥4.5:1 as small text on --bg, --brand-soft and --line; white on it 5.5:1 */
+  --brand-hover: #175c62;
   --brand-soft: #e8f3f3;
   --brand-tint: #eaf4f4;
   --brand-light: #7cc3c6;
   --brand-pale: #9fd6d8;
+  --brand-line: #b4d8da;
   --focus: #9dcfd1;
 
   --bg: #f4f8f8;
@@ -36,6 +37,7 @@
   --ok-fg: #2f6b3f;
   --ok-icon: #3c8a50;
   --ok-bg: #e7f1e8;
+  --ok-line: #b9d8bf;
   --warn-fg: #8a4b05;
   --warn-strong: #6b3a04;
   --warn-icon: #c47a12;
@@ -45,6 +47,7 @@
   --unk-fg: #4d6169;
   --unk-icon: #8a93a0;
   --unk-bg: #eef0f3;
+  --unk-line: #d2d8df;
 
   --shadow-card: 0 1px 2px rgba(14, 52, 66, 0.04), 0 10px 30px -12px rgba(14, 52, 66, 0.1);
   --shadow-float: 0 2px 4px rgba(14, 52, 66, 0.04), 0 24px 48px -16px rgba(14, 52, 66, 0.18);
@@ -144,8 +147,8 @@ main.container {
   color: #fff;
 }
 .btn-primary:disabled {
-  background: var(--line-strong);
-  color: var(--muted);
+  background: var(--line);
+  color: var(--muted); /* 4.5:1 */
   cursor: not-allowed;
 }
 .btn-secondary {
