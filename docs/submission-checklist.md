@@ -29,7 +29,7 @@ Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec
 | HG-04 | Not a basic RAG / image analyzer | ✅ Demo shows check selection, validation and claim-level reassessment |
 | HG-05 | Meaningful Meta model use; only Meta models at runtime | ✅ Muse Spark for extraction and check selection; host/model allowlist; no other AI dependency |
 | HG-06 | Submit before cutoff | ⏳ |
-| HG-07 | 3-min video + public repo links; hosted product optional | ⏳ video · ➖ hosting |
+| HG-07 | 3-min video + public repo links; hosted product optional | ⏳ video · ➖ not hosted (decided) |
 | HG-08 | Video covers impact, Meta use, depth, demo equally | ⏳ follow the script |
 | HG-09 | Solo entrant attribution | ⏳ confirm entrant name on the submission form |
 | HG-10 | Meta API credits / billing alerts | ⏳ confirm spend alert is set on the Meta account |
@@ -37,7 +37,7 @@ Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec
 ## Owner decisions still open
 
 1. **License — decided and confirmed (31 Oct):** all rights reserved, with permission for organizers/judges to run it for evaluation. Organizers confirmed no specific or OSI-approved license is required: the repo must be public and runnable by judges from its setup instructions, plus the 3-minute video ([participant resources](https://cerebralvalley.ai/e/meta-ai-developer-hackathon/details)). Check the participant agreement for any rights it grants the organizers (e.g. publicity or demo use); those would apply alongside this.
-2. **Hosting (optional).** If you want a hosted URL: deploy to Vercel with `MODEL_API_KEY`, `CASE_SEAL_KEY` set as server env vars, add a Vercel Firewall rate-limit rule on `/api/investigations/*`, set a Meta spend alert, and re-run `npm run qa:repeat` against the deployed URL. Document any access restriction in the README.
+2. **Hosting — decided: not hosted (31 Oct).** Optional per the rules; judges run it locally with their own Meta key, which keeps the entrant's API credits out of reach of public traffic. (Testing so far: about $2 of credits for 100+ live checks, roughly 1–2 cents each.)
 3. **Video.** Record per [demo-script.md](demo-script.md); upload unlisted/public (YouTube or similar) and check it plays logged out.
 4. **Separate signed participation agreement**, if any — review independently.
 
