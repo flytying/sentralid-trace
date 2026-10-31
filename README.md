@@ -84,7 +84,7 @@ Sample resorts (Lumen Cove, Bahay Dagat, Isla Verde) are fictional, kept in a se
 ## Testing and QA
 
 ```bash
-npm test                 # 122 unit + route tests (no network)
+npm test                 # 131 unit + route tests (no network)
 npm run typecheck && npm run lint
 npm run registry:gate    # ≥10 reviewed real records
 npm run smoke:meta       # live: key, image input, JSON-schema output
@@ -138,7 +138,7 @@ docs/                    registry audit, QA reports, demo script, submission che
 
 ## Built during the hackathon (Oct 27 – Nov 4, 2026)
 
-All code in this repository was written during the event; the commit history shows the progression. Inputs prepared earlier in the event by the entrant — the BRD/PRD/TDD specifications, a clickable HTML prototype whose visual design was ported here, and the synthetic sample screenshots — are not code in this repo except the sample images.
+All code in this repository was written during the event; the commit history shows the progression. Inputs prepared earlier in the event by the entrant — the BRD/PRD/TDD specifications and a clickable HTML prototype whose visual design was ported here — are not in this repo. The synthetic sample screenshots are generated in the repo by `eval/samples-src/render.mjs`. Deliberate changes from the specs (a fourth safe check, a fourth sample, a contacts-only source kind, made-up sample resorts) are recorded in [docs/spec-changes.md](docs/spec-changes.md).
 
 - **Phase 1 — Foundation:** Next.js app shell and design system, fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
 - **Phase 2 — Registry:** claim/source data model with validation and admission gate, 13 reviewed real records, strict Facebook URL parser, search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic samples.
@@ -146,6 +146,7 @@ All code in this repository was written during the event; the commit history sho
 - **Phase 4 — VerifyNext:** safe-check catalog, competing explanations, model-chosen and validated check with rule-based fallback, one sealed follow-up, claim-level before/after diff, check and updated-result screens.
 - **Phase 5 — Hardening:** mentioned-link and ambiguous-address guards, adversarial screenshots and live eval, rate limiting, security headers, route-level failure tests, accessibility fixes, 3 × 5 live repeat runs.
 - **Phase 6 — Submission:** this README, clean-checkout verification, demo script and submission checklist.
+- **Phase 7 — Depth and polish:** phone numbers and emails from each resort's listed page (contacts-only source kind with admission checks); a fourth safe check, *message the resort from its listed page*, and Sample D to show it; realistic generated sample screenshots; a progress screen that plays out the real stages; redesigned check, result and side-panel screens; full-size screenshot viewer; a type scale and a WCAG AA contrast pass; 4 × 5 live repeat runs (20/20).
 
 ## Third-party software and data
 
