@@ -1142,10 +1142,17 @@
   border-radius: 999px;
   padding: 1px 8px;
 }
+/* Empty states sit in the same card shell as findings, so every group reads the same way. */
 .emptyGroup {
   margin: 0;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
   font-size: var(--fs-body);
   color: var(--muted);
+  line-height: 1.5;
 }
 .finding {
   overflow: hidden;
