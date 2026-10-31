@@ -5,6 +5,7 @@ import { ChevronDown, CircleCheck, CircleHelp, Cpu, Link2, TriangleAlert } from 
 import type { AnalyzeResponse } from "@/lib/case/state";
 import { FIELD_LABEL, NOT_A_GUARANTEE, OUTCOME_COPY, STATE_CHIP, findingCopy } from "@/lib/engine/copy";
 import type { Finding, FindingState } from "@/lib/engine/types";
+import { NextCheckCard } from "./CheckView";
 import { formatDate } from "./format";
 import type { ReferenceView } from "./types";
 import styles from "./workspace.module.css";
@@ -17,7 +18,17 @@ const GROUPS: { state: FindingState; label: string; short: string; desc: string;
 
 const ICON = { ok: CircleCheck, warn: TriangleAlert, unk: CircleHelp };
 
-export function Findings({ result, reference, note, onEdit, onRestart }: { result: AnalyzeResponse; reference: ReferenceView | null; note: string; onEdit: () => void; onRestart: () => void }) {
+interface FindingsProps {
+  result: AnalyzeResponse;
+  reference: ReferenceView | null;
+  note: string;
+  onEdit: () => void;
+  onRestart: () => void;
+  onStartCheck: () => void;
+  onFinish: () => void;
+}
+
+export function Findings({ result, reference, note, onEdit, onRestart, onStartCheck, onFinish }: FindingsProps) {
   const outcome = OUTCOME_COPY[result.outcome];
   const OutcomeIcon = ICON[outcome.tone];
   const obsById = new Map(result.observations.map((o) => [o.id, o]));
@@ -40,6 +51,8 @@ export function Findings({ result, reference, note, onEdit, onRestart }: { resul
           <p>{counts.filter((c) => c.n).map((c) => `${c.n} ${c.g.short}`).join(" · ")}</p>
         </div>
       </div>
+
+      <NextCheckCard next={result.nextCheck} onStart={onStartCheck} synthetic={result.subject.samples} />
 
       <p className={styles.provenance}>
         {result.inferencePerformed ? (
@@ -116,6 +129,15 @@ export function Findings({ result, reference, note, onEdit, onRestart }: { resul
       <p className={styles.disclaimer}>{NOT_A_GUARANTEE}</p>
 
       <div className={styles.actions}>
+        {result.nextCheck.status === "check_available" ? (
+          <button type="button" className="btn btn-primary" onClick={onStartCheck}>
+            Check one more thing
+          </button>
+        ) : (
+          <button type="button" className="btn btn-primary" onClick={onFinish}>
+            See what to do now
+          </button>
+        )}
         <button type="button" className="btn btn-secondary" onClick={onEdit}>
           Change what I sent
         </button>

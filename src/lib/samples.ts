@@ -11,6 +11,8 @@ export interface SampleScenario {
   pageUrl?: string;
   pageImage?: string;
   chatImages: string[];
+  /** Demo helper for the follow-up step: the link the (made-up) chat page would show. */
+  followupLink?: string;
 }
 
 export const SAMPLES: Record<SampleKey, SampleScenario> = {
@@ -21,6 +23,7 @@ export const SAMPLES: Record<SampleKey, SampleScenario> = {
     businessId: "sample-lumen-cove",
     pageImage: "/samples/A-page-lumencove-cropped.png",
     chatImages: ["/samples/A-chat-lumencove-gcash.png"],
+    followupLink: "facebook.com/lumencove.reservations",
   },
   B: {
     key: "B",

@@ -2,7 +2,7 @@
 // Observations are untrusted; only registry claims carry authority (TDD §3.2, §5.1).
 
 export type InputId = "IN-URL" | "IN-PAGE" | "IN-CHAT-1" | "IN-CHAT-2" | "IN-CHAT-3" | "IN-FOLLOWUP";
-export type InputKind = "page_url" | "page_screenshot" | "chat_screenshot" | "followup_screenshot" | "followup_url";
+export type InputKind = "page_url" | "page_screenshot" | "chat_screenshot" | "followup_screenshot" | "followup_url" | "followup_report";
 
 export interface EvidenceInput {
   id: InputId;
@@ -28,7 +28,8 @@ export type Clarity = "clear" | "uncertain" | "unreadable";
 export interface Observation {
   id: string; // OBS-n
   inputId: InputId;
-  field: ObservationField;
+  /** "user_report" records what the user says they were told; the engine never compares it. */
+  field: ObservationField | "user_report";
   /** Display-safe value (account numbers masked). Null when absent or unreadable. */
   value: string | null;
   excerpt: string | null;

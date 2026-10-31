@@ -9,6 +9,8 @@ import { MAX_TOTAL_BYTES, readImage } from "../image";
 import type { ReasoningEffort } from "../meta/client";
 import { extractObservations, type ImageInput } from "../meta/extract";
 import { isServable, loadRealRegistry, loadSampleRegistry } from "../registry/load";
+import { buildPlanInput } from "../verify/catalog";
+import { planNextCheck } from "../verify/plan";
 import { decodeSealKey, seal } from "./seal";
 import type { AnalyzeResponse, CaseState } from "./state";
 
@@ -17,6 +19,8 @@ export const EXTRACTION_EFFORT: ReasoningEffort = "minimal";
 
 export interface AnalyzeLog {
   requestId: string;
+  plannerMs?: number | null;
+  plan?: string;
   inputs: string[];
   modelLatencyMs: number | null;
   attempts: number;
@@ -92,6 +96,10 @@ export async function analyzeCase(form: FormData, log: (entry: AnalyzeLog) => vo
   // ---- Deterministic comparison --------------------------------------------------------------
   const findings = compareEvidence(reg, subject, inputs, observations);
   const outcome = reduceOutcome(findings, subject);
+
+  // ---- VerifyNext: one safe check. URL-only cases stay model-free (rule-based plan). ----------
+  const meta = { baseUrl: env.META_BASE_URL, apiKey: env.MODEL_API_KEY, model: env.MODEL_ID, timeoutMs: env.MODEL_TIMEOUT_MS };
+  const plan = await planNextCheck(images.length ? meta : null, buildPlanInput(reg, subject, findings), { reasoningEffort: EXTRACTION_EFFORT });
   const unreadableInputIds = images
     .map((i) => i.input.id)
     .filter((id) => !observations.some((o) => o.inputId === id && o.value !== null));
@@ -106,6 +114,7 @@ export async function analyzeCase(form: FormData, log: (entry: AnalyzeLog) => vo
     observations,
     findingIds: findings.map((f) => f.id),
     outcome,
+    allowedActionIds: plan.next.allowedActionIds,
     followupCount: 0,
   };
   const sealedCaseToken = seal(state, decodeSealKey(env.CASE_SEAL_KEY), env.CASE_TTL_SECONDS);
@@ -117,6 +126,8 @@ export async function analyzeCase(form: FormData, log: (entry: AnalyzeLog) => vo
     attempts: inference?.attempts ?? 0,
     observationCount: observations.length,
     outcome,
+    plannerMs: plan.latencyMs,
+    plan: `${plan.next.status}:${plan.next.actionId ?? "-"}:${plan.next.selectedBy}`,
   });
 
   return {
@@ -132,7 +143,8 @@ export async function analyzeCase(form: FormData, log: (entry: AnalyzeLog) => vo
     outcome,
     warnings,
     unreadableInputIds,
-    nextCheck: null,
+    nextCheck: plan.next,
+    planner: images.length ? { latencyMs: plan.latencyMs } : null,
     sealedCaseToken,
   };
 }

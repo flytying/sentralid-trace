@@ -54,6 +54,11 @@ npm run registry:gate  # release gate: ≥10 reviewed, admitted real records
 npm run eval:extraction -- minimal low   # live extraction on the synthetic samples (uses your key)
 ```
 
+## How a check flows
+
+1. **Analyze** (`POST /api/investigations/analyze`): screenshots → one Muse Spark extraction call → fixed comparison rules → findings and outcome. A second, small Muse Spark call picks **one** next check from the server's candidate list (`COMPARE_LGU_REFERENCE_PAGE`, `COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE`, `CHECK_REGISTERED_CONTACT_POLICY`) and explains it; anything outside the list or with unsafe wording is rejected and replaced by a rule-based plan that the UI labels as such. Link-only checks make no model calls.
+2. **Reassess** (`POST /api/investigations/reassess`): one follow-up per case, carried in an encrypted, expiring case token. A new link is compared without fetching it; a new screenshot gets one more extraction call; a phone-call report is recorded as the user's note and cannot change any finding. Findings are recomputed against the same registry snapshot and returned as a before/after diff.
+
 ## Model settings and measured behaviour
 
 Screenshot extraction uses `muse-spark-1.3` with `reasoning_effort: "minimal"`, chosen from live runs on 2026-10-31 (single runs, not a benchmark):
@@ -73,6 +78,7 @@ All code in this repository was written during the event. Commit history shows t
 - Phase 1 — Foundation: Next.js app shell and design system (ported from the Trace prototype), fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
 - Phase 2 — Registry: claim/source data model with zod validation and integrity checks, admission gate, strict Facebook URL parser (no fetching), name search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic sample scenarios.
 - Phase 3 — Live investigation: evidence intake (link, page screenshot, up to three ordered chat screenshots, consent), browser-side image shrinking, server-side content sniffing and limits, schema-constrained Muse Spark extraction with one bounded retry, deterministic comparison engine (page link, name, phone, chat sender, payment request), case outcome, sealed case token, findings view with evidence trace, and honest progress/error states.
+- Phase 4 — VerifyNext and reassessment: server-owned catalog of three safe checks, deterministic candidate builder with two competing explanations, Muse Spark choosing one check from the allowlist and wording it (validated; labelled rule-based fallback), one sealed follow-up (page link, screenshot or phone-call report), claim-level before/after diff that changes only justified findings, and the check and updated-result screens.
 
 ## Reference registry
 

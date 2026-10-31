@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { AnalyzeResponse } from "@/lib/case/state";
+import type { AnalyzeResponse, ReassessResponse } from "@/lib/case/state";
 import { SAMPLES, type SampleKey } from "@/lib/samples";
+import { CheckView, type FollowUp } from "./CheckView";
 import { ErrorPanel, type ClientError } from "./ErrorPanel";
 import { EMPTY_EVIDENCE, EvidenceForm, type Evidence, type Shot } from "./EvidenceForm";
 import { Findings } from "./Findings";
 import { OnFilePanel } from "./OnFilePanel";
 import { Progress } from "./Progress";
 import { ResortPicker } from "./ResortPicker";
+import { ResultView } from "./ResultView";
 import { Stepper } from "./Stepper";
 import type { ReferenceView, Selection, StepId } from "./types";
 import styles from "./workspace.module.css";
 
-type View = "business" | "evidence" | "analyzing" | "error" | "findings";
+type View = "business" | "evidence" | "analyzing" | "error" | "findings" | "check" | "result";
 
 const STEP_OF: Record<View, StepId> = {
   business: "business",
@@ -21,6 +23,8 @@ const STEP_OF: Record<View, StepId> = {
   analyzing: "findings",
   error: "findings",
   findings: "findings",
+  check: "check",
+  result: "result",
 };
 
 export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
@@ -31,6 +35,11 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
   const [error, setError] = useState<ClientError | null>(null);
   const [sampleError, setSampleError] = useState(false);
+  const [reassessment, setReassessment] = useState<ReassessResponse | null>(null);
+  const [skipped, setSkipped] = useState(false);
+  const [checkBusy, setCheckBusy] = useState(false);
+  const [checkError, setCheckError] = useState<string | null>(null);
+  const [times, setTimes] = useState<{ analyzed: Date; followup: Date | null }>({ analyzed: new Date(), followup: null });
   const mainRef = useRef<HTMLDivElement>(null);
 
   // A sample scenario preselects its made-up resort and loads its made-up screenshots.
@@ -96,8 +105,42 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
     setEvidence(EMPTY_EVIDENCE);
     setResult(null);
     setError(null);
+    setReassessment(null);
+    setSkipped(false);
     setView("business");
   };
+
+  async function followUp(f: FollowUp) {
+    if (!result?.nextCheck.actionId) return;
+    setCheckBusy(true);
+    setCheckError(null);
+    const form = new FormData();
+    form.set("sealedCaseToken", result.sealedCaseToken);
+    form.set("actionId", result.nextCheck.actionId);
+    if (f.kind === "url") form.set("extraPageUrl", f.url);
+    if (f.kind === "image") {
+      form.set("extraImage", f.file);
+      form.set("consent", "true");
+    }
+    if (f.kind === "report") form.set("reportedAnswer", f.answer);
+    try {
+      const res = await fetch("/api/investigations/reassess", { method: "POST", body: form });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data || data.error) {
+        // Never show a success card for an error; the earlier result stays as it was.
+        setCheckError(`${data?.error?.message ?? "We couldn't update your result. Please try again."} Your result hasn't changed.`);
+        return;
+      }
+      setReassessment(data as ReassessResponse);
+      setSkipped(false);
+      setTimes((t) => ({ ...t, followup: new Date() }));
+      setView("result");
+    } catch {
+      setCheckError("We couldn't reach Trace. Check your connection and try again. Your result hasn't changed.");
+    } finally {
+      setCheckBusy(false);
+    }
+  }
 
   async function analyze() {
     if (!selection) return;
@@ -120,6 +163,9 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
         return;
       }
       setResult(data as AnalyzeResponse);
+      setReassessment(null);
+      setSkipped(false);
+      setTimes({ analyzed: new Date(), followup: null });
       setView("findings");
     } catch {
       setError({ code: "NETWORK", message: "Check your connection and try again. Nothing was analysed.", recoverable: true });
@@ -164,6 +210,40 @@ export function Workspace({ sampleKey }: { sampleKey: SampleKey | null }) {
               reference={selection?.kind === "listed" ? selection.ref : null}
               note={evidence.note}
               onEdit={() => setView("evidence")}
+              onRestart={restart}
+              onStartCheck={() => {
+                setCheckError(null);
+                setView(reassessment ? "result" : "check");
+              }}
+              onFinish={() => {
+                setSkipped(true);
+                setView("result");
+              }}
+            />
+          )}
+          {view === "check" && result?.nextCheck.check && (
+            <CheckView
+              next={result.nextCheck}
+              synthetic={result.subject.samples}
+              sampleLink={sample?.followupLink}
+              busy={checkBusy}
+              error={checkError}
+              onSubmit={followUp}
+              onSkip={() => {
+                setSkipped(true);
+                setTimes((t) => ({ ...t, followup: new Date() }));
+                setView("result");
+              }}
+              onBack={() => setView("findings")}
+            />
+          )}
+          {view === "result" && result && (
+            <ResultView
+              analysis={result}
+              reassessment={reassessment}
+              skipped={skipped && !reassessment}
+              reference={selection?.kind === "listed" ? selection.ref : null}
+              checkedAt={times}
               onRestart={restart}
             />
           )}
