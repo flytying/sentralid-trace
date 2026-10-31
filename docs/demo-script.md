@@ -7,6 +7,7 @@ Setup before recording:
 - Have ready: the Altogrand Beach House page screenshot (real resort on file; not committed to the repo) and the repo open on GitHub.
 - Close other tabs; turn off notifications. Record voice separately if easier.
 - Do one warm-up run so the first Meta call isn't the recorded one.
+- Open the file picker once and cancel it before recording: macOS can take several seconds to open it the first time.
 
 | Time | Screen | Voice-over (≈ 400 words total) |
 |---|---|---|
