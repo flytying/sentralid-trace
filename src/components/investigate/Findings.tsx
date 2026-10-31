@@ -105,7 +105,10 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
       })}
 
       <details className={`card ${styles.readBox}`}>
-        <summary>What we read from what you sent ({result.observations.filter((o) => o.value).length})</summary>
+        <summary>
+          <span>What we read from what you sent ({result.observations.filter((o) => o.value).length})</span>
+          <ChevronDown size={18} aria-hidden="true" className={styles.chev} />
+        </summary>
         <ul>
           {result.observations
             .filter((o) => o.value)

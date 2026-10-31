@@ -978,16 +978,6 @@
 }
 .finding {
   overflow: hidden;
-  border-left-width: 4px;
-}
-.finding[data-tone="ok"] {
-  border-left-color: var(--ok-icon);
-}
-.finding[data-tone="warn"] {
-  border-left-color: var(--warn-icon);
-}
-.finding[data-tone="unk"] {
-  border-left-color: var(--unk-icon);
 }
 .findingHead {
   width: 100%;
@@ -1077,19 +1067,33 @@
   color: var(--muted);
   overflow-wrap: anywhere;
 }
-.readBox {
-  padding: 4px 16px;
-}
 .readBox summary {
   cursor: pointer;
-  padding: 10px 0;
-  font-size: 14.5px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  font-size: 15px;
   font-weight: 600;
+  color: var(--ink);
+}
+.readBox summary::-webkit-details-marker {
+  display: none;
+}
+.readBox summary span {
+  flex: 1;
+}
+.readBox[open] .chev {
+  transform: rotate(180deg);
+}
+.readBox > p {
+  padding: 0 16px 14px;
 }
 .readBox ul {
   list-style: none;
   margin: 0;
-  padding: 0 0 12px;
+  padding: 0 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1426,10 +1430,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-left: 4px solid var(--brand);
 }
 .messengerNext[data-answer="new_chat"] {
-  border-left-color: var(--warn-line);
   background: var(--warn-bg, #fdf6e7);
 }
 .messengerNext p {
