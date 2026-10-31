@@ -499,48 +499,95 @@
   color: var(--text-2);
   line-height: 1.6;
 }
-.dl {
+/* Side panel: details on file (icon, value, "label · from source"), then one row per source. */
+.fileList,
+.srcList {
+  list-style: none;
   margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
-.dl dt {
+.fileList {
+  gap: 12px;
+}
+.fileRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.fileIcon,
+.srcIcon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+.fileIcon[data-empty] {
+  background: var(--unk-bg);
+  color: var(--muted);
+}
+.srcIcon {
+  background: var(--bg);
+  color: var(--text-3);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.fileText {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-top: 1px;
+}
+.fileValue {
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.fileMeta {
   font-size: var(--fs-meta);
   color: var(--muted);
-  font-weight: 600;
+  line-height: 1.4;
 }
-.dl dd {
-  margin: 2px 0 0;
-  font-size: var(--fs-sm);
-  color: var(--brand-hover);
-  word-break: break-all;
-}
-.sources {
+.srcBlock {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 12px;
+  gap: 8px;
+  padding-top: 14px;
   border-top: 1px solid var(--line-3);
 }
-.source {
-  display: flex;
-  flex-direction: column;
+.srcList {
   gap: 2px;
-  font-size: var(--fs-sm);
+  margin: 0 -8px;
 }
-.sourceKind {
+.srcRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+a.srcRow:hover {
+  background: var(--bg);
+}
+a.srcRow:hover .srcName {
+  color: var(--brand);
+}
+.srcName {
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--ink-2);
 }
-.sourceKind .mono {
-  font-weight: 400;
-  font-size: var(--fs-label);
+.srcOut {
+  flex: none;
   color: var(--muted);
-  margin-left: 4px;
-}
-.sourceTitle {
-  color: var(--text-3);
 }
 .sourceUrl {
   font-size: var(--fs-meta);
@@ -548,10 +595,6 @@
   display: inline-flex;
   gap: 4px;
   align-items: center;
-}
-.sourceMeta {
-  font-size: var(--fs-meta);
-  color: var(--muted);
 }
 .scope {
   margin: 0;

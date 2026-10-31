@@ -1,14 +1,23 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Globe, Landmark, Link2, Mail, Phone } from "lucide-react";
 import { displayUrl, formatDate } from "./format";
 import type { Selection } from "./types";
 import styles from "./workspace.module.css";
 
-const SOURCE_KIND_LABEL: Record<string, string> = {
-  local_tourism_directory: "Local government tourism directory",
-  independent_business_site: "The resort's own website",
-  listed_facebook_page: "The resort's listed Facebook page",
-  owner_attestation: "Statement from the resort",
-  other_documented_source: "Other documented source",
+// Full name for the source list, short name for the "from" line under each detail.
+const SOURCE_KIND: Record<string, { label: string; short: string; Icon: typeof Globe }> = {
+  local_tourism_directory: { label: "Tourism office directory", short: "tourism office", Icon: Landmark },
+  independent_business_site: { label: "Resort's own website", short: "resort website", Icon: Globe },
+  listed_facebook_page: { label: "Resort's listed Facebook page", short: "listed page", Icon: Link2 },
+  owner_attestation: { label: "Statement from the resort", short: "resort statement", Icon: Globe },
+  other_documented_source: { label: "Other documented source", short: "other source", Icon: Globe },
+};
+
+const hostOf = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 };
 
 export function OnFilePanel({ selection, onChange }: { selection: Selection; onChange: () => void }) {
@@ -33,6 +42,20 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
   }
 
   const r = selection.ref;
+  const kindOf = new Map(r.sources.map((s) => [s.id, s.kind]));
+  const from = (ids: string[]) => [...new Set(ids.map((id) => SOURCE_KIND[kindOf.get(id) ?? ""]?.short).filter(Boolean))].join(", ");
+  const details = [
+    ...r.facebookPages.map((p) => ({ id: p.claimId, Icon: Link2, value: displayUrl(p.url), label: p.label ?? "Facebook page", src: from(p.sourceIds) })),
+    ...r.contacts.map((c) => ({
+      id: c.claimId,
+      Icon: c.kind === "reservation_phone" ? Phone : c.kind === "reservation_email" ? Mail : Globe,
+      value: c.value,
+      label: c.kind === "reservation_phone" ? "Phone" : c.kind === "reservation_email" ? "Email" : "Website",
+      src: from(c.sourceIds),
+    })),
+  ];
+  const noContacts = !r.contacts.some((c) => c.kind === "reservation_phone" || c.kind === "reservation_email");
+
   return (
     <aside className={`card ${styles.side}`} aria-label="Resort record">
       <div className={styles.sideHead}>
@@ -51,52 +74,72 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
         <p className={styles.recheck}>Needs a recheck. Our record was last checked {formatDate(r.reviewedAt)} and may be out of date.</p>
       )}
 
-      <dl className={styles.dl}>
-        {r.facebookPages.map((p) => (
-          <div key={p.claimId}>
-            <dt>{p.label ?? "Facebook page"}</dt>
-            <dd className="mono">{displayUrl(p.url)}</dd>
-          </div>
-        ))}
-        {r.contacts.map((c) => (
-          <div key={c.claimId}>
-            <dt>{c.kind === "reservation_phone" ? "Reservations phone" : c.kind === "reservation_email" ? "Reservations email" : "Website"}</dt>
-            <dd className="mono">{c.value}</dd>
-          </div>
-        ))}
-        {!r.contacts.some((c) => c.kind === "reservation_phone" || c.kind === "reservation_email") && (
-          <div>
-            <dt>Phone and email</dt>
-            <dd className={styles.help}>
-              None on file yet. The tourism office lists Facebook pages, not phone numbers.
-            </dd>
-          </div>
-        )}
-      </dl>
-
-      <div className={styles.sources}>
-        <span className={styles.sideEyebrow}>Where we got it</span>
-        {r.sources.map((s) => (
-          <div key={s.id} className={styles.source}>
-            <span className={styles.sourceKind}>
-              {SOURCE_KIND_LABEL[s.kind]} <span className="mono">{s.id}</span>
+      <ul className={styles.fileList} aria-label="Details on file">
+        {details.map(({ id, Icon, value, label, src }) => (
+          <li key={id} className={styles.fileRow}>
+            <span className={styles.fileIcon} aria-hidden="true">
+              <Icon size={15} />
             </span>
-            <span className={styles.sourceTitle}>{s.title}</span>
-            {r.synthetic ? (
-              <span className={`mono ${styles.sourceUrl}`}>{s.url} (made-up — doesn&apos;t open)</span>
-            ) : (
-              <a className={`mono ${styles.sourceUrl}`} href={s.url} target="_blank" rel="noopener noreferrer nofollow">
-                {displayUrl(s.url)} <ExternalLink size={12} aria-label="opens in a new tab" />
-              </a>
-            )}
-            <span className={styles.sourceMeta}>Checked {formatDate(s.reviewedAt)}</span>
-          </div>
+            <span className={styles.fileText}>
+              <span className={`mono ${styles.fileValue}`}>{value}</span>
+              <span className={styles.fileMeta}>
+                {label}
+                {src && <> · from {src}</>}
+              </span>
+            </span>
+          </li>
         ))}
+        {noContacts && (
+          <li className={styles.fileRow}>
+            <span className={styles.fileIcon} data-empty="" aria-hidden="true">
+              <Phone size={15} />
+            </span>
+            <span className={styles.fileText}>
+              <span className={styles.fileMeta}>No phone or email on file yet</span>
+            </span>
+          </li>
+        )}
+      </ul>
+
+      <div className={styles.srcBlock}>
+        <span className={styles.sideEyebrow}>Sources</span>
+        <ul className={styles.srcList}>
+          {r.sources.map((s) => {
+            const k = SOURCE_KIND[s.kind] ?? SOURCE_KIND.other_documented_source;
+            const inner = (
+              <>
+                <span className={styles.srcIcon} aria-hidden="true">
+                  <k.Icon size={15} />
+                </span>
+                <span className={styles.fileText}>
+                  <span className={styles.srcName}>{k.label}</span>
+                  <span className={styles.fileMeta}>
+                    {r.synthetic ? "made up · doesn't open" : hostOf(s.url)} · checked {formatDate(s.reviewedAt)}
+                  </span>
+                </span>
+                {!r.synthetic && <ExternalLink size={14} className={styles.srcOut} aria-hidden="true" />}
+              </>
+            );
+            return (
+              <li key={s.id}>
+                {r.synthetic ? (
+                  <span className={styles.srcRow} title={`${s.title} (${s.id})`}>
+                    {inner}
+                  </span>
+                ) : (
+                  <a className={styles.srcRow} href={s.url} target="_blank" rel="noopener noreferrer nofollow" title={`${s.title} (${s.id}) — opens in a new tab`}>
+                    {inner}
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
       <p className={styles.scope}>
-        <strong>This tells us</strong> which Facebook page{r.facebookPages.length > 1 ? "s are" : " is"} linked to this resort by the
-        source above. <strong>It doesn&apos;t tell us</strong> who&apos;s behind a Messenger chat, or whose GCash or bank account it is.
+        <strong>Confirms</strong> which pages and contacts belong to this resort. <strong>Doesn&apos;t confirm</strong> who&apos;s behind a chat or
+        whose GCash or bank account it is.
       </p>
     </aside>
   );
