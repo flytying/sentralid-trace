@@ -158,6 +158,10 @@ Next.js, React, zod, lucide-react (ISC), Geist fonts via `next/font` (SIL OFL); 
 - The rate limiter is per server instance; the case token allows one follow-up per issued token, and an unexpired earlier token could be replayed until it expires (30 min).
 - Latency figures are single-session measurements, not an SLA.
 
+## License
+
+**All rights reserved.** The code is public only so the hackathon can review it: organizers, sponsors and judges may clone and run it to evaluate this entry. No other use, copying or redistribution is permitted without written permission. See [LICENSE](LICENSE).
+
 ## Disclaimer
 
 Trace is a hackathon prototype, not an official Meta product or a fraud-detection service. Its results are not a guarantee of authenticity or booking safety, and it does not certify any payment account.

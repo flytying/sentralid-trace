@@ -14,7 +14,7 @@ Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · �
 | 4 | One counterfactual question + validated reassessment visibly changes a supported claim | ✅ | Sample A: page finding *Can't tell → Matches our record*, citing `CLM-sample-lc-fb-2`; other findings unchanged |
 | 5 | Three demo scenarios × five production repetitions | ✅ 15/15 | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
 | 6 | No safety or privacy critical defect | ✅ (no known open) | Trust-invariant tests, adversarial eval, log-hygiene test, no storage of uploads |
-| 7 | Public repo with hackathon-built code and licensed/synthetic assets only | ✅ / ⏳ license | Public at github.com/flytying/sentralid-trace; synthetic samples; no resort photos/logos. **Choose a LICENSE** (see below) |
+| 7 | Public repo with hackathon-built code and licensed/synthetic assets only | ✅ | Public at github.com/flytying/sentralid-trace; synthetic samples; no resort photos/logos; LICENSE: all rights reserved, evaluation-only permission for judges |
 | 8 | 3-minute demo video, accessible without login | ⏳ | Script: [demo-script.md](demo-script.md) |
 | 9 | Video clearly identifies newly built functionality | ⏳ | Covered in the script's 2:40 segment and README "Built during the hackathon" |
 | 10 | Submission completed on time; receipt saved | ⏳ | — |
@@ -36,7 +36,7 @@ Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · �
 
 ## Owner decisions still open
 
-1. **License.** Without a LICENSE file the code is public but not licensed for reuse; judges can still clone and run it. MIT is the usual choice for hackathon entries.
+1. **License — decided:** all rights reserved, with permission for organizers/judges to run it for evaluation. Check the participant agreement for any rights it grants the organizers (e.g. publicity or demo use); those would apply alongside this.
 2. **Hosting (optional).** If you want a hosted URL: deploy to Vercel with `MODEL_API_KEY`, `CASE_SEAL_KEY` set as server env vars, add a Vercel Firewall rate-limit rule on `/api/investigations/*`, set a Meta spend alert, and re-run `npm run qa:repeat` against the deployed URL. Document any access restriction in the README.
 3. **Video.** Record per [demo-script.md](demo-script.md); upload unlisted/public (YouTube or similar) and check it plays logged out.
 4. **Separate signed participation agreement**, if any — review independently.
