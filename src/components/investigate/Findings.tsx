@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, CircleCheck, CircleHelp, Cpu, Link2, TriangleAlert } from "lucide-react";
+import { ChevronDown, CircleCheck, CircleHelp, Cpu, Info, Link2, TriangleAlert } from "lucide-react";
 import type { AnalyzeResponse } from "@/lib/case/state";
 import { FIELD_LABEL, NOT_A_GUARANTEE, OUTCOME_COPY, STATE_CHIP, findingCopy } from "@/lib/engine/copy";
 import type { Finding, FindingState } from "@/lib/engine/types";
@@ -204,12 +204,15 @@ function FindingCard({
               ))}
             </div>
           </div>
-          <p className={styles.explain}>{copy.explanation}</p>
-          {f.limitations.map((l) => (
-            <p key={l} className={styles.limit}>
-              {l}
-            </p>
-          ))}
+          <div className={styles.findingNotes}>
+            <p className={styles.explain}>{copy.explanation}</p>
+            {f.limitations.map((l) => (
+              <p key={l} className={styles.limit}>
+                <Info size={15} aria-hidden="true" />
+                <span>{l}</span>
+              </p>
+            ))}
+          </div>
           <span className={`mono ${styles.trace}`}>
             {f.rationaleCode} · {[...f.observationIds, ...f.referenceClaimIds].join(", ") || "no evidence ids"}
           </span>
