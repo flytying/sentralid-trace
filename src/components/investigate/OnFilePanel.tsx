@@ -1,6 +1,6 @@
 import { ExternalLink, Globe, Landmark, Link2, Mail, Phone } from "lucide-react";
 import { displayUrl, formatDate } from "./format";
-import type { Selection } from "./types";
+import type { ReferenceView, Selection } from "./types";
 import styles from "./workspace.module.css";
 
 // Full name for the source list, short name for the "from" line under each detail.
@@ -42,20 +42,6 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
   }
 
   const r = selection.ref;
-  const kindOf = new Map(r.sources.map((s) => [s.id, s.kind]));
-  const from = (ids: string[]) => [...new Set(ids.map((id) => SOURCE_KIND[kindOf.get(id) ?? ""]?.short).filter(Boolean))].join(", ");
-  const details = [
-    ...r.facebookPages.map((p) => ({ id: p.claimId, Icon: Link2, value: displayUrl(p.url), label: p.label ?? "Facebook page", src: from(p.sourceIds) })),
-    ...r.contacts.map((c) => ({
-      id: c.claimId,
-      Icon: c.kind === "reservation_phone" ? Phone : c.kind === "reservation_email" ? Mail : Globe,
-      value: c.value,
-      label: c.kind === "reservation_phone" ? "Phone" : c.kind === "reservation_email" ? "Email" : "Website",
-      src: from(c.sourceIds),
-    })),
-  ];
-  const noContacts = !r.contacts.some((c) => c.kind === "reservation_phone" || c.kind === "reservation_email");
-
   return (
     <aside className={`card ${styles.side}`} aria-label="Resort record">
       <div className={styles.sideHead}>
@@ -74,6 +60,35 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
         <p className={styles.recheck}>Needs a recheck. Our record was last checked {formatDate(r.reviewedAt)} and may be out of date.</p>
       )}
 
+      <RecordDetails r={r} />
+
+      <p className={styles.scope}>
+        <strong>Confirms</strong> which pages and contacts belong to this resort. <strong>Doesn&apos;t confirm</strong> who&apos;s behind a chat or
+        whose GCash or bank account it is.
+      </p>
+    </aside>
+  );
+}
+
+/** The details on file (with which source backs each) and the sources. Shared by the side panel
+ *  and the result screen. */
+export function RecordDetails({ r }: { r: ReferenceView }) {
+  const kindOf = new Map(r.sources.map((s) => [s.id, s.kind]));
+  const from = (ids: string[]) => [...new Set(ids.map((id) => SOURCE_KIND[kindOf.get(id) ?? ""]?.short).filter(Boolean))].join(", ");
+  const details = [
+    ...r.facebookPages.map((p) => ({ id: p.claimId, Icon: Link2, value: displayUrl(p.url), label: p.label ?? "Facebook page", src: from(p.sourceIds) })),
+    ...r.contacts.map((c) => ({
+      id: c.claimId,
+      Icon: c.kind === "reservation_phone" ? Phone : c.kind === "reservation_email" ? Mail : Globe,
+      value: c.value,
+      label: c.kind === "reservation_phone" ? "Phone" : c.kind === "reservation_email" ? "Email" : "Website",
+      src: from(c.sourceIds),
+    })),
+  ];
+  const noContacts = !r.contacts.some((c) => c.kind === "reservation_phone" || c.kind === "reservation_email");
+
+  return (
+    <>
       <ul className={styles.fileList} aria-label="Details on file">
         {details.map(({ id, Icon, value, label, src }) => (
           <li key={id} className={styles.fileRow}>
@@ -136,11 +151,6 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
           })}
         </ul>
       </div>
-
-      <p className={styles.scope}>
-        <strong>Confirms</strong> which pages and contacts belong to this resort. <strong>Doesn&apos;t confirm</strong> who&apos;s behind a chat or
-        whose GCash or bank account it is.
-      </p>
-    </aside>
+    </>
   );
 }

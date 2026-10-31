@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowRight, CircleCheck, CircleHelp, ExternalLink, TriangleAlert } from "lucide-react";
+import { ArrowRight, CircleCheck, CircleHelp, TriangleAlert } from "lucide-react";
 import type { AnalyzeResponse, ReassessResponse } from "@/lib/case/state";
 import { NOT_A_GUARANTEE, OUTCOME_COPY, STATE_CHIP, findingCopy } from "@/lib/engine/copy";
 import type { CaseOutcome, Finding } from "@/lib/engine/types";
-import { displayUrl, formatDate } from "./format";
+import { displayUrl } from "./format";
 import type { ReferenceView } from "./types";
+import { RecordDetails } from "./OnFilePanel";
 import styles from "./workspace.module.css";
 
 const ICON = { ok: CircleCheck, warn: TriangleAlert, unk: CircleHelp };
@@ -107,11 +108,11 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
       </section>
 
       {reassessment && (
-        <section className={`card ${styles.looked}`} aria-labelledby="looked-at">
+        <section className={styles.group} aria-labelledby="looked-at">
           <h2 id="looked-at" className={styles.h2}>
             What we looked at
           </h2>
-          <div className={styles.compare}>
+          <div className={`card ${styles.sectionCard} ${styles.compare}`}>
             <div>
               <span className={styles.compareLabel}>What you added</span>
               <span className={styles.compareValue}>
@@ -141,61 +142,43 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
           <h2 id="still-open" className={styles.h2}>
             What&apos;s still open <span className={styles.count}>{unknowns.length}</span>
           </h2>
-          {unknowns.map((f) => (
-            <div key={f.id} className={styles.openItem}>
-              <span className={`chip chip-${STATE_CHIP[f.state].tone}`}>{STATE_CHIP[f.state].text}</span>
-              <span>
-                <strong>{findingCopy(f).title}</strong>
-                <span className={styles.help}>{findingCopy(f).explanation}</span>
-              </span>
-            </div>
-          ))}
+          <ul className={`card ${styles.rowCard}`}>
+            {unknowns.map((f) => (
+              <li key={f.id} className={styles.openItem}>
+                <span>
+                  <strong>{findingCopy(f).title}</strong>
+                  <span className={styles.help}>{findingCopy(f).explanation}</span>
+                </span>
+                <span className={`chip chip-${STATE_CHIP[f.state].tone}`}>{STATE_CHIP[f.state].text}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
       {reference && (
-        <section className={`card ${styles.looked}`} aria-labelledby="contacts">
+        <section className={styles.group} aria-labelledby="contacts">
           <h2 id="contacts" className={styles.h2}>
             The resort&apos;s contact details on file
           </h2>
-          <ul className={styles.contactList}>
-            {reference.facebookPages.map((p) => (
-              <li key={p.claimId}>
-                <span className="mono">{displayUrl(p.url)}</span> · {p.label ?? "Facebook page"}
-              </li>
-            ))}
-            {reference.contacts.map((c) => (
-              <li key={c.claimId}>
-                <span className="mono">{c.value}</span> · {c.kind === "reservation_phone" ? "reservations phone" : c.kind.replace("_", " ")}
-              </li>
-            ))}
-          </ul>
-          {reference.sources.map((s) =>
-            reference.synthetic ? (
-              <span key={s.id} className={styles.help}>
-                From: {s.title}, checked {formatDate(s.reviewedAt)} (made up — doesn&apos;t open)
-              </span>
-            ) : (
-              <a key={s.id} className={styles.sourceUrl} href={s.url} target="_blank" rel="noopener noreferrer nofollow">
-                From: {s.title}, checked {formatDate(s.reviewedAt)} <ExternalLink size={12} aria-label="opens in a new tab" />
-              </a>
-            ),
-          )}
+          <div className={`card ${styles.sectionCard} ${styles.recordCard}`}>
+            <RecordDetails r={reference} />
+          </div>
         </section>
       )}
 
-      <section className={styles.whatNow} aria-labelledby="what-now">
+      <section className={styles.group} aria-labelledby="what-now">
         <h2 id="what-now" className={styles.h2}>
           What to do now
         </h2>
-        <p>{WHAT_NOW[outcome]}</p>
+        <p className={styles.whatNow}>{WHAT_NOW[outcome]}</p>
       </section>
 
       <section className={styles.group} aria-labelledby="history">
         <h2 id="history" className={styles.h2}>
           Check history
         </h2>
-        <ol className={styles.history}>
+        <ol className={`card ${styles.rowCard} ${styles.history}`}>
           <li>
             <span className="mono">{checkedAt.analyzed.toLocaleTimeString()}</span> First check:{" "}
             {analysis.inferencePerformed ? `${analysis.inputs.length} input(s), screenshots read live by Meta AI` : "link compared, no AI used"} →{" "}

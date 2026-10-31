@@ -1548,13 +1548,21 @@ a.srcRow:hover .srcName {
    answer would tell you as an A/B pair. The A/B/? badges match across the screen. */
 .badge {
   flex: none;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   font-size: var(--fs-meta);
   font-weight: 700;
+  line-height: 1;
+}
+/* Optically centre the badge on the first line of the text beside it. */
+.unclearNote .badge {
+  margin-top: -1px;
+}
+.unclearNote > span:last-child {
+  padding-top: 2px;
 }
 .badge[data-k="a"] {
   background: var(--brand-soft);
@@ -1729,7 +1737,7 @@ a.srcRow:hover .srcName {
   margin: 0;
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   font-size: var(--fs-sm);
   color: var(--muted);
   line-height: 1.45;
@@ -1884,13 +1892,32 @@ a.srcRow:hover .srcName {
   flex-direction: column;
   gap: 10px;
 }
+/* Result screen: every section is a heading outside plus its content in a card. */
+.sectionCard {
+  padding: 16px 18px;
+}
+.recordCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.rowCard {
+  list-style: none;
+  margin: 0;
+  padding: 0 18px;
+}
+.rowCard > li + li {
+  border-top: 1px solid var(--line);
+}
 .openItem {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 0;
   font-size: var(--fs-body);
 }
-.openItem > span:last-child {
+.openItem > span:first-child {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -1903,28 +1930,23 @@ a.srcRow:hover .srcName {
   word-break: break-all;
 }
 .whatNow {
-  padding: 16px;
-  border-radius: 14px;
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: var(--radius);
   background: var(--ink);
-  color: #fff;
-}
-.whatNow .h2 {
-  color: #fff;
-}
-.whatNow p {
-  margin: 6px 0 0;
   font-size: var(--fs-body);
   line-height: 1.55;
-  color: #d5e6e8;
+  color: #e3eff0;
 }
-.history {
-  margin: 0;
-  padding-left: 18px;
+.history > li {
+  padding: 12px 0;
   font-size: var(--fs-sm);
   color: var(--text-3);
-  line-height: 1.7;
+  line-height: 1.5;
 }
 .history .mono {
+  display: inline-block;
+  min-width: 88px;
   font-size: var(--fs-meta);
   color: var(--muted);
 }

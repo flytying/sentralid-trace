@@ -308,7 +308,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
               <span className={styles.badge} data-k="u" aria-hidden="true">
                 ?
               </span>
-              {next.implications.unclear}
+              <span>{next.implications.unclear}</span>
             </p>
           )}
         </section>
