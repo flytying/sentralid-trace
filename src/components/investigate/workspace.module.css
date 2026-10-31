@@ -651,6 +651,115 @@
   border: 1px solid var(--line);
   border-radius: 12px;
 }
+/* Thumbnails open the full-size viewer. */
+.thumbBtn {
+  position: relative;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 6px;
+  cursor: zoom-in;
+  line-height: 0;
+}
+.thumbBtn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.thumbZoom {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: rgba(14, 52, 66, 0.45);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.thumbBtn:hover .thumbZoom,
+.thumbBtn:focus-visible .thumbZoom {
+  opacity: 1;
+}
+.viewer {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: min(92vw, 560px);
+  max-height: 92vh;
+  overflow: visible;
+}
+.viewer::backdrop {
+  background: rgba(8, 24, 32, 0.78);
+  backdrop-filter: blur(3px);
+}
+.viewer[open] {
+  animation: tr-viewer-in 0.2s ease-out;
+}
+@keyframes tr-viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.viewer figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.viewer img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(92vh - 64px);
+  width: auto;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  background: #fff;
+}
+.viewer figcaption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #fff;
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+.viewer figcaption strong {
+  font-size: var(--fs-body);
+}
+.viewer figcaption span {
+  opacity: 0.75;
+}
+.viewerClose {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  cursor: pointer;
+}
+.viewerClose:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+.viewerClose:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
 .thumb {
   width: 48px;
   height: 64px;

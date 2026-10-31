@@ -1,11 +1,12 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { ArrowRight, ExternalLink, ImageUp, ShieldAlert, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, ExternalLink, ImageUp, ShieldAlert, ShieldCheck, X, ZoomIn } from "lucide-react";
 import { FACEBOOK_URL_ERROR_TEXT, displayFacebookUrl, parseFacebookUrl } from "@/lib/facebook-url";
 import type { NextCheck } from "@/lib/verify/plan";
 import { PrepareError, prepareImage } from "./compress";
 import { displayUrl } from "./format";
+import { ImageViewer } from "./ImageViewer";
 import styles from "./workspace.module.css";
 
 export type FollowUp =
@@ -85,6 +86,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
   const [consent, setConsent] = useState(false);
   const [answer, setAnswer] = useState("");
   const [fileErr, setFileErr] = useState<string | null>(null);
+  const [viewing, setViewing] = useState(false);
 
   const parsed = url.trim() ? parseFacebookUrl(url) : null;
   const isReport = check.resolution === "user_report";
@@ -220,8 +222,14 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
                 <>
                   {shot ? (
                     <div className={styles.shot}>
-                      {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
-                      <img src={shot.preview} alt="New screenshot preview" className={styles.thumb} />
+                      <button type="button" className={styles.thumbBtn} onClick={() => setViewing(true)} aria-label="View new screenshot full size">
+                        {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
+                        <img src={shot.preview} alt="" className={styles.thumb} />
+                        <span className={styles.thumbZoom} aria-hidden="true">
+                          <ZoomIn size={14} />
+                        </span>
+                      </button>
+                      {viewing && <ImageViewer src={shot.preview} caption="New screenshot" onClose={() => setViewing(false)} />}
                       <span className={styles.shotMain}>
                         <strong>New screenshot</strong>
                         <span className={styles.help}>{Math.round(shot.file.size / 1024)} KB</span>
