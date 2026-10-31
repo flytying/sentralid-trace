@@ -953,7 +953,22 @@
 .group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+}
+/* Sections sit clearly apart; everything inside a section stays tight. */
+.panel > .group,
+.panel > .readBox,
+.panel > .looked {
+  margin-top: 18px;
+}
+.groupHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.groupHead p {
+  margin: 0;
 }
 .h2 {
   margin: 0;

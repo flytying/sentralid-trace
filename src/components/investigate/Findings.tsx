@@ -90,7 +90,7 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
         if (!items.length && !g.empty) return null;
         return (
           <section key={g.state} className={`${styles.group} stagger`} aria-labelledby={`grp-${g.state}`}>
-            <div>
+            <div className={styles.groupHead}>
               <h2 id={`grp-${g.state}`} className={styles.h2}>
                 {g.label} <span className={styles.count}>{items.length}</span>
               </h2>
