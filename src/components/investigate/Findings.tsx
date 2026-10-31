@@ -92,7 +92,10 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
           <section key={g.state} className={`${styles.group} stagger`} aria-labelledby={`grp-${g.state}`}>
             <div className={styles.groupHead}>
               <h2 id={`grp-${g.state}`} className={styles.h2}>
-                {g.label} <span className={styles.count}>{items.length}</span>
+                {g.label}{" "}
+                <span className={styles.count} data-tone={items.length ? STATE_CHIP[g.state].tone : undefined}>
+                  {items.length}
+                </span>
               </h2>
               <p className={styles.help}>{g.desc}</p>
             </div>

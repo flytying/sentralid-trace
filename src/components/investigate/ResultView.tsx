@@ -140,7 +140,10 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
       {unknowns.length > 0 && (
         <section className={styles.group} aria-labelledby="still-open">
           <h2 id="still-open" className={styles.h2}>
-            What&apos;s still open <span className={styles.count}>{unknowns.length}</span>
+            What&apos;s still open{" "}
+            <span className={styles.count} data-tone="unk">
+              {unknowns.length}
+            </span>
           </h2>
           <ul className={`card ${styles.rowCard}`}>
             {unknowns.map((f) => (
