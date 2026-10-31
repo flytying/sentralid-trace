@@ -2,14 +2,14 @@
 
 Deadline: **4 Nov 2026, 9:00 PM EST = 5 Nov 2026, 10:00 AM Manila** (Cerebral Valley). Internal target: 4 Nov, Manila.
 
-Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · ➖ optional / not applicable.
+Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec-changes.md). ✅ done and verified · ⏳ owner action needed · ➖ optional / not applicable.
 
 ## Release gates (TDD §8.3, PRD §10.4)
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
 | 1 | ≥ 10 source-admitted real records | ✅ 13 | `npm run registry:gate`; [registry-audit.md](registry-audit.md) |
-| 2 | Repo runs live from a clean checkout per README, with a judge's own key | ✅ | Fresh `git clone` from GitHub on 31 Oct: `npm ci`, tests 122/122, typecheck, lint, registry gate, `smoke:meta`, `build`, `start`, and Sample A clicked through to the updated result |
+| 2 | Repo runs live from a clean checkout per README, with a judge's own key | ✅ | Fresh `git clone` from GitHub on 31 Oct (commit `4a9bd8f`): `npm ci`, tests 131/131, typecheck, lint, registry gate, `build`. Live path (`smoke:meta`, `start`, Samples A–D) verified on the same code with a production build: QA repeat 20/20 |
 | 3 | A new, unseen screenshot invokes Meta and yields evidence-linked results | ✅ | Real Altogrand page screenshot (not in repo): live extraction, page link matched from address bar ([QA report](qa/repeat-runs-2026-10-31.md)) |
 | 4 | One counterfactual question + validated reassessment visibly changes a supported claim | ✅ | Sample A: page finding *Can't tell → Matches our record*, citing `CLM-sample-lc-fb-2`; other findings unchanged |
 | 5 | Demo scenarios × five production repetitions | ✅ 20/20 (Samples A–D) | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
