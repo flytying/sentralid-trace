@@ -47,3 +47,6 @@ next-env.d.ts
 
 # rendered sample HTML (eval/samples-src/render.mjs)
 /eval/samples-src/.build/
+
+# entrant-only notes (e.g. the demo video script), kept out of the public repo
+/private/

@@ -15,7 +15,7 @@ Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec
 | 5 | Demo scenarios × five production repetitions | ✅ 20/20 (Samples A–D) | [docs/qa/repeat-runs-2026-10-31.md](qa/repeat-runs-2026-10-31.md) |
 | 6 | No safety or privacy critical defect | ✅ (no known open) | Trust-invariant tests, adversarial eval, log-hygiene test, no storage of uploads |
 | 7 | Public repo with hackathon-built code and licensed/synthetic assets only | ✅ | Public at github.com/flytying/sentralid-trace; synthetic samples; no resort photos/logos; LICENSE: all rights reserved, evaluation-only permission for judges |
-| 8 | 3-minute demo video, accessible without login | ⏳ **record by 1 Nov** | Script: [demo-script.md](demo-script.md). The only gate left that the build depends on |
+| 8 | 3-minute demo video, accessible without login | ⏳ **record by 1 Nov** | Script kept locally by the entrant (not in the repo). The only gate left that the build depends on |
 | 9 | Video clearly identifies newly built functionality | ⏳ | Covered in the script's 2:40 segment and README "Built during the hackathon" |
 | 10 | Submission completed on time; receipt saved | ⏳ | — |
 
@@ -38,7 +38,7 @@ Status as of 31 Oct 2026. Spec deviations are recorded in [spec-changes.md](spec
 
 1. **License — decided and confirmed (31 Oct):** all rights reserved, with permission for organizers/judges to run it for evaluation. Organizers confirmed no specific or OSI-approved license is required: the repo must be public and runnable by judges from its setup instructions, plus the 3-minute video ([participant resources](https://cerebralvalley.ai/e/meta-ai-developer-hackathon/details)). Check the participant agreement for any rights it grants the organizers (e.g. publicity or demo use); those would apply alongside this.
 2. **Hosting — decided: not hosted (31 Oct).** Optional per the rules; judges run it locally with their own Meta key, which keeps the entrant's API credits out of reach of public traffic. (Testing so far: about $2 of credits for 100+ live checks, roughly 1–2 cents each.)
-3. **Video.** Record per [demo-script.md](demo-script.md); upload unlisted/public (YouTube or similar) and check it plays logged out.
+3. **Video.** Record per the local demo script; upload unlisted/public (YouTube or similar) and check it plays logged out.
 4. **Separate signed participation agreement**, if any — review independently.
 
 ## Final pre-submit run (do on 4 Nov)
