@@ -712,68 +712,101 @@
   height: 120px;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--bg-soft, #eef3f4);
-  box-shadow: inset 0 0 0 1px var(--line);
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(14, 52, 66, 0.06);
 }
 .scanFrame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  filter: saturate(0.85);
 }
+/* A thin read line drifts down and back; a faint trail behind it, nothing heavier. */
 .scanBeam {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 36%;
-  background: linear-gradient(180deg, transparent, rgba(35, 127, 135, 0.22) 80%, rgba(35, 127, 135, 0.9));
-  border-bottom: 2px solid var(--brand);
-  animation: tr-scan 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  transform: translateY(-100%);
+  inset: 0 0 auto;
+  height: 28px;
+  background: linear-gradient(180deg, rgba(35, 127, 135, 0) 0%, rgba(35, 127, 135, 0.07) 100%);
+  border-bottom: 1px solid rgba(35, 127, 135, 0.55);
+  box-shadow: 0 1px 6px rgba(35, 127, 135, 0.25);
+  animation: tr-scan 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
 }
 @keyframes tr-scan {
-  0% {
-    transform: translateY(-100%);
+  from {
+    transform: translateY(-28px);
   }
-  100% {
-    transform: translateY(290%);
+  to {
+    transform: translateY(120px);
   }
 }
 .targets {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 }
 .targetsLabel {
   font-size: 12.5px;
   color: var(--muted);
-  margin-right: 4px;
+}
+.targetList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .target {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12.5px;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-  background: var(--line);
-  color: var(--text-3);
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
   animation-name: tr-target;
   animation-iteration-count: infinite;
-  animation-timing-function: ease;
+  animation-timing-function: linear;
 }
+.target::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  animation: inherit;
+  animation-name: tr-target-dot;
+}
+/* Each pill gets one soft turn per cycle: ease in, hold, ease out. */
 @keyframes tr-target {
   0%,
-  22% {
-    background: var(--brand-pale);
-    color: var(--brand);
-    box-shadow: inset 0 0 0 1px var(--brand);
-  }
-  30%,
   100% {
-    background: var(--line);
-    color: var(--text-3);
-    box-shadow: none;
+    color: var(--muted);
+    background: #fff;
+    border-color: var(--line);
+  }
+  4%,
+  14% {
+    color: var(--ink);
+    background: var(--brand-soft);
+    border-color: var(--brand-soft);
+  }
+  20% {
+    color: var(--muted);
+    background: #fff;
+    border-color: var(--line);
+  }
+}
+@keyframes tr-target-dot {
+  0%,
+  100% {
+    background: var(--line-strong);
+  }
+  4%,
+  14% {
+    background: var(--brand);
+  }
+  20% {
+    background: var(--line-strong);
   }
 }
 .skeletons {

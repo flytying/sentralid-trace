@@ -55,7 +55,7 @@ export function Progress({ usesModel, shots }: { usesModel: boolean; shots: { sh
                 <div className={styles.scanFrame}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
                   <img src={shot.previewUrl} alt="" decoding="async" />
-                  <span className={styles.scanBeam} style={{ animationDelay: `${i * 450}ms` }} />
+                  <span className={styles.scanBeam} style={{ animationDelay: `${i * -0.9}s` }} />
                 </div>
                 <figcaption>{caption}</figcaption>
               </figure>
@@ -66,11 +66,13 @@ export function Progress({ usesModel, shots }: { usesModel: boolean; shots: { sh
         {usesModel && (
           <div className={styles.targets} aria-hidden="true">
             <span className={styles.targetsLabel}>Meta AI looks for</span>
-            {TARGETS.map((t, i) => (
-              <span key={t} className={styles.target} style={{ animationDelay: `${i * 0.6}s`, animationDuration: `${TARGETS.length * 0.6}s` }}>
-                {t}
-              </span>
-            ))}
+            <div className={styles.targetList}>
+              {TARGETS.map((t, i) => (
+                <span key={t} className={styles.target} style={{ animationDelay: `${i * 0.9}s`, animationDuration: `${TARGETS.length * 0.9}s` }}>
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         )}
 
