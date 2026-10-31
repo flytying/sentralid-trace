@@ -74,6 +74,35 @@ describe("admission gate", () => {
     );
   });
 
+  it("only accepts page-published contacts from the business's independently listed page", () => {
+    const files: RegistryFiles = JSON.parse(JSON.stringify(base));
+    const b = files.businesses.find((x) => x.id === "altogrand-beach-house")!;
+    expect(admissionIssues(b, files.claims, files.sources)).toEqual([]);
+    // Same contacts, but read from a page the tourism office never listed.
+    files.sources.find((s) => s.id === "SRC-FB-ALTOGRAND")!.url = "https://www.facebook.com/AltograndBeachHouse.Bookings";
+    expect(admissionIssues(b, files.claims, files.sources)).toContain(
+      "CLM-altogrand-beach-house-phone-1: source page https://www.facebook.com/AltograndBeachHouse.Bookings is not this business's independently listed page",
+    );
+  });
+
+  it("never lets a page vouch for its own link", () => {
+    const files: RegistryFiles = JSON.parse(JSON.stringify(base));
+    const b = files.businesses.find((x) => x.id === "altogrand-beach-house")!;
+    files.claims.find((x) => x.id === "CLM-altogrand-beach-house-fb-1")!.sourceIds = ["SRC-FB-ALTOGRAND"];
+    const issues = admissionIssues(b, files.claims, files.sources);
+    expect(issues).toContain("no Facebook claim backed by a source independent of the business");
+    expect(issues).toContain("CLM-altogrand-beach-house-fb-1: a page can't vouch for itself");
+  });
+
+  it("every page-published contact cites the business's own LGU-listed page", () => {
+    for (const c of real.claims.filter((x) => x.kind === "reservation_phone" || x.kind === "reservation_email")) {
+      const page = real.claims.find((x) => x.businessId === c.businessId && x.kind === "facebook_page_url" && x.sourceIds.includes("SRC-LGU-SJB-FBDIR"))!;
+      const src = real.sources.find((s) => s.id === c.sourceIds[0])!;
+      expect(src.kind).toBe("listed_facebook_page");
+      expect(src.url).toBe(page.value);
+    }
+  });
+
   it("rejects an admitted record whose manual review is not recorded", () => {
     const b = { ...base.businesses[0], registryStatus: "admitted" as const, reviewerNote: "Pending manual review." };
     expect(admissionIssues(b, base.claims, base.sources)).toContain("manual review not recorded");

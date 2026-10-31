@@ -6,6 +6,7 @@ import styles from "./workspace.module.css";
 const SOURCE_KIND_LABEL: Record<string, string> = {
   local_tourism_directory: "Local government tourism directory",
   independent_business_site: "The resort's own website",
+  listed_facebook_page: "The resort's listed Facebook page",
   owner_attestation: "Statement from the resort",
   other_documented_source: "Other documented source",
 };

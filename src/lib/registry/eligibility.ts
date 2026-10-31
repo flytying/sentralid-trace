@@ -7,7 +7,9 @@ export const REQUIRED_ADMITTED = 10;
 
 // Sources the business itself controls. They may corroborate a page link, but domain control
 // alone cannot establish who the registered business is, so they never admit a record alone.
-const OWNER_CONTROLLED = new Set(["independent_business_site", "owner_attestation"]);
+const OWNER_CONTROLLED = new Set(["independent_business_site", "listed_facebook_page", "owner_attestation"]);
+
+const pageKey = (url: string) => url.toLowerCase().replace(/^https?:\/\/(www\.|m\.)?/, "").replace(/\/+$/, "");
 
 export interface Issue {
   ref: string;
@@ -68,6 +70,20 @@ export function admissionIssues(
   );
   if (fb.length > 0 && !independentFb) out.push("no Facebook claim backed by a source independent of the business");
   if (own.some((c) => c.trust === "conflicted")) out.push("has a conflicted claim; reconcile before admission");
+  // Contacts read from a Facebook page count only when that exact page is independently listed.
+  const isIndependent = (sid: string) => {
+    const s = srcById.get(sid);
+    return s !== undefined && !OWNER_CONTROLLED.has(s.kind);
+  };
+  const listedPages = new Set(fb.filter((c) => c.sourceIds.some(isIndependent)).map((c) => c.normalizedValue));
+  for (const c of own) {
+    for (const sid of c.sourceIds) {
+      const s = srcById.get(sid);
+      if (s?.kind !== "listed_facebook_page") continue;
+      if (c.kind === "facebook_page_url" || c.kind === "facebook_page_id") out.push(`${c.id}: a page can't vouch for itself`);
+      else if (!listedPages.has(pageKey(s.url))) out.push(`${c.id}: source page ${s.url} is not this business's independently listed page`);
+    }
+  }
   if (!b.synthetic && /pending/i.test(b.reviewerNote)) out.push("manual review not recorded");
   return out;
 }

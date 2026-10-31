@@ -68,7 +68,7 @@ Outcomes are one of: *No conflict found in what we could check*, *Possible booki
 
 ## Reference registry
 
-`src/data/reference-registry/` holds **13 real resorts** in San Juan, Batangas. Each record links a business to a Facebook page only because a separate, identifiable source does: the [San Juan, Batangas Municipal Tourism Office directory](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages) (and, for four resorts, the resort's own website too). Links were taken from the page HTML, then approved in manual review — see [docs/registry-audit.md](docs/registry-audit.md). A record supports only the page relationship, never a chat sender, booking agent or payment account. `npm run registry:gate` enforces the ≥ 10 reviewed-records release gate.
+`src/data/reference-registry/` holds **13 real resorts** in San Juan, Batangas. Each record links a business to a Facebook page only because a separate, identifiable source does: the [San Juan, Batangas Municipal Tourism Office directory](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages) (and, for four resorts, the resort's own website too). Links were taken from the page HTML, then approved in manual review — see [docs/registry-audit.md](docs/registry-audit.md). Phone numbers and emails come only from that exact listed page (the resort's own published contacts), never from a lookalike. A record supports the page relationship and those published contacts, never a chat sender, booking agent or payment account. `npm run registry:gate` enforces the ≥ 10 reviewed-records release gate.
 
 Sample resorts (Lumen Cove, Bahay Dagat, Isla Verde) are fictional, kept in a separate fixture file with `.example` sources, and never counted as real.
 

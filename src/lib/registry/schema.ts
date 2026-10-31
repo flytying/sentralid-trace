@@ -17,6 +17,7 @@ export const RegistryStatus = z.enum(["draft", "admitted", "needs_review"]);
 export const SourceKind = z.enum([
   "local_tourism_directory",
   "independent_business_site",
+  "listed_facebook_page",
   "owner_attestation",
   "other_documented_source",
 ]);

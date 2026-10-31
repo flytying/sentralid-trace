@@ -53,5 +53,148 @@
     "reviewedAt": "2026-10-31",
     "method": "Opened the business's own website and recorded the Facebook link in its page HTML. Owner-controlled: corroborates the page link only, not the business's registered identity.",
     "permittedUse": "Link and short factual citation of the public Facebook link on the website."
+  },
+  {
+    "id": "SRC-FB-ACUATICO",
+    "kind": "listed_facebook_page",
+    "ownerName": "Acuatico Beach Resort and Hotel",
+    "title": "Acuatico Beach Resort and Hotel — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/AcuaticoBeachResort",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-ACUAVERDE",
+    "kind": "listed_facebook_page",
+    "ownerName": "Acuaverde Beach Resort and Hotel",
+    "title": "Acuaverde Beach Resort and Hotel — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/AcuaverdeBeachResort",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-ALTOGRAND",
+    "kind": "listed_facebook_page",
+    "ownerName": "Altogrand Beach House",
+    "title": "Altogrand Beach House — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/EnteBeachResort",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-ARIASCRIB",
+    "kind": "listed_facebook_page",
+    "ownerName": "Aria's Crib - Laiya Beach House",
+    "title": "Aria's Crib - Laiya Beach House — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/AriasCrib",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-AVC",
+    "kind": "listed_facebook_page",
+    "ownerName": "AVC Kubo Transient House",
+    "title": "AVC Kubo Transient House — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/AVCSanJuanBatangas",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BEACHHIVE",
+    "kind": "listed_facebook_page",
+    "ownerName": "Beach Hive Seafront",
+    "title": "Beach Hive Seafront — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/beachhiveseafront",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BEATAJARA",
+    "kind": "listed_facebook_page",
+    "ownerName": "Beatajara House Rental",
+    "title": "Beatajara House Rental — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/bjbplaiya",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BEBES",
+    "kind": "listed_facebook_page",
+    "ownerName": "Bebe's Resort",
+    "title": "Bebe's Resort — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/bebesresortt",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BIGA",
+    "kind": "listed_facebook_page",
+    "ownerName": "BigA Cottages",
+    "title": "BigA Cottages — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/Bigacottage",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BLUECORAL",
+    "kind": "listed_facebook_page",
+    "ownerName": "Blue Coral Beach Resort",
+    "title": "Blue Coral Beach Resort — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/bluecoralbeachresortlaiya",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BURACAI",
+    "kind": "listed_facebook_page",
+    "ownerName": "Buracai de Laiya Hotel & Resort",
+    "title": "Buracai de Laiya Hotel & Resort — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/BuracaiDeLaiyaHotelAndResort",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-BURGIS",
+    "kind": "listed_facebook_page",
+    "ownerName": "Burgis Mangrove Beach Resort",
+    "title": "Burgis Mangrove Beach Resort — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/burgismangrovebeachresort",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
+  },
+  {
+    "id": "SRC-FB-CALALAIYA",
+    "kind": "listed_facebook_page",
+    "ownerName": "Cala Laiya",
+    "title": "Cala Laiya — Facebook page (Intro / contact info)",
+    "url": "https://www.facebook.com/calalaiya",
+    "observedAt": "2026-10-31T11:30:00Z",
+    "reviewedAt": "2026-10-31",
+    "method": "Project owner opened the exact Facebook page listed by the San Juan, Batangas LGU directory and recorded the phone and email shown in its Intro / contact info. Owner-controlled: the resort publishes these itself; they count only because this exact page is independently listed.",
+    "permittedUse": "Short factual citation of business contact details the resort publishes on its public page."
   }
 ]

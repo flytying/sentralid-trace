@@ -197,5 +197,285 @@
     ],
     "reviewedAt": "2026-10-31",
     "note": "Listed by the San Juan, Batangas LGU tourism directory as “Cala Laiya”; the business's own website links the same page."
+  },
+  {
+    "id": "CLM-acuatico-beach-resort-phone-1",
+    "businessId": "acuatico-beach-resort",
+    "kind": "reservation_phone",
+    "value": "+63 968 871 4516",
+    "normalizedValue": "+639688714516",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ACUATICO"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AcuaticoBeachResort)."
+  },
+  {
+    "id": "CLM-acuatico-beach-resort-email-1",
+    "businessId": "acuatico-beach-resort",
+    "kind": "reservation_email",
+    "value": "reservations@acuaticoresort.com.ph",
+    "normalizedValue": "reservations@acuaticoresort.com.ph",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ACUATICO"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AcuaticoBeachResort)."
+  },
+  {
+    "id": "CLM-acuaverde-beach-resort-phone-1",
+    "businessId": "acuaverde-beach-resort",
+    "kind": "reservation_phone",
+    "value": "+63 998 843 1347",
+    "normalizedValue": "+639988431347",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ACUAVERDE"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AcuaverdeBeachResort)."
+  },
+  {
+    "id": "CLM-acuaverde-beach-resort-email-1",
+    "businessId": "acuaverde-beach-resort",
+    "kind": "reservation_email",
+    "value": "reservations@acuaverderesort.com.ph",
+    "normalizedValue": "reservations@acuaverderesort.com.ph",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ACUAVERDE"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AcuaverdeBeachResort)."
+  },
+  {
+    "id": "CLM-altogrand-beach-house-phone-1",
+    "businessId": "altogrand-beach-house",
+    "kind": "reservation_phone",
+    "value": "+63 950 317 7669",
+    "normalizedValue": "+639503177669",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ALTOGRAND"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/EnteBeachResort)."
+  },
+  {
+    "id": "CLM-altogrand-beach-house-phone-2",
+    "businessId": "altogrand-beach-house",
+    "kind": "reservation_phone",
+    "value": "+63 961 197 8288",
+    "normalizedValue": "+639611978288",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ALTOGRAND"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Second number in the page bio on the resort's LGU-listed Facebook page (facebook.com/EnteBeachResort)."
+  },
+  {
+    "id": "CLM-arias-crib-laiya-email-1",
+    "businessId": "arias-crib-laiya",
+    "kind": "reservation_email",
+    "value": "ariascriblaiya@gmail.com",
+    "normalizedValue": "ariascriblaiya@gmail.com",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-ARIASCRIB"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AriasCrib)."
+  },
+  {
+    "id": "CLM-avc-kubo-transient-house-phone-1",
+    "businessId": "avc-kubo-transient-house",
+    "kind": "reservation_phone",
+    "value": "+63 919 271 3551",
+    "normalizedValue": "+639192713551",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-AVC"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/AVCSanJuanBatangas)."
+  },
+  {
+    "id": "CLM-beach-hive-seafront-phone-1",
+    "businessId": "beach-hive-seafront",
+    "kind": "reservation_phone",
+    "value": "+63 965 235 8873",
+    "normalizedValue": "+639652358873",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BEACHHIVE"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/beachhiveseafront)."
+  },
+  {
+    "id": "CLM-beach-hive-seafront-email-1",
+    "businessId": "beach-hive-seafront",
+    "kind": "reservation_email",
+    "value": "beachhive.seafront@gmail.com",
+    "normalizedValue": "beachhive.seafront@gmail.com",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BEACHHIVE"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/beachhiveseafront)."
+  },
+  {
+    "id": "CLM-beatajara-house-rental-phone-1",
+    "businessId": "beatajara-house-rental",
+    "kind": "reservation_phone",
+    "value": "+63 919 895 5748",
+    "normalizedValue": "+639198955748",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BEATAJARA"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/bjbplaiya)."
+  },
+  {
+    "id": "CLM-bebes-resort-email-1",
+    "businessId": "bebes-resort",
+    "kind": "reservation_email",
+    "value": "bebehomeresort@gmail.com",
+    "normalizedValue": "bebehomeresort@gmail.com",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BEBES"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/bebesresortt)."
+  },
+  {
+    "id": "CLM-biga-cottages-phone-1",
+    "businessId": "biga-cottages",
+    "kind": "reservation_phone",
+    "value": "+63 961 360 2190",
+    "normalizedValue": "+639613602190",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BIGA"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/Bigacottage)."
+  },
+  {
+    "id": "CLM-blue-coral-beach-resort-phone-1",
+    "businessId": "blue-coral-beach-resort",
+    "kind": "reservation_phone",
+    "value": "+63 915 712 3100",
+    "normalizedValue": "+639157123100",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BLUECORAL"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/bluecoralbeachresortlaiya)."
+  },
+  {
+    "id": "CLM-blue-coral-beach-resort-email-1",
+    "businessId": "blue-coral-beach-resort",
+    "kind": "reservation_email",
+    "value": "bluecoralbeachresort@gmail.com",
+    "normalizedValue": "bluecoralbeachresort@gmail.com",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BLUECORAL"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/bluecoralbeachresortlaiya)."
+  },
+  {
+    "id": "CLM-buracai-de-laiya-phone-1",
+    "businessId": "buracai-de-laiya",
+    "kind": "reservation_phone",
+    "value": "+63 999 600 2518",
+    "normalizedValue": "+639996002518",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BURACAI"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/BuracaiDeLaiyaHotelAndResort)."
+  },
+  {
+    "id": "CLM-buracai-de-laiya-email-1",
+    "businessId": "buracai-de-laiya",
+    "kind": "reservation_email",
+    "value": "buracaidelaiya08@gmail.com",
+    "normalizedValue": "buracaidelaiya08@gmail.com",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BURACAI"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/BuracaiDeLaiyaHotelAndResort)."
+  },
+  {
+    "id": "CLM-burgis-mangrove-beach-resort-phone-1",
+    "businessId": "burgis-mangrove-beach-resort",
+    "kind": "reservation_phone",
+    "value": "+63 947 100 3639",
+    "normalizedValue": "+639471003639",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-BURGIS"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/burgismangrovebeachresort)."
+  },
+  {
+    "id": "CLM-cala-laiya-phone-1",
+    "businessId": "cala-laiya",
+    "kind": "reservation_phone",
+    "value": "+63 917 883 9900",
+    "normalizedValue": "+639178839900",
+    "label": "Phone on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-CALALAIYA"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/calalaiya)."
+  },
+  {
+    "id": "CLM-cala-laiya-email-1",
+    "businessId": "cala-laiya",
+    "kind": "reservation_email",
+    "value": "reservations@calalaiya.ph",
+    "normalizedValue": "reservations@calalaiya.ph",
+    "label": "Email on the listed page",
+    "trust": "corroborated",
+    "sourceIds": [
+      "SRC-FB-CALALAIYA"
+    ],
+    "reviewedAt": "2026-10-31",
+    "note": "Shown on the resort's LGU-listed Facebook page (facebook.com/calalaiya)."
   }
 ]

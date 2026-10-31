@@ -8,10 +8,13 @@
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-ACUATICO"
+      "SRC-WEB-ACUATICO",
+      "SRC-FB-ACUATICO"
     ],
     "claimIds": [
-      "CLM-acuatico-beach-resort-fb-1"
+      "CLM-acuatico-beach-resort-fb-1",
+      "CLM-acuatico-beach-resort-phone-1",
+      "CLM-acuatico-beach-resort-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -25,10 +28,13 @@
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-ACUAVERDE"
+      "SRC-WEB-ACUAVERDE",
+      "SRC-FB-ACUAVERDE"
     ],
     "claimIds": [
-      "CLM-acuaverde-beach-resort-fb-1"
+      "CLM-acuaverde-beach-resort-fb-1",
+      "CLM-acuaverde-beach-resort-phone-1",
+      "CLM-acuaverde-beach-resort-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -41,10 +47,13 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-ALTOGRAND"
     ],
     "claimIds": [
-      "CLM-altogrand-beach-house-fb-1"
+      "CLM-altogrand-beach-house-fb-1",
+      "CLM-altogrand-beach-house-phone-1",
+      "CLM-altogrand-beach-house-phone-2"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. Reviewer opened the Facebook page: name matches the LGU listing; bio states it was formerly Ente's Beach Resort.",
     "synthetic": false
@@ -57,10 +66,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-ARIASCRIB"
     ],
     "claimIds": [
-      "CLM-arias-crib-laiya-fb-1"
+      "CLM-arias-crib-laiya-fb-1",
+      "CLM-arias-crib-laiya-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -73,10 +84,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-AVC"
     ],
     "claimIds": [
-      "CLM-avc-kubo-transient-house-fb-1"
+      "CLM-avc-kubo-transient-house-fb-1",
+      "CLM-avc-kubo-transient-house-phone-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -89,10 +102,13 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BEACHHIVE"
     ],
     "claimIds": [
-      "CLM-beach-hive-seafront-fb-1"
+      "CLM-beach-hive-seafront-fb-1",
+      "CLM-beach-hive-seafront-phone-1",
+      "CLM-beach-hive-seafront-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -105,10 +121,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BEATAJARA"
     ],
     "claimIds": [
-      "CLM-beatajara-house-rental-fb-1"
+      "CLM-beatajara-house-rental-fb-1",
+      "CLM-beatajara-house-rental-phone-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -121,10 +139,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BEBES"
     ],
     "claimIds": [
-      "CLM-bebes-resort-fb-1"
+      "CLM-bebes-resort-fb-1",
+      "CLM-bebes-resort-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -137,10 +157,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BIGA"
     ],
     "claimIds": [
-      "CLM-biga-cottages-fb-1"
+      "CLM-biga-cottages-fb-1",
+      "CLM-biga-cottages-phone-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -153,10 +175,13 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BLUECORAL"
     ],
     "claimIds": [
-      "CLM-blue-coral-beach-resort-fb-1"
+      "CLM-blue-coral-beach-resort-fb-1",
+      "CLM-blue-coral-beach-resort-phone-1",
+      "CLM-blue-coral-beach-resort-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -170,11 +195,14 @@
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-BURACAI"
+      "SRC-WEB-BURACAI",
+      "SRC-FB-BURACAI"
     ],
     "claimIds": [
       "CLM-buracai-de-laiya-fb-1",
-      "CLM-buracai-de-laiya-fb-2"
+      "CLM-buracai-de-laiya-fb-2",
+      "CLM-buracai-de-laiya-phone-1",
+      "CLM-buracai-de-laiya-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -187,10 +215,12 @@
     "registryStatus": "admitted",
     "reviewedAt": "2026-10-31",
     "sourceIds": [
-      "SRC-LGU-SJB-FBDIR"
+      "SRC-LGU-SJB-FBDIR",
+      "SRC-FB-BURGIS"
     ],
     "claimIds": [
-      "CLM-burgis-mangrove-beach-resort-fb-1"
+      "CLM-burgis-mangrove-beach-resort-fb-1",
+      "CLM-burgis-mangrove-beach-resort-phone-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false
@@ -204,10 +234,13 @@
     "reviewedAt": "2026-10-31",
     "sourceIds": [
       "SRC-LGU-SJB-FBDIR",
-      "SRC-WEB-CALALAIYA"
+      "SRC-WEB-CALALAIYA",
+      "SRC-FB-CALALAIYA"
     ],
     "claimIds": [
-      "CLM-cala-laiya-fb-1"
+      "CLM-cala-laiya-fb-1",
+      "CLM-cala-laiya-phone-1",
+      "CLM-cala-laiya-email-1"
     ],
     "reviewerNote": "Approved in project review on 2026-10-31. LGU directory link re-verified from the page HTML the same day.",
     "synthetic": false

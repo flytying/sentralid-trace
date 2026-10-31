@@ -140,7 +140,7 @@ describe("trust invariants", () => {
     expect(byKind(f, "facebook_page_url")[0].rationaleCode).toBe("FB_PAGE_IS_OTHER_LISTED_BUSINESS");
   });
 
-  it("a renamed page: link matches, name differs, numbers have no reference", () => {
+  it("a renamed page: link matches, and the number published on the listed page matches", () => {
     const o = [
       obs({ field: "facebook_url", value: "facebook.com/EnteBeachResort" }),
       obs({ field: "business_name", value: "Altogrand Beach House" }),
@@ -149,7 +149,7 @@ describe("trust invariants", () => {
     const subject: CaseSubject = { businessId: "altogrand-beach-house", label: "Altogrand Beach House", samples: false };
     const f = compareEvidence(real, subject, [PAGE_IN], o);
     expect(byKind(f, "facebook_page_url")[0].state).toBe("match");
-    expect(byKind(f, "reservation_phone")[0].rationaleCode).toBe("PHONE_NO_REFERENCE");
+    expect(byKind(f, "reservation_phone")[0]).toMatchObject({ state: "match", rationaleCode: "PHONE_MATCH", referenceClaimIds: ["CLM-altogrand-beach-house-phone-1"] });
     expect(reduceOutcome(f, subject)).toBe("no_material_conflict_observed");
   });
 
