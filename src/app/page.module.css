@@ -1,0 +1,244 @@
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  padding: clamp(48px, 9vw, 112px) 0 clamp(56px, 9vw, 120px);
+}
+.heroCopy {
+  flex: 1 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 8px;
+}
+.pill {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  background: var(--brand-soft);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+.title {
+  margin: 0;
+  font-size: clamp(26px, 4.6vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.lede {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 540px;
+  text-wrap: pretty;
+}
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding-top: 4px;
+}
+.ctaNote {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.art {
+  flex: 1 1 380px;
+  min-width: 0;
+  position: relative;
+  padding: 28px 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+.artBg {
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 78%;
+  height: 88%;
+  border-radius: 28px;
+  background: linear-gradient(160deg, #e3f0f0, var(--bg));
+}
+.mock {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow-float);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mockHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mockIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--brand-pale);
+  display: grid;
+  place-items: center;
+}
+.mockName {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.mockName strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.mockName span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.mockAlert {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--warn-bg);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--warn-fg);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.mockAlert span {
+  color: var(--warn-strong);
+}
+.mockRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 2px;
+  border-bottom: 1px solid var(--line-3);
+  font-size: 13px;
+}
+.mockRow:last-child {
+  border-bottom: 0;
+}
+.mockRow > span:nth-child(2) {
+  flex: 1;
+}
+.mockNext {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mockNext > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+}
+.mockNext small {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-pale);
+  font-weight: 600;
+}
+.onFile {
+  position: absolute;
+  top: 0;
+  right: 4%;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 12px 28px -10px rgba(14, 52, 66, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+}
+.onFile small {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #d5eeee;
+}
+
+.steps {
+  padding: 8px 0 56px;
+}
+.stepsHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 22px;
+  text-align: center;
+}
+.stepsHead h2 {
+  margin: 0;
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.stepGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.step {
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stepTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.stepIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--brand-tint);
+  color: var(--brand);
+  display: grid;
+  place-items: center;
+}
+.stepNum {
+  font-size: 12px;
+  color: var(--muted-3);
+  font-weight: 500;
+}
+.step strong {
+  font-size: 15.5px;
+}
+.step span:last-child {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.5;
+}

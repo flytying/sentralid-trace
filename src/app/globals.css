@@ -1,0 +1,222 @@
+/* Design tokens ported from the SentralID Trace prototype. */
+:root {
+  --ink: #0e3442;
+  --ink-2: #2a3f48;
+  --text-2: #3c5059;
+  --text-3: #4d6169;
+  --muted: #5b6e75;
+  --muted-2: #7d8f95;
+  --muted-3: #8aa0a6;
+
+  --brand: #237f87;
+  --brand-hover: #1b666d;
+  --brand-soft: #e8f3f3;
+  --brand-tint: #eaf4f4;
+  --brand-light: #7cc3c6;
+  --brand-pale: #9fd6d8;
+  --focus: #9dcfd1;
+
+  --bg: #f4f8f8;
+  --surface: #fff;
+  --line: #e6eeee;
+  --line-2: #e3ebeb;
+  --line-3: #ebf0f0;
+  --line-strong: #cdd8d8;
+
+  --ok-fg: #2f6b3f;
+  --ok-icon: #3c8a50;
+  --ok-bg: #e7f1e8;
+  --warn-fg: #8a4b05;
+  --warn-strong: #6b3a04;
+  --warn-icon: #c47a12;
+  --warn-bg: #fcf1de;
+  --warn-line: #ecc98c;
+  --bad-fg: #9a3412;
+  --unk-fg: #4d6169;
+  --unk-icon: #8a93a0;
+  --unk-bg: #eef0f3;
+
+  --shadow-card: 0 1px 2px rgba(14, 52, 66, 0.04), 0 10px 30px -12px rgba(14, 52, 66, 0.1);
+  --shadow-float: 0 2px 4px rgba(14, 52, 66, 0.04), 0 24px 48px -16px rgba(14, 52, 66, 0.18);
+  --radius: 16px;
+  --radius-lg: 18px;
+  --mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--brand);
+}
+a:hover {
+  color: var(--brand-hover);
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+:where(button, input, textarea, a, select):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Layout */
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+main.container {
+  flex: 1;
+}
+
+/* Buttons */
+.btn {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--brand-hover);
+  color: #fff;
+}
+.btn-primary:disabled {
+  background: var(--line-strong);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+.btn-secondary:hover {
+  background: var(--line);
+  color: var(--ink);
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+/* Chips: state is always conveyed by text, never colour alone. */
+.chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.chip-ok {
+  color: var(--ok-fg);
+  background: var(--ok-bg);
+}
+.chip-warn {
+  color: var(--warn-fg);
+  background: var(--warn-bg);
+}
+.chip-unk {
+  color: var(--unk-fg);
+  background: var(--unk-bg);
+}
+
+.eyebrow {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+@keyframes pp-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pp-indet {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(285%);
+  }
+}
+.fade-in {
+  animation: pp-in 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
