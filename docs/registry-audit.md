@@ -22,7 +22,7 @@ Each website link was taken from the site's own HTML (`facebook.com/...` href). 
 |---|---|---|---|---|
 | 1 | acuatico-beach-resort | Acuatico Beach Resort and Hotel, Inc. | facebook.com/AcuaticoBeachResort | Website links the same page |
 | 2 | acuaverde-beach-resort | Acuaverde Beach Resort and Hotel, Inc. | facebook.com/AcuaverdeBeachResort | Website links the same page |
-| 3 | altogrand-beach-house | Altogrand Beach House | facebook.com/EnteBeachResort | — ⚠ page username differs from the listed name |
+| 3 | altogrand-beach-house | Altogrand Beach House | facebook.com/EnteBeachResort | — Username is from a former name; reviewer confirmed the page is titled “Altogrand Beach House” and its bio says “Formerly known as Ente's Beach Resort” |
 | 4 | arias-crib-laiya | Aria's Crib - Laiya Beach House | facebook.com/AriasCrib | — |
 | 5 | avc-kubo-transient-house | AVC Kubo Transient House | facebook.com/AVCSanJuanBatangas | — |
 | 6 | beach-hive-seafront | Beach Hive Seafront | facebook.com/beachhiveseafront | — |
