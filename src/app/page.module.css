@@ -15,7 +15,7 @@
 }
 .pill {
   align-self: flex-start;
-  font-size: 12px;
+  font-size: var(--fs-meta);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -26,7 +26,7 @@
 }
 .title {
   margin: 0;
-  font-size: clamp(26px, 4.6vw, 52px);
+  font-size: var(--fs-display);
   line-height: 1.04;
   letter-spacing: -0.035em;
   font-weight: 500;
@@ -34,7 +34,7 @@
 }
 .lede {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--fs-h3);
   line-height: 1.55;
   color: var(--text-2);
   max-width: 540px;
@@ -48,7 +48,7 @@
   padding-top: 4px;
 }
 .ctaNote {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--muted);
 }
 
@@ -195,7 +195,7 @@
 }
 .stepsHead h2 {
   margin: 0;
-  font-size: clamp(24px, 3.4vw, 32px);
+  font-size: var(--fs-h1);
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -230,22 +230,22 @@
   place-items: center;
 }
 .stepNum {
-  font-size: 12px;
+  font-size: var(--fs-label);
   color: var(--muted);
   font-weight: 500;
 }
 .step strong {
-  font-size: 15.5px;
+  font-size: var(--fs-title);
 }
 .step span:last-child {
-  font-size: 14px;
+  font-size: var(--fs-body);
   color: var(--text-3);
   line-height: 1.5;
 }
 
 .samplesNote {
   margin: 4px 0 0;
-  font-size: 14px;
+  font-size: var(--fs-body);
   color: var(--muted);
 }
 .sampleGrid {
@@ -271,15 +271,15 @@
   border-color: var(--brand-light);
 }
 .sample strong {
-  font-size: 15.5px;
+  font-size: var(--fs-title);
 }
 .sample > span:not(.sampleKey):not(.sampleCta) {
-  font-size: 14px;
+  font-size: var(--fs-body);
   color: var(--text-3);
   line-height: 1.5;
 }
 .sampleKey {
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -291,7 +291,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--brand);
 }

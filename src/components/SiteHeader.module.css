@@ -48,7 +48,7 @@
   line-height: 1.05;
 }
 .wordTop {
-  font-size: 10.5px;
+  font-size: var(--fs-label);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--muted);
@@ -67,7 +67,7 @@
 .navLink {
   padding: 10px 12px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--ink);
   text-decoration: none;
@@ -90,6 +90,6 @@
 @media (max-width: 420px) {
   .navLink {
     padding: 10px 8px;
-    font-size: 13px;
+    font-size: var(--fs-sm);
   }
 }

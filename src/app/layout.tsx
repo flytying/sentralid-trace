@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="shell">
           <SiteHeader />
           <main className="container">{children}</main>
-          <footer className="container" style={{ padding: "20px", fontSize: 13, color: "var(--muted)", display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", borderTop: "1px solid var(--line-2)" }}>
+          <footer className="container" style={{ padding: "20px", fontSize: "var(--fs-sm)", color: "var(--muted)", display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", borderTop: "1px solid var(--line-2)" }}>
             <span>SentralID Trace · Hackathon prototype. Not a guarantee of authenticity or booking safety.</span>
             <span style={{ display: "flex", gap: 14 }}>
               <Link href="/about#privacy">Privacy</Link>
