@@ -36,7 +36,7 @@ Status as of 31 Oct 2026. ✅ done and verified · ⏳ owner action needed · �
 
 ## Owner decisions still open
 
-1. **License — decided:** all rights reserved, with permission for organizers/judges to run it for evaluation. Check the participant agreement for any rights it grants the organizers (e.g. publicity or demo use); those would apply alongside this.
+1. **License — decided and confirmed (31 Oct):** all rights reserved, with permission for organizers/judges to run it for evaluation. Organizers confirmed no specific or OSI-approved license is required: the repo must be public and runnable by judges from its setup instructions, plus the 3-minute video ([participant resources](https://cerebralvalley.ai/e/meta-ai-developer-hackathon/details)). Check the participant agreement for any rights it grants the organizers (e.g. publicity or demo use); those would apply alongside this.
 2. **Hosting (optional).** If you want a hosted URL: deploy to Vercel with `MODEL_API_KEY`, `CASE_SEAL_KEY` set as server env vars, add a Vercel Firewall rate-limit rule on `/api/investigations/*`, set a Meta spend alert, and re-run `npm run qa:repeat` against the deployed URL. Document any access restriction in the README.
 3. **Video.** Record per [demo-script.md](demo-script.md); upload unlisted/public (YouTube or similar) and check it plays logged out.
 4. **Separate signed participation agreement**, if any — review independently.
