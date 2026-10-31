@@ -67,7 +67,7 @@ export function OnFilePanel({ selection, onChange }: { selection: Selection; onC
           <div>
             <dt>Phone and email</dt>
             <dd className={styles.help}>
-              None on file. Our source lists Facebook pages only, and we don&apos;t copy numbers from a resort&apos;s own page.
+              None on file yet. The tourism office lists Facebook pages, not phone numbers.
             </dd>
           </div>
         )}
