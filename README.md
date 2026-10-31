@@ -1,107 +1,163 @@
 # SentralID Trace — Verify Before You Book
 
-Trace helps Philippine travelers check a hotel or resort booking channel on Facebook before paying a deposit. It compares a pasted Facebook page link and/or screenshots of the page and Messenger chat against a small registry of independently sourced business records, shows what matches, what conflicts and what can't be established, then proposes one safe follow-up check and re-assesses.
+**Trace checks a Philippine hotel or resort booking channel before you pay a deposit.** Paste the Facebook page link you were sent and/or upload screenshots of the page and your Messenger chat. Trace reads them live with **Meta Muse Spark**, compares what it sees against independently sourced records, tells you what matches, what doesn't and what nobody can confirm from a screenshot — then suggests **one safe check** and updates the result when you come back with the answer.
 
 Entry for the **Meta Global AI Developer Hackathon** — Indie Developer track, *Build for Your World*.
 
-> Status: under active development (Oct 27 – Nov 4, 2026). This README is expanded as each phase lands.
+| | |
+|---|---|
+| Runtime AI | Meta `muse-spark-1.3` (Standard mode) via `https://api.meta.ai/v1` — the only AI the app calls |
+| Real records | 13 San Juan, Batangas resorts, each tied to its Facebook page by the LGU tourism directory |
+| Tests | 122 unit/route tests · live 3 × 5 demo runs: 15/15 ([report](docs/qa/repeat-runs-2026-10-31.md)) |
 
-## How AI is used
+## Why this isn't "ask a chatbot"
 
-- **Runtime model:** Meta **Muse Spark 1.3** (Standard mode) via the Meta Model API at `https://api.meta.ai/v1`. No other AI provider is called at runtime; the server refuses to start an inference call if the configured host or model is not on its allowlist.
-- The model **extracts** visible details from screenshots and **proposes** a next check from a fixed catalog. Application code — not the model — normalizes links, compares claims against the registry, decides what is corroborated, and computes the before/after reassessment.
-- URL-only checks make **no** model call and never fetch the pasted page.
+- **The model reads; it never decides.** Muse Spark extracts what is visible into a strict schema. Fixed rules compare those observations with a curated, source-backed registry and produce every finding.
+- **Every finding is traceable** to an observation in your input and, where it matches, a registry claim with its source and review date.
+- **It never over-claims.** A matching page never "verifies" the person chatting with you or the GCash/bank account they give you — those stay *can't tell*, always. There is no scam score and no "safe to pay".
+- **It asks for the one check that could change the answer.** VerifyNext states two competing explanations, picks one safe check from a server-owned catalog (Muse Spark chooses and explains; the server validates), and re-assesses only the findings that evidence justifies.
 
-## Requirements
+## Quick start (about 5 minutes)
 
-- Node.js 20.9+ (developed on Node 24)
-- Your own Meta Model API key
-
-## Setup
+Requirements: **Node.js 20.9+** (tested on Node 24) and **your own Meta Model API key**.
 
 ```bash
-npm install
+git clone https://github.com/flytying/sentralid-trace.git
+cd sentralid-trace
+npm ci
 cp .env.example .env.local
 ```
 
-Fill in `.env.local`:
+Edit `.env.local`:
 
-- `MODEL_API_KEY` — your Meta Model API key (server-side only)
-- `CASE_SEAL_KEY` — generate with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
+- `MODEL_API_KEY=` your Meta Model API key (kept server-side; never sent to the browser)
+- `CASE_SEAL_KEY=` output of `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
 
-Verify your Meta access with a live smoke test (sends one synthetic sample screenshot):
+Check your key works (sends one synthetic sample screenshot to Meta; expect two `ok` lines):
 
 ```bash
 npm run smoke:meta
 ```
 
-Expected output: two `ok` lines. Muse Spark is a reasoning model, so the image call takes several seconds (about 4–12s depending on `reasoning_effort`).
-
-## Run
+Run it:
 
 ```bash
-npm run dev            # http://localhost:3000
-npm run build && npm start
+npm run build && npm start      # production build on http://localhost:3000
+# or: npm run dev
 ```
 
-## Test
+### Try it
 
-```bash
-npm test               # unit tests
-npm run typecheck
-npm run lint
-npm run registry:gate  # release gate: ≥10 reviewed, admitted real records
-npm run eval:extraction -- minimal low   # live extraction on the synthetic samples (uses your key)
-npm run eval:adversarial                 # live adversarial screenshots vs. a running server
-TRACE_URL=http://localhost:3000 npm run qa:repeat -- 5   # 3 scenarios × 5 live runs → docs/qa/
-```
+1. Open http://localhost:3000 and pick **Sample A** under *Try a sample*. (Samples use made-up resorts and screenshots, but are analysed live.)
+2. Tick the privacy box → **Check this booking**. Muse Spark reads both screenshots (~5 s). Result: *We can't confirm this booking channel yet* — the cropped page screenshot doesn't show which page it is.
+3. **Let's check** → Trace suggests comparing your page's address with the pages the resort's own website lists. Click **Use the sample's page link** → **Compare and update my result**.
+4. The page finding changes from *Can't tell* to *Matches our record*. Who is sending the messages and whose GCash it is stay open.
+5. Try **Sample B** (a lookalike page and a different phone number → *Some details don't match*; reporting what the resort "said" changes nothing, by design) and **Sample C** (a resort not on file → no safe check available).
+6. Then use your own screenshot of a real resort's Facebook page — for example one of the [13 resorts on file](docs/registry-audit.md) — via **Check a booking**.
 
-Latest live QA report: [docs/qa/repeat-runs-2026-10-31.md](docs/qa/repeat-runs-2026-10-31.md).
+### Live vs. simulated
 
-## Safety and abuse controls
-
-- **Model boundary:** screenshot text is data. The extraction prompt says so, output is schema-constrained and re-validated, and the comparison is done by fixed rules. Synthetic adversarial screenshots (prompt injection in a page bio, a fake "verified" badge with the real page's link in the bio, an "official GCash" chat) are in `eval/adversarial/`; none produced a page match or a "no conflict" result.
-- **Mentioned links never count:** only the page's own address (pasted by the user, or shown as the address in a page screenshot) is compared. A link written inside a chat, bio or post is reported as "mentioned" and never matches. If one screenshot yields two different addresses, neither is trusted.
-- **No fetching:** pasted links are parsed, never opened. The server only calls `https://api.meta.ai/v1`.
-- **Privacy:** screenshots are processed in memory and not stored; logs record request id, input types, timings, counts and outcome only. Account numbers are masked in results.
-- **Rate limiting:** `RATE_LIMIT_PER_MINUTE` (per client) and `MODEL_CALLS_PER_HOUR` (per server) cap model use. This limiter is in-memory **per instance**: it protects a local run but does not coordinate across serverless instances. A public hosted deployment must also enable platform rate limiting (for example a Vercel Firewall rate-limit rule on `/api/investigations/*`) and Meta API spend alerts.
-- **Headers:** strict Content-Security-Policy (`connect-src 'self'`), `frame-ancestors 'none'`, `nosniff`, no `X-Powered-By`.
+Everything is live. There is **no replay, stub or cached-answer mode**: every screenshot (including the samples) goes to Meta, and if Meta is unavailable you get an error, never a made-up result. Checks that use only a pasted link make **no** model call — the UI says so — and never open the link.
 
 ## How a check flows
 
-1. **Analyze** (`POST /api/investigations/analyze`): screenshots → one Muse Spark extraction call → fixed comparison rules → findings and outcome. A second, small Muse Spark call picks **one** next check from the server's candidate list (`COMPARE_LGU_REFERENCE_PAGE`, `COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE`, `CHECK_REGISTERED_CONTACT_POLICY`) and explains it; anything outside the list or with unsafe wording is rejected and replaced by a rule-based plan that the UI labels as such. Link-only checks make no model calls.
-2. **Reassess** (`POST /api/investigations/reassess`): one follow-up per case, carried in an encrypted, expiring case token. A new link is compared without fetching it; a new screenshot gets one more extraction call; a phone-call report is recorded as the user's note and cannot change any finding. Findings are recomputed against the same registry snapshot and returned as a before/after diff.
+1. **Analyze** (`POST /api/investigations/analyze`): validate inputs (content-sniffed images, strict Facebook-URL parser) → one Muse Spark **extraction** call → deterministic comparison → findings and outcome → one small Muse Spark **planning** call that chooses the next check from the server's candidates (`COMPARE_LGU_REFERENCE_PAGE`, `COMPARE_REGISTRY_OFFICIAL_WEBSITE_PAGE`, `CHECK_REGISTERED_CONTACT_POLICY`). Anything outside the list, or with unsafe wording, is rejected and replaced by a rule-based plan that the UI labels as such.
+2. **Reassess** (`POST /api/investigations/reassess`): exactly one follow-up, carried in an AES-256-GCM encrypted, expiring case token (no database). A new link is compared without fetching it; a new screenshot gets one more extraction call; a phone-call report is kept as the user's note and cannot change any finding. Findings are recomputed against the same registry snapshot and returned as a before/after diff.
 
-## Model settings and measured behaviour
-
-Screenshot extraction uses `muse-spark-1.3` with `reasoning_effort: "minimal"`, chosen from live runs on 2026-10-31 (single runs, not a benchmark):
-
-| Effort | Sample A | Sample B | Sample C | Extraction quality on samples |
-|---|---|---|---|---|
-| minimal | 4.2s | 4.3s | 5.9s | All key fields read correctly |
-| low | 10.7s | 11.1s | 6.6s | Same fields |
-| default | 18.2s | 25.8s | 21.1s | Same fields, more noise |
-
-An unseen real page screenshot (not in the repo) also extracted correctly at `minimal` in 4.9s, including the `facebook.com/…` address from the browser bar. Muse Spark spends output tokens on reasoning first, so calls set a generous `max_tokens`; an exhausted budget is reported as an error, never as an empty result.
-
-## Built during the hackathon (Oct 27 – Nov 4, 2026)
-
-All code in this repository was written during the event. Commit history shows the progression by phase.
-
-- Phase 1 — Foundation: Next.js app shell and design system (ported from the Trace prototype), fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
-- Phase 2 — Registry: claim/source data model with zod validation and integrity checks, admission gate, strict Facebook URL parser (no fetching), name search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic sample scenarios.
-- Phase 3 — Live investigation: evidence intake (link, page screenshot, up to three ordered chat screenshots, consent), browser-side image shrinking, server-side content sniffing and limits, schema-constrained Muse Spark extraction with one bounded retry, deterministic comparison engine (page link, name, phone, chat sender, payment request), case outcome, sealed case token, findings view with evidence trace, and honest progress/error states.
-- Phase 4 — VerifyNext and reassessment: server-owned catalog of three safe checks, deterministic candidate builder with two competing explanations, Muse Spark choosing one check from the allowlist and wording it (validated; labelled rule-based fallback), one sealed follow-up (page link, screenshot or phone-call report), claim-level before/after diff that changes only justified findings, and the check and updated-result screens.
-- Phase 5 — Hardening: "mentioned link" handling and ambiguous-address guard, synthetic adversarial screenshots with a live eval, per-instance rate limiting with `Retry-After`, security headers, clear error for a rejected API key, route-level failure tests (provider 401/429/500/timeout/bad output, missing key, planner failure, follow-up replay, tampered token, log hygiene), contrast and control-labelling fixes, and a 3×5 live repeat-run report.
+Outcomes are one of: *No conflict found in what we could check*, *Possible booking-channel mismatch*, *Not enough evidence* — each with "This can't promise the page is real or that paying is safe."
 
 ## Reference registry
 
-`src/data/reference-registry/` holds real Philippine resort records. Each record links a business to a Facebook page only when a separate, identifiable source does so — primarily the [San Juan, Batangas LGU tourism directory](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages), sometimes also the resort's own website. Records stay `draft` (never shown or compared against) until a human reviewer checks them; see [docs/registry-audit.md](docs/registry-audit.md). A record supports only the page relationship — never a chat sender or payment account.
+`src/data/reference-registry/` holds **13 real resorts** in San Juan, Batangas. Each record links a business to a Facebook page only because a separate, identifiable source does: the [San Juan, Batangas Municipal Tourism Office directory](https://tourism.sanjuanbatangas.gov.ph/verified-facebook-pages) (and, for four resorts, the resort's own website too). Links were taken from the page HTML, then approved in manual review — see [docs/registry-audit.md](docs/registry-audit.md). A record supports only the page relationship, never a chat sender, booking agent or payment account. `npm run registry:gate` enforces the ≥ 10 reviewed-records release gate.
 
-## Sample data
+Sample resorts (Lumen Cove, Bahay Dagat, Isla Verde) are fictional, kept in a separate fixture file with `.example` sources, and never counted as real.
 
-Files in `public/samples/` are **synthetic** screenshots of **fictional** resorts (watermarked "Synthetic sample — not a real business"). They exist only to demonstrate the workflow and make no claim about any real business.
+## Safety, privacy and abuse controls
+
+- **Model boundary:** screenshot text is data. The extraction prompt says so; output is schema-constrained by the API and re-validated with zod; unknown fields, extra keys or screenshots that weren't sent are rejected (one bounded retry, then an error).
+- **Mentioned links never count:** only the page's own address (pasted, or shown as the address in a page screenshot) is compared. Links written in chats, bios or posts are reported as "mentioned" and never match; if one screenshot yields two different addresses, neither is trusted. Synthetic adversarial screenshots (prompt injection in a bio, fake "verified" badge with the real link, "official GCash" chat) live in `eval/adversarial/`; none produced a match or a "no conflict" result.
+- **No fetching:** pasted links are parsed, never opened. The only outbound request is to `https://api.meta.ai/v1`; the server refuses to run with any other host or model.
+- **Privacy:** consent and redaction notice before any screenshot is sent; images are shrunk in the browser, processed in memory and never stored; account numbers are masked; logs contain only request id, input types, timings, counts and outcome.
+- **Rate limiting:** `RATE_LIMIT_PER_MINUTE` (per client) and `MODEL_CALLS_PER_HOUR` (per server) cap model use, with `Retry-After`. This limiter is **per instance** — fine for a local run; a public deployment must add platform rate limiting and Meta spend alerts.
+- **Headers:** strict CSP (`connect-src 'self'`, `frame-ancestors 'none'`), `nosniff`, no `X-Powered-By`.
+
+## Testing and QA
+
+```bash
+npm test                 # 122 unit + route tests (no network)
+npm run typecheck && npm run lint
+npm run registry:gate    # ≥10 reviewed real records
+npm run smoke:meta       # live: key, image input, JSON-schema output
+npm run eval:extraction -- minimal low      # live: extraction on samples per reasoning effort
+npm run eval:adversarial                    # live: adversarial screenshots vs. a running server
+TRACE_URL=http://localhost:3000 npm run qa:repeat -- 5   # live: 3 scenarios × 5 runs → docs/qa/
+```
+
+Tests cover the trust invariants from the design (every finding cites evidence; a screenshot alone can't corroborate; payment never upgrades; only allowlisted checks; one follow-up; unrelated findings stay byte-identical), provider failures (401/429/500/timeout/malformed output never produce a result), tampered/expired/replayed case tokens, image sniffing and log hygiene.
+
+Latest live report: [docs/qa/repeat-runs-2026-10-31.md](docs/qa/repeat-runs-2026-10-31.md) — 15/15 runs matched expectations on a production build; analyze end-to-end 4.1–9.1 s.
+
+## Model settings
+
+Extraction and planning use `reasoning_effort: "minimal"`, chosen from live runs on 2026-10-31 (single runs, not a benchmark):
+
+| Effort | Sample A | Sample B | Sample C | Extraction on samples |
+|---|---|---|---|---|
+| minimal | 4.2 s | 4.3 s | 5.9 s | All key fields read correctly |
+| low | 10.7 s | 11.1 s | 6.6 s | Same fields |
+| default | 18.2 s | 25.8 s | 21.1 s | Same fields, more noise |
+
+Muse Spark reasons before answering and reasoning tokens count against `max_tokens`, so calls use a generous budget; an exhausted budget is reported as an error, never as an empty result.
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| "Live analysis isn't set up" / `CONFIG_INVALID` | `MODEL_API_KEY` or `CASE_SEAL_KEY` missing in `.env.local`; restart the server after editing. |
+| "The Meta Model API rejected this server's API key" | The key is wrong or lacks access to `muse-spark-1.3`; run `npm run smoke:meta`. |
+| `MODEL_RATE_LIMITED` | Your Meta quota or Trace's per-minute limit (`RATE_LIMIT_PER_MINUTE`, default 8) — wait the time shown. |
+| `MODEL_TIMEOUT` | Slow provider response; retry, or raise `MODEL_TIMEOUT_MS` (default 45000). |
+| `CASE_EXPIRED` / `FOLLOWUP_ALREADY_USED` | Case tokens last 30 minutes and allow one follow-up; start a new check. |
+| "We couldn't load our records" | The registry files failed validation; run `npm run registry:gate` to see why. |
+| Port 3000 busy | `npm start -- -p 3001` |
+
+## Project layout
+
+```
+src/app/                 pages (/, /investigate, /about) and API routes
+src/components/investigate/   workspace UI: picker, evidence form, findings, check, result
+src/lib/engine/          deterministic comparison, phone handling, outcome, copy
+src/lib/meta/            Meta Model API client and extraction adapter
+src/lib/verify/          VerifyNext catalog, planner, reassessment diff
+src/lib/registry/        registry schema, loader, admission gate, search
+src/lib/case/            analyze / reassess orchestration, sealed case tokens
+src/data/reference-registry/   real records + synthetic sample fixtures
+eval/adversarial/        synthetic adversarial screenshots (and their HTML sources)
+docs/                    registry audit, QA reports, demo script, submission checklist
+```
+
+## Built during the hackathon (Oct 27 – Nov 4, 2026)
+
+All code in this repository was written during the event; the commit history shows the progression. Inputs prepared earlier in the event by the entrant — the BRD/PRD/TDD specifications, a clickable HTML prototype whose visual design was ported here, and the synthetic sample screenshots — are not code in this repo except the sample images.
+
+- **Phase 1 — Foundation:** Next.js app shell and design system, fail-closed Meta Model API client, live smoke test, AES-256-GCM sealed case tokens.
+- **Phase 2 — Registry:** claim/source data model with validation and admission gate, 13 reviewed real records, strict Facebook URL parser, search and exact link lookup, reference APIs, resort picker and "on file" source panel, labelled synthetic samples.
+- **Phase 3 — Live investigation:** evidence intake with consent, browser-side image shrinking, server-side content sniffing, schema-constrained Muse Spark extraction, deterministic comparison engine, findings view with evidence trace, honest progress and error states.
+- **Phase 4 — VerifyNext:** safe-check catalog, competing explanations, model-chosen and validated check with rule-based fallback, one sealed follow-up, claim-level before/after diff, check and updated-result screens.
+- **Phase 5 — Hardening:** mentioned-link and ambiguous-address guards, adversarial screenshots and live eval, rate limiting, security headers, route-level failure tests, accessibility fixes, 3 × 5 live repeat runs.
+- **Phase 6 — Submission:** this README, clean-checkout verification, demo script and submission checklist.
+
+## Third-party software and data
+
+Next.js, React, zod, lucide-react (ISC), Geist fonts via `next/font` (SIL OFL); dev: Vitest, tsx, ESLint. Registry facts (business names and public Facebook links) are cited from the San Juan, Batangas Municipal Tourism Office directory and the resorts' own websites; no photos, logos or page content from them are included. Sample and adversarial screenshots are synthetic and watermarked.
+
+## Limitations
+
+- Registry covers 13 resorts in one municipality; anything else is "not on file" (which is not evidence of anything).
+- A screenshot can be edited; Trace says so on screenshot-based matches and never treats a match as proof of who is chatting or who owns a payment account.
+- The rate limiter is per server instance; the case token allows one follow-up per issued token, and an unexpired earlier token could be replayed until it expires (30 min).
+- Latency figures are single-session measurements, not an SLA.
 
 ## Disclaimer
 
-Trace is a hackathon prototype. Its results are not a guarantee of authenticity or booking safety, and it does not certify any payment account.
+Trace is a hackathon prototype, not an official Meta product or a fraud-detection service. Its results are not a guarantee of authenticity or booking safety, and it does not certify any payment account.
