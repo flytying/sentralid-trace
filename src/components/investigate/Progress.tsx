@@ -70,7 +70,7 @@ export function Progress({ usesModel, shots, done, modelMs, onFinished }: Props)
         </h1>
         <p className={styles.sub}>
           {usesModel
-            ? "This usually takes 5–15 seconds. Your screenshots are read once and not stored."
+            ? "This usually takes 5–15 seconds. Your screenshots are read once and not stored by Trace."
             : "We only compare the link. We don't open the page."}
         </p>
       </div>

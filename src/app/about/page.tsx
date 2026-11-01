@@ -57,7 +57,8 @@ export default function AboutPage() {
           Screenshots you submit are sent to the Meta Model API (Muse Spark, Standard mode) to read visible text such
           as page names, handles and contact details. Please hide OTPs, ID numbers, private addresses, account balances
           and unrelated personal information first. Trace does not store your screenshots or chats on its servers and
-          does not write them to logs. Pasted links are compared with our records and are never opened.
+          does not write them to logs. This hackathon build runs on Meta&apos;s free API credits; under those terms, Meta may use
+          submitted content to improve its products. Pasted links are compared with our records and are never opened.
         </p>
       </section>
 
