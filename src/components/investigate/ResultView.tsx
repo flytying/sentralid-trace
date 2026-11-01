@@ -71,7 +71,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
       step: "Step 3",
       title: `First check · ${OUTCOME_COPY[analysis.outcome].label}`,
       detail: analysis.inferencePerformed
-        ? `${shots} screenshot${shots === 1 ? "" : "s"} read live by Meta AI${secs(analysis.inference?.latencyMs) ? ` in ${secs(analysis.inference?.latencyMs)}` : ""}, then compared with our records by fixed rules`
+        ? `${shots} screenshot${shots === 1 ? "" : "s"} read live by Muse Spark${secs(analysis.inference?.latencyMs) ? ` in ${secs(analysis.inference?.latencyMs)}` : ""}, then compared with our records by fixed rules`
         : "Link compared with our records · no AI used",
       at: checkedAt.analyzed,
     },
@@ -80,7 +80,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
       title: analysis.nextCheck.check ? `Check suggested · ${analysis.nextCheck.check.label}` : "No safe check available",
       detail:
         analysis.nextCheck.selectedBy === "model"
-          ? `Chosen with Meta AI from our list of safe checks${secs(analysis.planner?.latencyMs) ? ` in ${secs(analysis.planner?.latencyMs)}` : ""}`
+          ? `Chosen with Muse Spark from our list of safe checks${secs(analysis.planner?.latencyMs) ? ` in ${secs(analysis.planner?.latencyMs)}` : ""}`
           : "Chosen by fixed rules",
       at: checkedAt.analyzed,
     },
@@ -89,7 +89,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
       title: skipped ? "You skipped the check" : `You added · ${reassessment?.followup.inputLabel ?? "—"}`,
       detail: skipped
         ? "Nothing new was added"
-        : `${added ?? "—"}${reassessment?.inference ? ` · read live by Meta AI in ${secs(reassessment.inference.latencyMs)}` : " · no AI used"}`,
+        : `${added ?? "—"}${reassessment?.inference ? ` · read live by Muse Spark in ${secs(reassessment.inference.latencyMs)}` : " · no AI used"}`,
       at: checkedAt.followup,
     },
     {
@@ -163,7 +163,7 @@ export function ResultView({ analysis, reassessment, skipped, reference, checked
               <span className={styles.compareValue}>{added ?? "—"}</span>
               <span className={styles.help}>
                 {reassessment.followup.inputLabel}
-                {reassessment.inference ? ` · read live by Meta AI in ${(reassessment.inference.latencyMs / 1000).toFixed(1)}s` : " · no AI used"}
+                {reassessment.inference ? ` · read live by Muse Spark in ${(reassessment.inference.latencyMs / 1000).toFixed(1)}s` : " · no AI used"}
               </span>
             </div>
             <div>

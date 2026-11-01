@@ -110,7 +110,7 @@ export function EvidenceForm({ evidence, onChange, onSubmit, onBack, isSample }:
       {isSample && (
         <p className={styles.sampleNote}>
           <Info size={17} aria-hidden="true" style={{ flex: "none", marginTop: 2 }} />
-          <span>This demo scenario is filled in with sample screenshots of a fictional resort. They&apos;ll be read live by Meta AI, just like your own.</span>
+          <span>This demo scenario is filled in with sample screenshots of a fictional resort. They&apos;ll be read live by Meta&apos;s Muse Spark, just like your own.</span>
         </p>
       )}
 
@@ -251,7 +251,7 @@ export function EvidenceForm({ evidence, onChange, onSubmit, onBack, isSample }:
                 checked={evidence.consent}
                 onChange={(e) => onChange({ ...evidence, consent: e.target.checked })}
               />
-              I&apos;ve covered up private details, and I&apos;m okay with Meta AI reading my screenshots.
+              I&apos;ve covered up private details, and I&apos;m okay with Meta&apos;s Muse Spark reading my screenshots.
             </label>
           </div>
         </div>

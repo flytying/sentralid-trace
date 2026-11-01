@@ -7,7 +7,7 @@ Server: production build (`next build` + `next start`), live Meta `muse-spark-1.
 | Scenario | Expected |
 |---|---|
 | A | not enough evidence → (documented reservations link) → no conflict found; exactly 1 finding changes; payment stays unknown |
-| B | possible mismatch → (user report: "they said yes" for the phone check, or "same conversation" for the Messenger check — whichever Meta AI chose) → unchanged; 0 findings change |
+| B | possible mismatch → (user report: "they said yes" for the phone check, or "same conversation" for the Messenger check — whichever Muse Spark chose) → unchanged; 0 findings change |
 | C | not enough evidence; no safe check available (resort not on file) |
 | D | no conflict found (page and number match) → Messenger check is the one offered → (user report: "new, empty chat") → unchanged; 0 findings change; payment stays unknown |
 

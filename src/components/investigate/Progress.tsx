@@ -48,8 +48,8 @@ export function Progress({ usesModel, shots, done, modelMs, onFinished }: Props)
     return () => timers.forEach((t) => window.clearTimeout(t));
   }, [done]);
 
-  const reading = usesModel ? "Reading your screenshots with Meta AI (live)" : "Comparing your link with our records — no AI needed";
-  const readDone = usesModel && modelMs !== null ? `Read your screenshots with Meta AI · ${(modelMs / 1000).toFixed(1)} s` : reading;
+  const reading = usesModel ? "Reading your screenshots with Muse Spark (live)" : "Comparing your link with our records — no AI needed";
+  const readDone = usesModel && modelMs !== null ? `Read your screenshots with Muse Spark · ${(modelMs / 1000).toFixed(1)} s` : reading;
   type State = "done" | "active" | "todo";
   const stages: { label: string; state: State }[] = [
     { label: "Checking what you sent", state: "done" },
@@ -104,7 +104,7 @@ export function Progress({ usesModel, shots, done, modelMs, onFinished }: Props)
 
         {usesModel && (
           <div className={styles.targets} aria-hidden="true" data-done={finishStep > 0}>
-            <span className={styles.targetsLabel}>Meta AI looks for</span>
+            <span className={styles.targetsLabel}>Muse Spark looks for</span>
             <div className={styles.targetList}>
               {TARGETS.map((t, i) => (
                 <span key={t} className={styles.target} style={{ animationDelay: `${i * 0.9}s`, animationDuration: `${TARGETS.length * 0.9}s` }}>

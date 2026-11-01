@@ -57,7 +57,7 @@ export default function AboutPage() {
           items={[
             "Whether a Facebook link is a resort's page on file",
             "Whether the resort name and phone numbers you saw match what we have on file",
-            "One safe thing to check next, picked with Meta AI from a fixed list, and then your updated result",
+            "One safe thing to check next, picked with Muse Spark from a fixed list, and then your updated result",
           ]}
         />
         <LimitCard

@@ -120,7 +120,7 @@ export function Findings({ result, reference, note, onEdit, onRestart, onStartCh
                 <span className={styles.readField}>{FIELD_LABEL[o.field]}</span>
                 <span className={styles.readValue}>{o.value}</span>
                 <span className={styles.help}>
-                  {inputLabel.get(o.inputId)} · {o.origin === "user" ? "you typed this" : `read by Meta AI${o.clarity === "uncertain" ? ", partly readable" : ""}`} · {o.id}
+                  {inputLabel.get(o.inputId)} · {o.origin === "user" ? "you typed this" : `read by Muse Spark${o.clarity === "uncertain" ? ", partly readable" : ""}`} · {o.id}
                 </span>
               </li>
             ))}

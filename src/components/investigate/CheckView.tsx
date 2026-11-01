@@ -35,7 +35,7 @@ export function NextCheckCard({ next, onStart, synthetic }: { next: NextCheck; o
           Let&apos;s check <ArrowRight size={16} aria-hidden="true" />
         </button>
         <span className={styles.nextMeta}>
-          {next.selectedBy === "model" ? "Chosen with Meta AI from our list of safe checks" : "Chosen by our rules from our list of safe checks"}
+          {next.selectedBy === "model" ? "Chosen with Muse Spark from our list of safe checks" : "Chosen by our rules from our list of safe checks"}
           {synthetic ? " · demo scenario" : ""}
         </span>
       </div>
@@ -231,7 +231,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
                       <ImageUp size={20} aria-hidden="true" />
                       <span>
                         <strong>Choose a screenshot that shows the page&apos;s address</strong>
-                        <span className={styles.help}>It will be read live by Meta AI</span>
+                        <span className={styles.help}>It will be read live by Muse Spark</span>
                       </span>
                     </button>
                   )}
@@ -257,7 +257,7 @@ export function CheckView({ next, synthetic, sampleLink, busy, error, onSubmit, 
                   {shot && (
                     <label className={styles.checkRow}>
                       <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
-                      I&apos;ve covered up private details, and I&apos;m okay with Meta AI reading this screenshot.
+                      I&apos;ve covered up private details, and I&apos;m okay with Meta&apos;s Muse Spark reading this screenshot.
                     </label>
                   )}
                 </>

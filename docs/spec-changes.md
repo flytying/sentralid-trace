@@ -41,7 +41,7 @@ VERIFY-01 is unchanged: any action outside this list is rejected, even if the mo
 In `src/app/api/investigations/routes.test.ts`:
 - end-to-end: the planner picks it, it is sealed as the only allowed action, a wrong-action answer is rejected, and the right answer changes nothing.
 
-**Live QA:** Meta AI chose it for Sample D in 5/5 production runs ([QA report](qa/repeat-runs-2026-10-31.md)).
+**Live QA:** Muse Spark chose it for Sample D in 5/5 production runs ([QA report](qa/repeat-runs-2026-10-31.md)).
 
 ## 2. Source kind `listed_facebook_page`
 
