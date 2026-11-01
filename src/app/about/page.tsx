@@ -1,11 +1,53 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  CircleHelp,
+  EyeOff,
+  Link2,
+  MapPinOff,
+  MessageCircleQuestion,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 
 export const metadata = { title: "About & limits — SentralID Trace" };
 
 const h2 = { margin: 0, fontSize: "var(--fs-h3)", fontWeight: 500 } as const;
 const p = { margin: 0, fontSize: "var(--fs-body)", lineHeight: 1.6, color: "var(--text-2)" } as const;
-const list = { margin: 0, paddingLeft: 18, fontSize: "var(--fs-body)", lineHeight: 1.6, color: "var(--text-2)" } as const;
+const list = { margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 } as const;
+
+// Same tones as the findings: "Matches" for what Trace checks, "Can't tell" for what it can't.
+const TONE = {
+  can: { fg: "var(--ok-icon)", bg: "var(--ok-bg)", line: "var(--ok-line)" },
+  cant: { fg: "var(--unk-fg)", bg: "var(--unk-bg)", line: "var(--unk-line)" },
+} as const;
+
+function LimitCard({ tone, Icon, title, items }: { tone: keyof typeof TONE; Icon: LucideIcon; title: string; items: [LucideIcon, string][] }) {
+  const t = TONE[tone];
+  return (
+    <div className="card" style={{ padding: 22, display: "flex", flexDirection: "column", gap: 16, borderTop: `3px solid ${t.line}` }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ display: "grid", placeItems: "center", width: 40, height: 40, borderRadius: 12, background: t.bg, color: t.fg, flexShrink: 0 }}>
+          <Icon size={22} aria-hidden="true" />
+        </span>
+        <h2 style={{ ...h2, fontSize: "var(--fs-title)", fontWeight: 600 }}>{title}</h2>
+      </div>
+      <ul style={list}>
+        {items.map(([ItemIcon, text]) => (
+          <li key={text} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ display: "grid", placeItems: "center", width: 30, height: 30, borderRadius: 9, background: t.bg, color: t.fg, flexShrink: 0 }}>
+              <ItemIcon size={16} aria-hidden="true" />
+            </span>
+            <span style={{ fontSize: "var(--fs-body)", lineHeight: 1.5, color: "var(--text-2)", paddingTop: 4 }}>{text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -21,24 +63,28 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 12 }}>
-        <div className="card" style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-          <h2 style={{ ...h2, fontSize: "var(--fs-title)", fontWeight: 600 }}>What it can check</h2>
-          <ul style={list}>
-            <li>Whether a Facebook link is a resort&apos;s page on file</li>
-            <li>Whether the resort name and phone numbers you saw match what we have on file</li>
-            <li>One safe thing to check next, picked with Meta AI from a fixed list, and then your updated result</li>
-          </ul>
-        </div>
-        <div className="card" style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-          <h2 style={{ ...h2, fontSize: "var(--fs-title)", fontWeight: 600 }}>What it can&apos;t check</h2>
-          <ul style={list}>
-            <li>Who is actually typing in a Messenger chat</li>
-            <li>Whether a GCash, Maya or bank account belongs to the business</li>
-            <li>Resorts we don&apos;t have on file (13 so far, all in San Juan, Batangas)</li>
-            <li>Anything on Facebook directly — we never open pages</li>
-          </ul>
-        </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 14 }}>
+        <LimitCard
+          tone="can"
+          Icon={ShieldCheck}
+          title="What it can check"
+          items={[
+            [Link2, "Whether a Facebook link is a resort's page on file"],
+            [Phone, "Whether the resort name and phone numbers you saw match what we have on file"],
+            [Sparkles, "One safe thing to check next, picked with Meta AI from a fixed list, and then your updated result"],
+          ]}
+        />
+        <LimitCard
+          tone="cant"
+          Icon={CircleHelp}
+          title="What it can't check"
+          items={[
+            [MessageCircleQuestion, "Who is actually typing in a Messenger chat"],
+            [Wallet, "Whether a GCash, Maya or bank account belongs to the business"],
+            [MapPinOff, "Resorts we don't have on file (13 so far, all in San Juan, Batangas)"],
+            [EyeOff, "Anything on Facebook directly — we never open pages"],
+          ]}
+        />
       </div>
 
       <section style={{ display: "flex", flexDirection: "column", gap: 8 }}>
