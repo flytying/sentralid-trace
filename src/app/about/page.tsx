@@ -1,34 +1,22 @@
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  CircleHelp,
-  EyeOff,
-  Link2,
-  MapPinOff,
-  MessageCircleQuestion,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-  Wallet,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight, Check, CircleHelp, ShieldCheck, X, type LucideIcon } from "lucide-react";
 
 export const metadata = { title: "About & limits — SentralID Trace" };
 
 const h2 = { margin: 0, fontSize: "var(--fs-h3)", fontWeight: 500 } as const;
 const p = { margin: 0, fontSize: "var(--fs-body)", lineHeight: 1.6, color: "var(--text-2)" } as const;
-const list = { margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 } as const;
+const list = { margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 } as const;
 
 // Same tones as the findings: "Matches" for what Trace checks, "Can't tell" for what it can't.
 const TONE = {
-  can: { fg: "var(--ok-icon)", bg: "var(--ok-bg)", line: "var(--ok-line)" },
-  cant: { fg: "var(--unk-fg)", bg: "var(--unk-bg)", line: "var(--unk-line)" },
+  can: { fg: "var(--ok-icon)", bg: "var(--ok-bg)", Mark: Check },
+  cant: { fg: "var(--unk-fg)", bg: "var(--unk-bg)", Mark: X },
 } as const;
 
-function LimitCard({ tone, Icon, title, items }: { tone: keyof typeof TONE; Icon: LucideIcon; title: string; items: [LucideIcon, string][] }) {
+function LimitCard({ tone, Icon, title, items }: { tone: keyof typeof TONE; Icon: LucideIcon; title: string; items: string[] }) {
   const t = TONE[tone];
   return (
-    <div className="card" style={{ padding: 22, display: "flex", flexDirection: "column", gap: 16, borderTop: `3px solid ${t.line}` }}>
+    <div className="card" style={{ padding: 22, display: "flex", flexDirection: "column", gap: 16 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <span style={{ display: "grid", placeItems: "center", width: 40, height: 40, borderRadius: 12, background: t.bg, color: t.fg, flexShrink: 0 }}>
           <Icon size={22} aria-hidden="true" />
@@ -36,12 +24,10 @@ function LimitCard({ tone, Icon, title, items }: { tone: keyof typeof TONE; Icon
         <h2 style={{ ...h2, fontSize: "var(--fs-title)", fontWeight: 600 }}>{title}</h2>
       </div>
       <ul style={list}>
-        {items.map(([ItemIcon, text]) => (
-          <li key={text} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ display: "grid", placeItems: "center", width: 30, height: 30, borderRadius: 9, background: t.bg, color: t.fg, flexShrink: 0 }}>
-              <ItemIcon size={16} aria-hidden="true" />
-            </span>
-            <span style={{ fontSize: "var(--fs-body)", lineHeight: 1.5, color: "var(--text-2)", paddingTop: 4 }}>{text}</span>
+        {items.map((text) => (
+          <li key={text} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+            <t.Mark size={18} strokeWidth={2.4} aria-hidden="true" style={{ color: t.fg, flexShrink: 0, marginTop: 3 }} />
+            <span style={{ fontSize: "var(--fs-body)", lineHeight: 1.6, color: "var(--text-2)" }}>{text}</span>
           </li>
         ))}
       </ul>
@@ -69,9 +55,9 @@ export default function AboutPage() {
           Icon={ShieldCheck}
           title="What it can check"
           items={[
-            [Link2, "Whether a Facebook link is a resort's page on file"],
-            [Phone, "Whether the resort name and phone numbers you saw match what we have on file"],
-            [Sparkles, "One safe thing to check next, picked with Meta AI from a fixed list, and then your updated result"],
+            "Whether a Facebook link is a resort's page on file",
+            "Whether the resort name and phone numbers you saw match what we have on file",
+            "One safe thing to check next, picked with Meta AI from a fixed list, and then your updated result",
           ]}
         />
         <LimitCard
@@ -79,10 +65,10 @@ export default function AboutPage() {
           Icon={CircleHelp}
           title="What it can't check"
           items={[
-            [MessageCircleQuestion, "Who is actually typing in a Messenger chat"],
-            [Wallet, "Whether a GCash, Maya or bank account belongs to the business"],
-            [MapPinOff, "Resorts we don't have on file (13 so far, all in San Juan, Batangas)"],
-            [EyeOff, "Anything on Facebook directly — we never open pages"],
+            "Who is actually typing in a Messenger chat",
+            "Whether a GCash, Maya or bank account belongs to the business",
+            "Resorts we don't have on file (13 so far, all in San Juan, Batangas)",
+            "Anything on Facebook directly — we never open pages",
           ]}
         />
       </div>
