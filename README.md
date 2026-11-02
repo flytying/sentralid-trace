@@ -13,6 +13,7 @@ This is an entry for the **Meta Global AI Developer Hackathon** (Indie Developer
 | AI used | Meta `muse-spark-1.3`, through `https://api.meta.ai/v1`. It's the only AI the app talks to. |
 | Real records | 13 resorts in San Juan, Batangas, each linked to its Facebook page by the town's tourism office |
 | Tests | 134 automated tests, plus 20 out of 20 live end-to-end runs ([report](docs/qa/repeat-runs-2026-10-31.md)) |
+| Try it live | **https://sentralid-trace.vercel.app** (judges: no setup needed; the four demo scenarios are on the home page). Hosted copy added for judging; usage is capped, so if it says the hourly limit is reached, wait or run it locally with the quick start below. |
 
 ## Why this isn't just an image reader
 
@@ -31,7 +32,7 @@ The "message the resort" check answers something no screenshot can: **who is act
 
 ## Quick start (about 5 minutes)
 
-You'll need **Node.js 20.9 or newer** (tested on Node 24) and **your own Meta Model API key**.
+If you only want to see Trace work, use the hosted copy linked above. To run it yourself, you'll need **Node.js 20.9 or newer** (tested on Node 24) and **your own Meta Model API key**.
 
 ```bash
 git clone https://github.com/flytying/sentralid-trace.git
@@ -109,7 +110,7 @@ The sample resorts (Lumen Cove, Bahay Dagat, Isla Verde and Mirasol Cove) are fi
 - **Nothing is fetched.** Pasted links are read as text, never opened. The only outside service Trace contacts is `https://api.meta.ai/v1`, and the server won't start with any other address or model.
 - **Privacy.** You're asked to cover private details and agree before any screenshot is sent. Images are shrunk in your browser, handled in memory, and never stored by Trace. This build runs on Meta's free API credits, and under those terms Meta may use submitted content to improve its products; the About page says so. Account numbers are partly hidden. Logs record only timings, counts and the result, never what your screenshots say.
 - **Size limits.** Uploads are capped at 4.4 MB, counted from the data actually received, so the cap can't be dodged. Each image is checked to be a real PNG, JPEG or WebP of a sensible size.
-- **Usage limits.** `RATE_LIMIT_PER_MINUTE` limits each visitor, and `MODEL_CALLS_PER_HOUR` limits the whole server, so a busy or abusive visitor can't run up a large Meta bill. These limits apply to one running server. The per-visitor limit trusts a header that only a proxy you control can vouch for, but the server-wide hourly limit always holds. That's fine for running it yourself; a public deployment should add its host's rate limiting and a Meta spending alert.
+- **Usage limits.** `RATE_LIMIT_PER_MINUTE` limits each visitor, and `MODEL_CALLS_PER_HOUR` limits the whole server, so a busy or abusive visitor can't run up a large Meta bill. These limits apply to one running server. The per-visitor limit trusts a header that only a proxy you control can vouch for, but the server-wide hourly limit always holds. That's fine for running it yourself. The hosted copy runs on Meta's hackathon API credits with no payment method attached, so the most it can ever spend is those credits; the per-server limits are a second guard, not the only one.
 - **Browser protections.** In production the app sends strict security headers: a content security policy, no embedding in other sites, and no guessing of file types.
 - **Dependencies.** `npm audit` reports no known vulnerabilities. Zod is on 4.6.7, and the PostCSS bundled with Next.js is pinned to 8.5.29 through `overrides` in `package.json`.
 
@@ -178,7 +179,25 @@ docs/                          record audit, live QA report, changes from the or
 
 ## Built during the hackathon (27 Oct – 4 Nov 2026)
 
-All code in this repository was written during the event, and the commit history shows how it grew. Before coding, the entrant wrote the business, product and technical specs and built a clickable HTML prototype; the app's visual design comes from that prototype. Neither is in this repo. The sample screenshots are drawn by `eval/samples-src/render.mjs`. Deliberate changes from the original specs are recorded in [docs/spec-changes.md](docs/spec-changes.md): a fourth safe check, a fourth sample, a new kind of source for contact details, and fictional demo resorts.
+All code in this repository was written during the event, and the commit history shows how it grew. Before coding, the entrant wrote the business, product and technical specs and built a clickable HTML prototype; the app's visual design comes from that prototype. Neither is in this repo.
+
+**Timeline, for judges checking the "new work only" rule.** The first commit is dated 31 Oct, four days after the event opened. Those days went to the specs and the prototype; the code came after. Times are Manila (UTC+8).
+
+| When | What |
+|---|---|
+| 27 Oct, 18:35 | Participant Guide saved. |
+| 27 Oct, 18:03 – 18:46 | First drafts of the business, product and technical specs (BRD, PRD, TDD v1.0), under the project's working name, SentralID ProofPath. |
+| 27 Oct, 19:10 | Brief for the clickable prototype written. |
+| 28 – 30 Oct | Specs revised through several versions. |
+| 31 Oct, 10:38 | Specs at BRD v1.3, PRD v1.4, TDD v1.2, renamed to SentralID Trace. |
+| 31 Oct, 11:17 | HTML prototype exported. Its screens are the source of the app's design. |
+| 31 Oct, 11:57 | First commit (Phase 1). |
+| 31 Oct, 22:12 | Specs amended to BRD v1.4, PRD v1.5, TDD v1.3, recording the changes made while building ([docs/spec-changes.md](docs/spec-changes.md)). |
+| 31 Oct – 1 Nov | All 62 commits in this repository. |
+
+The specs and prototype are not in this repository. Nothing in this repository, the specs or the prototype existed before 27 Oct 2026.
+
+The sample screenshots are drawn by `eval/samples-src/render.mjs`. Deliberate changes from the original specs are recorded in [docs/spec-changes.md](docs/spec-changes.md): a fourth safe check, a fourth sample, a new kind of source for contact details, and fictional demo resorts.
 
 - **Phase 1, Foundation:** app shell and design, a Meta API client that refuses to run when misconfigured, a live smoke test, encrypted check tokens.
 - **Phase 2, Records:** the record format and admission rules, 13 reviewed real resorts, a strict Facebook link parser, search, the resort picker and the "on file" panel, labelled demo scenarios.
@@ -203,7 +222,7 @@ Resort names and Facebook links come from the San Juan, Batangas Municipal Touri
 
 ## License
 
-**All rights reserved.** The code is public only so the hackathon can review it. Organizers, sponsors and judges may download and run it to evaluate this entry. Any other use, copying or sharing needs written permission. See [LICENSE](LICENSE).
+[MIT](LICENSE). Use it, fork it, build on it. The registry data cites its public sources (see [docs/registry-audit.md](docs/registry-audit.md)); resort names and page links are public records and no photos, logos or page content are included.
 
 ## Disclaimer
 
