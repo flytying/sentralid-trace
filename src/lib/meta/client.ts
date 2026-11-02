@@ -73,7 +73,8 @@ export async function createCompletion(
     if ((err as Error).name === "AbortError") {
       throw new AppError("MODEL_TIMEOUT", "Live analysis took too long. Please try again.", 504);
     }
-    throw new AppError("MODEL_UNAVAILABLE", "Live analysis is temporarily unavailable.", 502);
+    const cause = (err as Error & { cause?: { code?: string } }).cause?.code ?? (err as Error).name;
+    throw Object.assign(new AppError("MODEL_UNAVAILABLE", "Live analysis is temporarily unavailable.", 502), { detail: `fetch:${cause}` });
   } finally {
     clearTimeout(timer);
   }
@@ -86,7 +87,7 @@ export async function createCompletion(
     throw new AppError("CONFIG_INVALID", "The Meta Model API rejected this server's API key. Check MODEL_API_KEY in .env.local and restart.", 502);
   }
   if (!res.ok) {
-    throw new AppError("MODEL_UNAVAILABLE", `Live analysis is temporarily unavailable (provider status ${res.status}).`, 502);
+    throw Object.assign(new AppError("MODEL_UNAVAILABLE", `Live analysis is temporarily unavailable (provider status ${res.status}).`, 502), { detail: `status:${res.status}` });
   }
 
   let json: {

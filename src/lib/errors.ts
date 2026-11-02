@@ -52,3 +52,11 @@ export interface ErrorBody {
 export function errorBody(err: AppError, requestId: string): ErrorBody {
   return { error: { code: err.code, message: err.message, recoverable: err.recoverable, requestId } };
 }
+
+/** The server is misconfigured (missing or malformed secrets). Fails closed; never a guessed result. */
+export class ConfigError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ConfigError";
+  }
+}

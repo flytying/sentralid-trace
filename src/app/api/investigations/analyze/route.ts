@@ -26,8 +26,9 @@ export async function POST(req: NextRequest) {
         : err instanceof ConfigError
           ? new AppError("CONFIG_INVALID", "Live analysis isn't configured on this server. See the README to add a Meta API key.", 500)
           : new AppError("MODEL_UNAVAILABLE", "Something went wrong on our side. Please try again.", 500);
-    // Log only the error class — never request contents.
-    console.warn(JSON.stringify({ evt: "analyze_error", requestId, code: appErr.code, totalMs: Date.now() - started }));
+    // Log only the error class, a provider status or the exception type — never request contents.
+    const detail = (appErr as AppError & { detail?: string }).detail ?? (err instanceof AppError || err instanceof ConfigError ? undefined : `unexpected:${(err as Error)?.name ?? typeof err}`);
+    console.warn(JSON.stringify({ evt: "analyze_error", requestId, code: appErr.code, ...(detail ? { detail } : {}), totalMs: Date.now() - started }));
     const retryAfter = (appErr as AppError & { retryAfter?: number }).retryAfter;
     return NextResponse.json(errorBody(appErr, requestId), {
       status: appErr.status,

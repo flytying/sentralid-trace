@@ -1,5 +1,8 @@
 import "server-only";
 import { z } from "zod";
+import { ConfigError } from "./errors";
+
+export { ConfigError };
 
 // Runtime AI must be a Meta model on the Meta endpoint. Anything else fails closed.
 export const ALLOWED_META_HOSTS = ["api.meta.ai"] as const;
@@ -16,12 +19,6 @@ const schema = z.object({
 
 export type ServerEnv = z.infer<typeof schema>;
 
-export class ConfigError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "ConfigError";
-  }
-}
 
 export function parseEnv(source: Record<string, string | undefined>): ServerEnv {
   const parsed = schema.safeParse(source);

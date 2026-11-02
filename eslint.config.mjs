@@ -21,6 +21,7 @@ const eslintConfig = [
       ".design-ref/**",
       ".next-qa/**",
       "private/**",
+      ".claude/**",
     ],
   },
 ];

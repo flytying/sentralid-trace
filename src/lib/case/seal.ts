@@ -1,7 +1,7 @@
 // Authenticated, encrypted, short-lived case tokens (AES-256-GCM).
 // Token = base64url(version byte | 12-byte IV | ciphertext | 16-byte tag).
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
-import { AppError } from "../errors";
+import { AppError, ConfigError } from "../errors";
 
 const TOKEN_VERSION = 1;
 const IV_LEN = 12;
@@ -14,7 +14,7 @@ interface Envelope<T> {
 
 export function decodeSealKey(b64: string): Buffer {
   const key = Buffer.from(b64, "base64");
-  if (key.length !== 32) throw new Error("CASE_SEAL_KEY must be 32 bytes, base64-encoded");
+  if (key.length !== 32) throw new ConfigError("CASE_SEAL_KEY must be 32 bytes, base64-encoded");
   return key;
 }
 
